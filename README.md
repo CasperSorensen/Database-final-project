@@ -11,3 +11,5 @@ Open a command line / shell and navigate to the project folder (where this READM
 ```sh
 dotnet run
 ```
+Then, navigate to http://localhost:5000
+or https://localhost:5001
