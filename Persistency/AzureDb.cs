@@ -10,28 +10,31 @@ namespace database_final_project
 
     }
 
-    // In here the methods for connecting 
-    // to the database should be located
-    /*
-    try
+    public static bool UserCheck(string Username)
+    {
+      bool isUser = false;
+      try
       {
+        //TODO Insert the real connection to the database
+        // or maybe move the data to the connectionstring
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-        builder.DataSource = "name of the mssql server";
-        builder.UserID = "userid";
-        builder.Password = "password";
-        builder.InitialCatalog = "The name of the database";
+        builder.DataSource = "Adress of the server";
+        builder.UserID = "id of the user";
+        builder.Password = "password for the user";
+        builder.InitialCatalog = "database name";
 
         using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
         {
           conn.Open();
-          string query = "Select * from [dbo].TBook";
+          string query = "Select * from [dbo].TUser where TUser.cName = @username";
           using (SqlCommand cmd = new SqlCommand(query, conn))
           {
+            cmd.Parameters.AddWithValue("@username", Username);
             using (SqlDataReader sdr = cmd.ExecuteReader())
             {
-              while (sdr.Read())
+              if (sdr.HasRows)
               {
-                Console.WriteLine("BookId: {0} BookTitle: {1}", sdr.GetInt32(0), sdr.GetString(1));
+                isUser = true;
               }
             }
           }
@@ -39,7 +42,10 @@ namespace database_final_project
       }
       catch (SqlException e)
       {
-      }    
-     */
+        System.Console.WriteLine(e);
+      }
+
+      return isUser;
+    }
   }
 }
