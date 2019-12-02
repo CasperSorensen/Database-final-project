@@ -8,10 +8,11 @@ namespace database_final_project
   public class AzureDb
   {
     #region Properties
-
+       
     private SqlConnectionStringBuilder _builder;
 
     #endregion
+
 
     public AzureDb()
     {

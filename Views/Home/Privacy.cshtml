@@ -3,4 +3,18 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+
+@{
+
+
+    if (bool.Parse(TempData["IsLoggedIn"].ToString()))
+    {
+        <p>Use this page to detail your site's privacy policy.</p>
+
+    }
+    else
+    {
+        <h2>Acces restricted Please log in <a href="/">here</a></h2>
+    }
+}
+

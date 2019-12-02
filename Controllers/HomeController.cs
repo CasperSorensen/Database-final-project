@@ -20,12 +20,21 @@ namespace database_final_project.Controllers
 
     public IActionResult Index()
     {
-      return View();
+           TempData["IsLoggedIn"] = false;
+            return View();
     }
 
-    public IActionResult Privacy()
+        public IActionResult test(string Name)
+        {
+            var sd = Name;
+            return View("test",Name);
+        }
+
+
+        public IActionResult Privacy()
     {
-      return View();
+            TempData["IsLoggedIn"] =false;
+            return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
