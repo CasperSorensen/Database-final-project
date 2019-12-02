@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using database_final_project.Models;
 
 namespace database_final_project
 {
@@ -52,6 +53,46 @@ namespace database_final_project
 
     }
 
-    #endregion
-  }
+
+       public UserModel LoginUser(UserModel user)
+        {
+            var id = user.UserId;
+            UserModel result = new UserModel();
+            
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
+                {
+                    conn.Open();
+                    string query = "Select * from [dbo].TUser Where TUser.nUserId = @Id";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            result.UserId = int.Parse(reader["nUserId"].ToString());
+                            result.UserName = reader["cFirstName"].ToString();
+                        }
+                       
+                    }
+                    else
+                    {
+                        return result;
+                    }
+
+                }
+            }
+            catch (SqlException e)
+            {
+                System.Console.WriteLine(e);
+            }
+            return result;
+
+        }
+
+        #endregion
+    }
 }

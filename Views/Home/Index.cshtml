@@ -1,36 +1,47 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+﻿@using database_final_project.Models
+@model UserModel
 
 
 @{
-
-    var sd = bool.Parse(TempData["IsLoggedIn"].ToString());
-
-    if (bool.Parse(TempData["IsLoggedIn"].ToString()))
+     var loginMsg = TempData["LogginMessage"]!=null?TempData["LogginMessage"].ToString():"";
+    var isLoggedIn = TempData["IsLoggedIn"].ToString();
+    TempData.Keep("IsLoggedIn");
+   
+    if (isLoggedIn!=string.Empty)
     {
-        <p> you are logged in</p>
-    }
-    else
-    {
-        <h2>please log in</h2>
-
+        <p> you are logged in as @(isLoggedIn != null ? isLoggedIn : "")</p>
 
         <div class="container">
-            <form name="Name" method="POST" action="/Home/test">
-                <div class="field">
-                    <label class="label">Name</label>
+            <form name="UserModel" method="POST" action="/Home/Logout">
+
+                <div class="field is-grouped">
                     <div class="control">
-                        <input class="input" type="text" placeholder="Hans Hansen" name="Name">
+                        <button class="button is-link">Log Out</button>
                     </div>
                 </div>
 
-               
+
+            </form>
+        </div>
+
+    }
+    else
+    {
+
+        <h2>please Enter your UserId</h2>
+        <h2>@loginMsg</h2>
+
+
+        <div class="container">
+            <form name="UserModel" method="POST" action="/Home/Login">
+                <div class="field">
+
+                    <div class="control">
+                        <input class="input" type="text" placeholder="" name="UserId">
+                    </div>
+                </div>
+
+
 
                 <div class="field is-grouped">
                     <div class="control">

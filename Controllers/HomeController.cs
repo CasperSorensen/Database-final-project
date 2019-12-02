@@ -20,20 +20,54 @@ namespace database_final_project.Controllers
 
     public IActionResult Index()
     {
-           TempData["IsLoggedIn"] = false;
-            return View();
+            
+            if (TempData["IsLoggedIn"]==null)
+            {
+                TempData["IsLoggedIn"] = string.Empty;
+                return View();
+            }
+            else
+            {
+                
+                
+                
+                    return View();
+                
+               
+
+            }
+          
     }
 
-        public IActionResult test(string Name)
+        public IActionResult Login(UserModel model)
         {
-            var sd = Name;
-            return View("test",Name);
+            var UserData = new AzureDb().LoginUser(model);
+            if (UserData.UserId == 0)
+            {
+                TempData["IsLoggedIn"] = "";
+                TempData["LogginMessage"] = "No user with such Id in Our Database";
+                return View("./Index");
+            }
+            else
+            {
+
+
+                TempData["IsLoggedIn"] = UserData.UserName;
+                return View("./Index", UserData);
+            }
+        }
+
+        public IActionResult Logout()
+        {
+
+            TempData["IsLoggedIn"] = "";
+            return View("./Index");
         }
 
 
         public IActionResult Privacy()
     {
-            TempData["IsLoggedIn"] =false;
+            var sd = TempData["IsLoggedIn"].ToString();
             return View();
     }
 

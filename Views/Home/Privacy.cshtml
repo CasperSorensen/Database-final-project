@@ -5,9 +5,10 @@
 
 
 @{
+     string isLoggedIn = TempData["IsLoggedIn"].ToString();
+            TempData.Keep();
 
-
-    if (bool.Parse(TempData["IsLoggedIn"].ToString()))
+    if (isLoggedIn!=string.Empty)
     {
         <p>Use this page to detail your site's privacy policy.</p>
 
