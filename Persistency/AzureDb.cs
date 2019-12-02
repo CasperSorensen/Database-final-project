@@ -1,51 +1,52 @@
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace database_final_project
 {
-  public class AzureDb
-  {
-    public AzureDb()
+    public class AzureDb
     {
-
-    }
-
-    public static bool UserCheck(string Username)
-    {
-      bool isUser = false;
-      try
-      {
-        //TODO Insert the real connection to the database
-        // or maybe move the data to the connectionstring
-        SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-        builder.DataSource = "Adress of the server";
-        builder.UserID = "id of the user";
-        builder.Password = "password for the user";
-        builder.InitialCatalog = "database name";
-
-        using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
+        public AzureDb()
         {
-          conn.Open();
-          string query = "Select * from [dbo].TUser where TUser.cName = @username";
-          using (SqlCommand cmd = new SqlCommand(query, conn))
-          {
-            cmd.Parameters.AddWithValue("@username", Username);
-            using (SqlDataReader sdr = cmd.ExecuteReader())
-            {
-              if (sdr.HasRows)
-              {
-                isUser = true;
-              }
-            }
-          }
-        }
-      }
-      catch (SqlException e)
-      {
-        System.Console.WriteLine(e);
-      }
 
-      return isUser;
+        }
+
+        public List<string> GetUsers()
+        {
+            List<string> result = new List<string>();
+            try
+            {
+                
+                //TODO Insert the real connection to the database
+                // or maybe move the data to the connectionstring
+                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+                builder.DataSource = "web-shop-server.database.windows.net";
+                builder.UserID = "ServerUser";
+                builder.Password = "SecretPassword123";
+                builder.InitialCatalog = "WebShopDB";
+
+                using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
+                {
+                    conn.Open();
+                    string query = "Select * from [dbo].TUser";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    
+                    while (reader.Read())
+                    {
+                        result.Add(reader["cFirstName"].ToString());
+                    }
+                    
+                }
+            }
+            catch (SqlException e)
+            {
+                System.Console.WriteLine(e);
+            }
+            return result;
+            
+        }
+
     }
-  }
 }
