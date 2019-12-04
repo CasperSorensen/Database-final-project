@@ -7,7 +7,7 @@ namespace database_final_project.Models
 {
     public class UserModel
     {
-       public int UserId { get; set; }
+        public int UserId { get; set; }
 
         public string UserName { get; set; }
     }
