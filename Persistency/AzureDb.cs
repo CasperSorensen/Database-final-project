@@ -128,6 +128,7 @@ namespace database_final_project
                         product.cdescription = reader["cdescription"].ToString();
                         product.nStock = int.Parse (reader["nStock"].ToString());
                         product.nProductId = int.Parse(reader["nProductId"].ToString());
+                        product.nUnitPrice = decimal.Parse(reader["nUnitPrice"].ToString());
                         result.Add(product);
                     }
 
@@ -138,7 +139,45 @@ namespace database_final_project
                 System.Console.WriteLine(e);
             }
             return result;
-            #endregion
+
+
+           
         }
+
+        public List<CreditCard> GetCreditCardsForUser(int UserId)
+        {
+            List<CreditCard> cards = new List<CreditCard>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
+                {
+                    conn.Open();
+                    string query = "Select * from [dbo].TCreditCard Where nUserId = @UserId";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@UserId", UserId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    var card = Factory.CreateCreditCard();
+                    while (reader.Read())
+                    {
+
+                        card.nCreditCardId = int.Parse(reader["nCreditCardId"].ToString());
+                        card.nIBANCode = int.Parse(reader["nIBANCode"].ToString());
+                        card.dExpDate = DateTime.Parse(reader["dExpDate"].ToString());
+                        cards.Add(card);
+
+                    }
+
+                }
+            }
+            catch (SqlException e)
+            {
+                System.Console.WriteLine(e);
+            }
+            return cards;
+
+
+
+        }
+        #endregion
     }
 }

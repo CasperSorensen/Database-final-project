@@ -12,7 +12,9 @@
 
     if (isLoggedIn != string.Empty)
     {
-        <p> you are logged in as @(isLoggedIn != null ? isLoggedIn : "")</p>
+        var name = isLoggedIn.ToString().Split(',').ElementAt(0);
+        var id =int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
+    <p> you are logged in as @(isLoggedIn != null ? isLoggedIn.ToString().Split(',').ElementAt(0) : "")</p>
 
         <div class="container">
             <form name="UserModel" method="POST" action="/Home/Logout">
@@ -31,37 +33,42 @@
         var products = new AzureDb().GetProducts();
         foreach (var Product in products)
         {
-<div>
+            <div>
 
-    <h2>@Product.cname</h2>
-    <p>Description : @Product.cdescription</p>
-    <p> Stock: @Product.nStock</p>
-    <button>
-        <a href="@Url.Action("AddToBasket","Home",Product)">Add to basket</a>
-    </button>
-    <div class="container">
-        <form name="UserModel" method="POST" action="/Home/RateProduct">
+                <h2>@Product.cname</h2>
+                <p>Description : @Product.cdescription</p>
+                <p> Stock: @Product.nStock units</p>
+                <p>Price: @Product.nUnitPrice DKK</p>
+                <button>
+                    <a href="@Url.Action("AddToBasket","Home",Product)">Add to basket</a>
+                </button>
+                <div class="container">
+                    <form name="UserModel" method="POST" action="/Home/RateProduct">
 
-            <div class="field is-grouped">
-                <div class="control">
-                    <button class="button is-link">RateProduct</button>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button is-link">RateProduct</button>
+                            </div>
+                        </div>
+
+
+                    </form>
                 </div>
+                <br />
+                <br />
+                <br />
             </div>
-
-
-        </form>
-    </div>
-    <br />
-    <br />
-    <br />
-</div>
         }
 
 
 
     }
+    else
+    {
+        <h2>Acces restricted Please log in <a href="/">here</a></h2>
+    }
 }
 
-@{ 
-    
+@{
+
 }

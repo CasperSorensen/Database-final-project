@@ -6,38 +6,42 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using database_final_project.Models;
+using Newtonsoft.Json;
 
 namespace database_final_project.Controllers
 {
-  public class HomeController : Controller
-  {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-      _logger = logger;
-    }
+        private readonly ILogger<HomeController> _logger;
 
-    public IActionResult Index()
-    {
-            
-            if (TempData["IsLoggedIn"]==null)
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
+
+            if (TempData["IsLoggedIn"] == null)
             {
                 TempData["IsLoggedIn"] = string.Empty;
                 return View();
             }
             else
             {
-                
-                
-                
-                    return View();
-                
-               
-
+                return View();
             }
-          
-    }
+
+        }
+
+        public IActionResult CheckoutPage(ObjectOfFieldsForDatabase data)
+        {
+
+
+
+            return View(data);
+        }
+     
 
         public IActionResult Login(UserModel model)
         {
@@ -52,13 +56,52 @@ namespace database_final_project.Controllers
             {
 
 
-                TempData["IsLoggedIn"] = UserData.UserName;
+                TempData["IsLoggedIn"] = UserData.UserName +","+ UserData.UserId;
                 return View("./Index", UserData);
             }
         }
-        public IActionResult AddToBasket(Product product1)
+        public IActionResult AddToBasket(Product SelectedProduct)
         {
-            return View();
+            var basketAsObj = TempData["Basket"];
+            
+            if (basketAsObj == string.Empty || basketAsObj == null)
+            {
+                
+                //first int is product id , second int is quantity
+                Dictionary<int, int> Basket = new Dictionary<int, int>();
+                Basket.Add(SelectedProduct.nProductId, 1);
+                var JsonString = JsonConvert.SerializeObject(Basket);
+                TempData["basket"] = JsonString;
+                var se = "";
+
+            }
+            else
+            {
+                var basket = basketAsObj.ToString();
+                Dictionary<int,int> Basket = JsonConvert.DeserializeObject<Dictionary<int, int>>(basket);
+                int Id = SelectedProduct.nProductId;
+                //product is allready in basket - increase quantity
+                if (Basket.ContainsKey(Id))
+                {
+                    int quant = Basket.GetValueOrDefault(Id);
+                    Basket.Remove(Id);
+                    Basket.Add(Id, quant + 1);
+
+                    
+                }
+                //product is not yet in basket - just add it
+                else
+                {
+                    Basket.Add(Id, 1);
+
+                }
+
+                var JsonString = JsonConvert.SerializeObject(Basket);
+                TempData["basket"] = JsonString;
+
+            }
+            
+            return View("./Products");
         }
         public IActionResult RateProduct(Product rateProduct)
         {
@@ -71,15 +114,33 @@ namespace database_final_project.Controllers
             return View("./Index");
         }
 
+        public IActionResult Checkout()
+        {
+
+            return View("./CheckoutPage");
+        }
+
+        public IActionResult Basket()
+        {
+           
+            return View("./Basket");
+        }
+
+        public IActionResult ClearBasket()
+        {
+            
+            TempData["Basket"] = null;             
+            return View("./Basket");
+        }
 
         public IActionResult Privacy()
-    {
-            var sd = TempData["IsLoggedIn"].ToString();
-            return View();
-    }
-        public IActionResult Products()
         {
             var sd = TempData["IsLoggedIn"].ToString();
+            return View();
+        }
+        public IActionResult Products()
+        {
+            
             return View();
         }
 

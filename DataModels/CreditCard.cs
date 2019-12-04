@@ -9,7 +9,7 @@ namespace database_final_project
 
         public int nCreditCardId { get; set; }
         public int nUserId { get; set; }
-        public string nIBANCode { get; set; }
+        public int nIBANCode { get; set; }
         public DateTime dExpDate { get; set; }
         public int nCcv { get; set; }
         public string cCardHolderName { get; set; }

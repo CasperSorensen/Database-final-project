@@ -1,0 +1,31 @@
+﻿@using Newtonsoft.Json
+@model ObjectOfFieldsForDatabase
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CheckoutPage</title>
+</head>
+<body>
+    @{
+        <p>UserId: @Model.UserId</p>
+        Dictionary<int, int> Basket = JsonConvert.DeserializeObject<Dictionary<int, int>>(Model.Products);
+        foreach (var product in Basket)
+        {
+            <p> ProductId: @product.Key , Quant: @product.Value</p>
+            
+        }
+        <p>Card Id : @Model.CreditCardId</p>
+        <p>Total: @Model.Total DKK</p>
+
+
+
+    }
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+﻿@using Newtonsoft.Json;
+@{
+    ViewData["Title"] = "CheckouPage";
+}
+
+<h1>Basket</h1>
+<br />
+
+@{
+    var loginMsg = TempData["LogginMessage"] != null ? TempData["LogginMessage"].ToString() : "";
+    var isLoggedIn = TempData["IsLoggedIn"].ToString();
+    TempData.Keep("IsLoggedIn");
+    ObjectOfFieldsForDatabase data = new ObjectOfFieldsForDatabase();
+
+    if (isLoggedIn != string.Empty)
+    {
+
+
+        var name = isLoggedIn.ToString().Split(',').ElementAt(0);
+        var id =int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
+        <p> you are logged in as @(isLoggedIn != null ? name : "")</p>
+        data.UserId = id;
+
+        var BasketAsObj = TempData["basket"];
+        TempData.Keep();
+        if (BasketAsObj != null)
+        {
+
+
+
+            decimal Total = 0;
+            var basket = BasketAsObj.ToString();
+
+            Dictionary<int, int> Basket = JsonConvert.DeserializeObject<Dictionary<int, int>>(basket);
+            data.Products = basket;
+            List<Product> AllDbProducts = AzureDb.Instance.GetProducts();
+
+            <h2>Your basket Contains:</h2>
+            foreach (var product in Basket)
+            {
+                foreach (var DbProduct in AllDbProducts)
+                {
+                    if (DbProduct.nProductId == product.Key)
+                    {
+                        decimal SubTotal = DbProduct.nUnitPrice * product.Value;
+                        <p>@DbProduct.cname, Quantity: @product.Value (x @DbProduct.nUnitPrice =@SubTotal DKK)</p>
+
+                        Total += DbProduct.nUnitPrice * product.Value;
+
+                       
+                    }
+                }
+
+
+
+            }
+            <br />
+            <h2>Total: @Total DKK</h2>
+            data.Total = Total;
+            <h3>Payment Method</h3>
+            <h4> Please Chose a card associated with your account to complete the purchase</h4>
+            <br />
+            List<CreditCard> cards = AzureDb.Instance.GetCreditCardsForUser(id);
+            foreach (var card in cards)
+            {
+                data.CreditCardId = card.nCreditCardId;
+                <div style="border:solid">
+                    <h5>Card Id: @card.nCreditCardId</h5>
+                    <p>Card IBAN: @card.nIBANCode</p>
+                    <p>Ending In: @card.dExpDate.Month / @card.dExpDate.Year</p>
+
+                     <button>
+                         <a href="@Url.Action("CheckoutPage", "Home",data)">This One!</a>
+                    </button>
+                    <br />
+
+                </div>
+                <br />
+            }
+
+
+            <div>
+                <button>
+                    <a href="@Url.Action("ClearBasket", "Home")">Clear Basket</a>
+                </button>
+
+                
+            </div>
+
+        }
+
+        else
+        {
+            <h3>Your Basket is empty, put something in it!</h3>
+        }
+    }
+    else
+    {
+        
+            <h2>You need to be logged in, in order to use Basket Please do so <a href="/">here</a></h2>
+        
+    }
+}
+
