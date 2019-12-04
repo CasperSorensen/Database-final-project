@@ -31,17 +31,30 @@
         var products = new AzureDb().GetProducts();
         foreach (var Product in products)
         {
-            <div>
+<div>
 
-                <h2>@Product.cname</h2>
-                <p>Description : @Product.cdescription</p>
-                 <p> Stock: @Product.nStock</p>
-                <button> <a href="@Url.Action("AddToBasket","Home",Product)">Add to basket</a>
-                </button>
-                <br />
-                <br />
-                <br />
+    <h2>@Product.cname</h2>
+    <p>Description : @Product.cdescription</p>
+    <p> Stock: @Product.nStock</p>
+    <button>
+        <a href="@Url.Action("AddToBasket","Home",Product)">Add to basket</a>
+    </button>
+    <div class="container">
+        <form name="UserModel" method="POST" action="/Home/RateProduct">
+
+            <div class="field is-grouped">
+                <div class="control">
+                    <button class="button is-link">RateProduct</button>
+                </div>
             </div>
+
+
+        </form>
+    </div>
+    <br />
+    <br />
+    <br />
+</div>
         }
 
 

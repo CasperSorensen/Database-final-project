@@ -1,0 +1,41 @@
+﻿@using database_final_project.Models
+@model UserModel
+@{
+    ViewData["Title"] = "RateProduct";
+}
+
+<h1>RateProduct</h1>
+
+<div class="container">
+    <form name="UserModel" method="POST" action="/Home/Product">
+        <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+                <input class="textview" type="text" name="Name">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Rating</label>
+            <div class="control">
+                <div class="select">
+                    <select name="Rating">
+                        <option disabled selected>Select Rating</option>
+
+
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Comment</label>
+            <div class="control">
+                <input class="input" type="text" placeholder="This is a Bad Product Because.." name="Comment">
+            </div>            
+        </div>
+       
+
+
+    </form>
+</div>

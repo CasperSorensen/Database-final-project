@@ -60,6 +60,10 @@ namespace database_final_project.Controllers
         {
             return View();
         }
+        public IActionResult RateProduct(Product rateProduct)
+        {
+            return View("./RateProduct");
+        }
         public IActionResult Logout()
         {
 
