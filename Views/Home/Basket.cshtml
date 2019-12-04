@@ -57,25 +57,37 @@
             <br />
             <h2>Total: @Total DKK</h2>
             data.Total = Total;
+            <br />
+             List<CreditCard> cards = AzureDb.Instance.GetCreditCardsForUser(id);
             <h3>Payment Method</h3>
             <h4> Please Chose a card associated with your account to complete the purchase</h4>
-            <br />
-            List<CreditCard> cards = AzureDb.Instance.GetCreditCardsForUser(id);
-            foreach (var card in cards)
+            
+           
+
+            if (cards.Count == 0)
             {
-                data.CreditCardId = card.nCreditCardId;
+                <h2> "no cards are registered with this user"</h2>
+            }
+            else
+            {
+
+
+                foreach (var card in cards)
+                {
+                    data.CreditCardId = card.nCreditCardId;
                 <div style="border:solid">
                     <h5>Card Id: @card.nCreditCardId</h5>
                     <p>Card IBAN: @card.nIBANCode</p>
                     <p>Ending In: @card.dExpDate.Month / @card.dExpDate.Year</p>
 
                      <button>
-                         <a href="@Url.Action("CheckoutPage", "Home",data)">This One!</a>
+                         <a href="@Url.Action("CheckoutPage", "Home", data)">This One!</a>
                     </button>
                     <br />
 
                 </div>
                 <br />
+                }
             }
 
 
