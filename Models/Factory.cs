@@ -9,15 +9,34 @@ namespace database_final_project.Models
 
         }
 
-        public static Data FetchObject(string type)
+        public static Product CreateProduct()
         {
-            switch (type)
-            {
-                case "product":
-                    return new Product();
-            }
-            return null;
+            return new Product();
+        }
 
+        public static User CreateUser()
+        {
+            return new User();
+        }
+
+        public static Rating CreateRating()
+        {
+            return new Rating();
+        }
+
+        public static Invoice CreateInvoice()
+        {
+            return new Invoice();
+        }
+
+        public static InvoiceLine CreateInvoiceLine()
+        {
+            return new InvoiceLine();
+        }
+
+        public static CreditCard CreateCreditCard()
+        {
+            return new CreditCard();
         }
 
     }
