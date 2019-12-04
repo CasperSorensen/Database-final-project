@@ -123,7 +123,7 @@ namespace database_final_project
 
                     while (reader.Read())
                     {
-                        var product = new Product();
+                        var product = Factory.CreateProduct();
                         product.cname = reader["cName"].ToString();
                         product.cdescription = reader["cdescription"].ToString();
                         product.nStock = int.Parse (reader["nStock"].ToString());
