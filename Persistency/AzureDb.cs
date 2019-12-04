@@ -127,6 +127,7 @@ namespace database_final_project
                         product.cname = reader["cName"].ToString();
                         product.cdescription = reader["cdescription"].ToString();
                         product.nStock = int.Parse (reader["nStock"].ToString());
+                        product.nProductId = int.Parse(reader["nProductId"].ToString());
                         result.Add(product);
                     }
 

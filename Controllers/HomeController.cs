@@ -56,7 +56,10 @@ namespace database_final_project.Controllers
                 return View("./Index", UserData);
             }
         }
-
+        public IActionResult AddToBasket(Product product1)
+        {
+            return View();
+        }
         public IActionResult Logout()
         {
 
