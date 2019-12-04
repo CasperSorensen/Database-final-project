@@ -6,59 +6,59 @@ using database_final_project.Models;
 
 namespace database_final_project
 {
-  public class AzureDb
-  {
-    #region Properties
-       
-    private SqlConnectionStringBuilder _builder;
-
-    #endregion
-
-
-    public AzureDb()
+    public class AzureDb
     {
-      this._builder = new SqlConnectionStringBuilder();
-      _builder.DataSource = "web-shop-server.database.windows.net";
-      _builder.UserID = "ServerUser";
-      _builder.Password = "SecretPassword123";
-      _builder.InitialCatalog = "WebShopDB";
-    }
+        #region Properties
 
-    #region Methods
+        private SqlConnectionStringBuilder _builder;
 
-    public List<string> GetUsers()
-    {
-      List<string> result = new List<string>();
-      try
-      {
-        using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
+        #endregion
+
+
+        public AzureDb()
         {
-          conn.Open();
-          string query = "Select * from [dbo].TUser";
-          SqlCommand cmd = new SqlCommand(query, conn);
-          SqlDataReader reader = cmd.ExecuteReader();
+            this._builder = new SqlConnectionStringBuilder();
+            _builder.DataSource = "web-shop-server.database.windows.net";
+            _builder.UserID = "ServerUser";
+            _builder.Password = "SecretPassword123";
+            _builder.InitialCatalog = "WebShopDB";
+        }
 
-          while (reader.Read())
-          {
-            result.Add(reader["cFirstName"].ToString());
-          }
+        #region Methods
+
+        public List<string> GetUsers()
+        {
+            List<string> result = new List<string>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
+                {
+                    conn.Open();
+                    string query = "Select * from [dbo].TUser";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        result.Add(reader["cFirstName"].ToString());
+                    }
+
+                }
+            }
+            catch (SqlException e)
+            {
+                System.Console.WriteLine(e);
+            }
+            return result;
 
         }
-      }
-      catch (SqlException e)
-      {
-        System.Console.WriteLine(e);
-      }
-      return result;
-
-    }
 
 
-       public UserModel LoginUser(UserModel user)
+        public UserModel LoginUser(UserModel user)
         {
             var id = user.UserId;
             UserModel result = new UserModel();
-            
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
@@ -76,7 +76,7 @@ namespace database_final_project
                             result.UserId = int.Parse(reader["nUserId"].ToString());
                             result.UserName = reader["cFirstName"].ToString();
                         }
-                       
+
                     }
                     else
                     {
@@ -92,7 +92,33 @@ namespace database_final_project
             return result;
 
         }
+        public List<Product> GetProducts()
+        {
+            List<Product> result = new List<Product>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
+                {
+                    conn.Open();
+                    string query = "Select * from [dbo].TProduct";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
 
-        #endregion
+                    while (reader.Read())
+                    {
+                        var product = new Product();
+                        product.cname = reader["cName"].ToString();
+                        result.Add(product);
+                    }
+
+                }
+            }
+            catch (SqlException e)
+            {
+                System.Console.WriteLine(e);
+            }
+            return result;
+            #endregion
+        }
     }
 }

@@ -1,0 +1,44 @@
+﻿@using database_final_project.Models
+@model UserModel
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Products</h1>
+@{
+    var loginMsg = TempData["LogginMessage"] != null ? TempData["LogginMessage"].ToString() : "";
+    var isLoggedIn = TempData["IsLoggedIn"].ToString();
+    TempData.Keep("IsLoggedIn");
+
+    if (isLoggedIn != string.Empty)
+    {
+        <p> you are logged in as @(isLoggedIn != null ? isLoggedIn : "")</p>
+
+        <div class="container">
+            <form name="UserModel" method="POST" action="/Home/Logout">
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-link">Log Out</button>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+
+
+        var products = new AzureDb().GetProducts();
+        foreach (var Product in products)
+        {
+            <p> @Product.cname</p>
+        }
+
+
+
+    }
+}
+
+@{ 
+    
+}
