@@ -6,13 +6,11 @@ using database_final_project.Models;
 
 namespace database_final_project
 {
-  public class AzureDb
-  {
-    #region Properties
-       
-    
+    public class AzureDb
+    {
+        #region Properties
 
-    #endregion
+        private SqlConnectionStringBuilder _builder;
 
             private SqlConnectionStringBuilder _builder;
             private static AzureDb instance = null;
@@ -55,32 +53,37 @@ namespace database_final_project
       {
         using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
         {
-          conn.Open();
-          string query = "Select * from [dbo].TUser";
-          SqlCommand cmd = new SqlCommand(query, conn);
-          SqlDataReader reader = cmd.ExecuteReader();
+            List<string> result = new List<string>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
+                {
+                    conn.Open();
+                    string query = "Select * from [dbo].TUser";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
 
-          while (reader.Read())
-          {
-            result.Add(reader["cFirstName"].ToString());
-          }
+                    while (reader.Read())
+                    {
+                        result.Add(reader["cFirstName"].ToString());
+                    }
+
+                }
+            }
+            catch (SqlException e)
+            {
+                System.Console.WriteLine(e);
+            }
+            return result;
 
         }
-      }
-      catch (SqlException e)
-      {
-        System.Console.WriteLine(e);
-      }
-      return result;
-
-    }
 
 
-       public UserModel LoginUser(UserModel user)
+        public UserModel LoginUser(UserModel user)
         {
             var id = user.UserId;
             UserModel result = new UserModel();
-            
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
@@ -98,7 +101,7 @@ namespace database_final_project
                             result.UserId = int.Parse(reader["nUserId"].ToString());
                             result.UserName = reader["cFirstName"].ToString();
                         }
-                       
+
                     }
                     else
                     {
@@ -114,7 +117,33 @@ namespace database_final_project
             return result;
 
         }
+        public List<Product> GetProducts()
+        {
+            List<Product> result = new List<Product>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
+                {
+                    conn.Open();
+                    string query = "Select * from [dbo].TProduct";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
 
-        #endregion
+                    while (reader.Read())
+                    {
+                        var product = new Product();
+                        product.cname = reader["cName"].ToString();
+                        result.Add(product);
+                    }
+
+                }
+            }
+            catch (SqlException e)
+            {
+                System.Console.WriteLine(e);
+            }
+            return result;
+            #endregion
+        }
     }
 }
