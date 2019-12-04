@@ -11,53 +11,46 @@ namespace database_final_project
         #region Properties
 
         private SqlConnectionStringBuilder _builder;
+        private static AzureDb instance = null;
+        private static readonly object padlock = new object();
 
-            private SqlConnectionStringBuilder _builder;
-            private static AzureDb instance = null;
-            private static readonly object padlock = new object();
+        #endregion
 
-            public AzureDb()
+        public AzureDb()
+        {
+            this._builder = new SqlConnectionStringBuilder();
+            _builder.DataSource = "web-shop-server.database.windows.net";
+            _builder.UserID = "ServerUser";
+            _builder.Password = "SecretPassword123";
+            _builder.InitialCatalog = "WebShopDB";
+        }
+
+        public static AzureDb Instance
+        {
+            get
             {
-                this._builder = new SqlConnectionStringBuilder();
-                _builder.DataSource = "web-shop-server.database.windows.net";
-                _builder.UserID = "ServerUser";
-                _builder.Password = "SecretPassword123";
-                _builder.InitialCatalog = "WebShopDB";
-            }
-
-            public static AzureDb Instance
-            {
-                get
+                lock (padlock)
                 {
-                    lock (padlock)
+                    if (instance == null)
                     {
-                        if (instance == null)
-                        {
-                            instance = new AzureDb();
-                        }
-                        return instance;
+                        instance = new AzureDb();
                     }
+                    return instance;
                 }
             }
-        
-
-
-
+        }
 
         #region Methods
 
         public List<string> GetUsers()
-    {
-      List<string> result = new List<string>();
-      try
-      {
-        using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
         {
             List<string> result = new List<string>();
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
                 {
+
                     conn.Open();
                     string query = "Select * from [dbo].TUser";
                     SqlCommand cmd = new SqlCommand(query, conn);
@@ -67,7 +60,6 @@ namespace database_final_project
                     {
                         result.Add(reader["cFirstName"].ToString());
                     }
-
                 }
             }
             catch (SqlException e)
@@ -77,7 +69,6 @@ namespace database_final_project
             return result;
 
         }
-
 
         public UserModel LoginUser(UserModel user)
         {
@@ -117,6 +108,7 @@ namespace database_final_project
             return result;
 
         }
+
         public List<Product> GetProducts()
         {
             List<Product> result = new List<Product>();
