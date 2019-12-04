@@ -108,6 +108,8 @@ namespace database_final_project
                     {
                         var product = new Product();
                         product.cname = reader["cName"].ToString();
+                        product.cdescription = reader["cdescription"].ToString();
+                        product.nStock = int.Parse (reader["nStock"].ToString());
                         result.Add(product);
                     }
 

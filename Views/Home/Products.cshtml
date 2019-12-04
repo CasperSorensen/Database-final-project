@@ -31,7 +31,15 @@
         var products = new AzureDb().GetProducts();
         foreach (var Product in products)
         {
-            <p> @Product.cname</p>
+            <div>
+
+                <h2>@Product.cname</h2>
+                <p>Description : @Product.cdescription</p>
+                 <p> Stock: @Product.nStock</p>
+                <br />
+                <br />
+                <br />
+            </div>
         }
 
 
