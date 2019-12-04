@@ -10,23 +10,45 @@ namespace database_final_project
   {
     #region Properties
        
-    private SqlConnectionStringBuilder _builder;
+    
 
     #endregion
 
+            private SqlConnectionStringBuilder _builder;
+            private static AzureDb instance = null;
+            private static readonly object padlock = new object();
 
-    public AzureDb()
-    {
-      this._builder = new SqlConnectionStringBuilder();
-      _builder.DataSource = "web-shop-server.database.windows.net";
-      _builder.UserID = "ServerUser";
-      _builder.Password = "SecretPassword123";
-      _builder.InitialCatalog = "WebShopDB";
-    }
+            public AzureDb()
+            {
+                this._builder = new SqlConnectionStringBuilder();
+                _builder.DataSource = "web-shop-server.database.windows.net";
+                _builder.UserID = "ServerUser";
+                _builder.Password = "SecretPassword123";
+                _builder.InitialCatalog = "WebShopDB";
+            }
 
-    #region Methods
+            public static AzureDb Instance
+            {
+                get
+                {
+                    lock (padlock)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new AzureDb();
+                        }
+                        return instance;
+                    }
+                }
+            }
+        
 
-    public List<string> GetUsers()
+
+
+
+        #region Methods
+
+        public List<string> GetUsers()
     {
       List<string> result = new List<string>();
       try
