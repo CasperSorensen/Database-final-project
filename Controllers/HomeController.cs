@@ -108,6 +108,11 @@ namespace database_final_project.Controllers
         {
             return View("./RateProduct");
         }
+
+        public IActionResult DoneRate(Product donerate)
+        {
+            return View("./Products");
+        }
         public IActionResult Logout()
         {
 
