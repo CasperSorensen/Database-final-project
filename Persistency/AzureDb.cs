@@ -126,7 +126,7 @@ namespace database_final_project
                         var product = Factory.CreateProduct();
                         product.cname = reader["cName"].ToString();
                         product.cdescription = reader["cdescription"].ToString();
-                        product.nStock = int.Parse (reader["nStock"].ToString());
+                        product.nStock = int.Parse(reader["nStock"].ToString());
                         product.nProductId = int.Parse(reader["nProductId"].ToString());
                         product.nUnitPrice = decimal.Parse(reader["nUnitPrice"].ToString());
                         result.Add(product);
@@ -141,7 +141,7 @@ namespace database_final_project
             return result;
 
 
-           
+
         }
 
         public List<CreditCard> GetCreditCardsForUser(int UserId)
@@ -178,6 +178,33 @@ namespace database_final_project
 
 
         }
+
+        public int InsertInvoice(ObjectOfFieldsForDatabase in_invoice)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
+                {
+                    conn.Open();
+                    string query = "EXEC pro_CreateInvoice @nUserId = @UserId, @nCardId = @CardId, @dTax = @Tax, @nTotalAmount = @TotalAmount, @dDate = @Date";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@UserId", in_invoice.UserId);
+                    cmd.Parameters.AddWithValue("@CardID", in_invoice.CreditCardId);
+                    cmd.Parameters.AddWithValue("@Tax", in_invoice.Tax);
+                    cmd.Parameters.AddWithValue("@TotalAmount", in_invoice.Total);
+                    cmd.Parameters.AddWithValue("@Date", DateTime.Now);
+                    var res = cmd.ExecuteNonQuery();
+                    var ggg = "";
+                }
+            }
+            catch (SqlException e)
+            {
+                System.Console.WriteLine(e);
+            }
+
+            return 0;
+        }
+
         #endregion
     }
 }

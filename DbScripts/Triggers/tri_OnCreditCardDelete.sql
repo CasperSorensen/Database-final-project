@@ -7,7 +7,7 @@
 --               it then calls the sp_InsertIntoAuditCreditCards 
 --               that inserts them into to the TAuditCreditCard table.
 --
--- Condition:    AFTER DELETE
+-- At:    AFTER DELETE
 --               
 -- Type:         Trigger
 -- 

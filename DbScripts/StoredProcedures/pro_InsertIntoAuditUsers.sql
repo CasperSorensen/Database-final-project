@@ -14,24 +14,29 @@
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 
-CREATE OR ALTER PROCEDURE pro_InsertIntoAuditUsersTable
+CREATE OR ALTER PROCEDURE pro_InsertIntoAuditUsers
 
-    -- Old values
-    @before_nCPR INT,
+    -- SET 
+    @before_nUserId INT,
     @before_cName VARCHAR(30),
     @before_cSurname VARCHAR(40),
     @before_cAddress VARCHAR(60),
     @before_cPhoneNo VARCHAR(8),
-    @before_dBirthDate DATE,
-    @before_dNewMemberDate DATE,
-    -- New values
+    @before_cZipcode VARCHAR(8),
+    @before_cCity VARCHAR(8),
+    @before_cEmail VARCHAR(8),
+    @before_nTotalAmount DECIMAL(2),
+
+    -- SET
     @after_nCPR INT,
     @after_cName VARCHAR(30),
     @after_cSurname VARCHAR(40),
     @after_cAddress VARCHAR(60),
     @after_VPhoneNo VARCHAR(8),
-    @after_dBirthDate DATE,
-    @after_dNewMemberDate DATE,
+    @after_cCity VARCHAR(8),
+    @after_cEmail VARCHAR (8),
+    @after_nTotalAmount DECIMAL(2),
+
     -- Data
     @vStatementType VARCHAR(10),
     @dtExecutedAt DATETIME,
@@ -42,22 +47,25 @@ CREATE OR ALTER PROCEDURE pro_InsertIntoAuditUsersTable
 AS
 BEGIN
 
-    INSERT INTO 
-TAudit
-        (beforeICPR ,
-        beforeVName,
-        beforeVSurname,
-        beforeVAddress,
-        beforeVPhoneNo,
-        beforeDBirthDate,
-        beforeDNewMemberDate,
-        afterICPR,
-        afterVName,
-        afterVSurname,
-        afterVAddress,
-        afterVPhoneNo,
-        afterDBirthDate,
-        afterDNewMemberDate,
+    INSERT INTO TAuditUsers
+        (before_nUserId ,
+        before_cName,
+        before_cSurname,
+        before_cAddress,
+        before_cPhoneNo,
+        before_cZipcode,
+        before_cCity,
+        before_cEmail,
+        before_nTotalAmount,
+        after_nUserId,
+        after_cName,
+        after_cSurname,
+        after_cAddress,
+        after_cPhoneNo,
+        after_cZipcode,
+        after_cCity,
+        after_cEmail,
+        after_nTotalAmount,
         vStatementType,
         dtExecutedAt,
         nDBMSName,
@@ -67,20 +75,20 @@ TAudit
         )
     VALUES
         (@beforeICPR,
-            @beforeVName,
-            @beforeVSurname,
-            @beforeVAddress,
-            @beforeVPhoneNo,
-            @beforeDBirthDate,
-            @beforeDNewMemberDate,
-            @afterICPR,
-            @afterVName,
-            @afterVSurname,
-            @afterVAddress,
-            @afterVPhoneNo,
-            @afterDBirthDate,
-            @afterDNewMemberDate,
-            @vStatementType,
+            @before_cName,
+            @before_cSurname,
+            @before_cAddress,
+            @before_cPhoneNo,
+            @before_DBirthDate,
+            @before_DNewMemberDate,
+            @after_nUserId,
+            @after_cName,
+            @after_cSurname,
+            @after_cAddress,
+            @after_cPhoneNo,
+            @after_dBirthDate,
+            @after_dNewMemberDate,
+            @cStatementType,
             @dtExecutedAt,
             @nDBMSId,
             @nDBMSName,

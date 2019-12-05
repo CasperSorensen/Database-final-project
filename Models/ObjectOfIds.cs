@@ -11,6 +11,7 @@ namespace database_final_project.Models
         public int CreditCardId { get; set; }
         public string Products { get; set; }
         public decimal Total { get; set; }
-           
+        public decimal Tax { get; set; }
+
     }
 }

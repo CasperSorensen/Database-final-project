@@ -7,7 +7,7 @@
 --               it then calls the sp_InsertIntoAuditUsers 
 --               that inserts them into to the TAuditUser table.
 --
--- Condition:    AFTER DELETE
+-- At:    AFTER DELETE
 --               
 -- Type:         Trigger
 -- 

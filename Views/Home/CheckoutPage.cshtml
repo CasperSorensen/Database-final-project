@@ -13,6 +13,7 @@
 </head>
 <body>
     @{
+        AzureDb.Instance.InsertInvoice(Model);
         <p>UserId: @Model.UserId</p>
         Dictionary<int, int> Basket = JsonConvert.DeserializeObject<Dictionary<int, int>>(Model.Products);
         foreach (var product in Basket)
