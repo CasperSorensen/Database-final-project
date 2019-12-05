@@ -156,9 +156,10 @@ namespace database_final_project
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@UserId", UserId);
                     SqlDataReader reader = cmd.ExecuteReader();
-                    var card = Factory.CreateCreditCard();
+                    
                     while (reader.Read())
                     {
+                        var card = Factory.CreateCreditCard();
 
                         card.nCreditCardId = int.Parse(reader["nCreditCardId"].ToString());
                         card.nIBANCode = Int64.Parse(reader["nIBANCode"].ToString());
@@ -181,10 +182,13 @@ namespace database_final_project
 
         public int InsertInvoice(ObjectOfFieldsForDatabase in_invoice)
         {
+            int Id = 0;
             try
             {
+               
                 using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
                 {
+                    
                     conn.Open();
                     string query = "EXEC pro_CreateInvoice @nUserId = @UserId, @nCardId = @CardId, @dTax = @Tax, @nTotalAmount = @TotalAmount, @dDate = @Date";
                     SqlCommand cmd = new SqlCommand(query, conn);
@@ -193,8 +197,20 @@ namespace database_final_project
                     cmd.Parameters.AddWithValue("@Tax", in_invoice.Tax);
                     cmd.Parameters.AddWithValue("@TotalAmount", in_invoice.Total);
                     cmd.Parameters.AddWithValue("@Date", DateTime.Now);
-                    var res = cmd.ExecuteNonQuery();
-                    var ggg = "";
+                    var res = cmd.ExecuteReader();
+                    conn.Close();
+
+                    conn.Open();
+                    string SelectQuery = @"SELECT TOP (1) [nInvoiceId]FROM[dbo].[TInvoice]ORDER BY nDate Desc";
+                    cmd = new SqlCommand(SelectQuery, conn);
+
+                    int result = int.Parse(cmd.ExecuteScalar().ToString());
+
+                    Id  = Convert.ToInt32(cmd.ExecuteScalar());
+                   
+                 
+
+
                 }
             }
             catch (SqlException e)
@@ -202,7 +218,47 @@ namespace database_final_project
                 System.Console.WriteLine(e);
             }
 
-            return 0;
+            return Id;
+        }
+
+        public int InsertInvoiceLine(int InvoiceId, int ProductId, int Quantity)
+        {
+            var result = 0;   
+            try
+            {
+
+                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
+                {
+
+                    conn.Open();
+                    string query = "EXEC pro_CreateInvoiceLine @nInvoiceId = @InvoiceId, @nProductId = @ProductId, @nQuantity = @Quantity";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@InvoiceId", InvoiceId);
+                    cmd.Parameters.AddWithValue("@ProductId", ProductId);
+                    cmd.Parameters.AddWithValue("@Quantity", Quantity);
+                    
+                    result = cmd.ExecuteNonQuery();
+                    conn.Close();
+
+                    //conn.Open();
+                    //string SelectQuery = @"SELECT TOP (1) [nInvoiceId]FROM[dbo].[TInvoice]ORDER BY nDate Desc";
+                    //cmd = new SqlCommand(SelectQuery, conn);
+
+                    //int result = int.Parse(cmd.ExecuteScalar().ToString());
+
+                   
+
+
+
+
+                }
+            }
+            catch (SqlException e)
+            {
+                System.Console.WriteLine(e);
+            }
+
+            return result;
         }
 
         #endregion

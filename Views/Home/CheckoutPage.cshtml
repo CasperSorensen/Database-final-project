@@ -13,9 +13,42 @@
 </head>
 <body>
     @{
-        AzureDb.Instance.InsertInvoice(Model);
-        <p>UserId: @Model.UserId</p>
+
+        //error handeling
+        //rollback
+        //unit price on invoiceline
+        //amount 10,2
+        //ccv string
+        //iban string
+        //coMMent textfied
+        //fix the relationsin ERD
+
+        var invoiceId = AzureDb.Instance.InsertInvoice(Model);
+
         Dictionary<int, int> Basket = JsonConvert.DeserializeObject<Dictionary<int, int>>(Model.Products);
+        List<int> products = new List<int>();
+
+        foreach (var product in Basket)
+        {
+
+            int ProductID = product.Key;
+            int Quantity = product.Value;
+
+          var result = AzureDb.Instance.InsertInvoiceLine(invoiceId, ProductID, Quantity);
+
+            <h2>result is: @result</h2>
+        }
+
+
+
+
+
+
+
+
+        <h1>InvoiceId is : @invoiceId !!1</h1>
+        <p>UserId: @Model.UserId</p>
+        
         foreach (var product in Basket)
         {
             <p> ProductId: @product.Key , Quant: @product.Value</p>
