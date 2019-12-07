@@ -19,7 +19,8 @@ CREATE OR ALTER PROCEDURE pro_CreateInvoiceLine
 
     @nInvoiceId INT,
     @nProductId INT,
-    @nQuantity INT
+    @nQuantity INT,
+	@nUnitPrice DECIMAL(4,2)
     
 AS
 BEGIN
@@ -27,8 +28,9 @@ BEGIN
     INSERT INTO TInvoiceLine
         ([nInvoiceId]
         ,[nProductId]
-        ,[nQuantity])
+        ,[nQuantity]
+		,[nUnitPrice])
     VALUES
-        (@nInvoiceId, @nProductId,@nQuantity)
+        (@nInvoiceId, @nProductId,@nQuantity,@nUnitPrice)
  
 END

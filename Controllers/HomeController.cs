@@ -117,6 +117,7 @@ namespace database_final_project.Controllers
         {
 
             TempData["IsLoggedIn"] = "";
+            TempData["Basket"] = null;
             return View("./Index");
         }
 

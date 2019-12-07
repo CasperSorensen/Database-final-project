@@ -23,6 +23,8 @@
         //coMMent textfied
         //fix the relationsin ERD
 
+       
+
         var invoiceId = AzureDb.Instance.InsertInvoice(Model);
 
         Dictionary<int, int> Basket = JsonConvert.DeserializeObject<Dictionary<int, int>>(Model.Products);
@@ -33,8 +35,9 @@
 
             int ProductID = product.Key;
             int Quantity = product.Value;
+            decimal UnitPrice = AzureDb.Instance.GetUnitPriceForProduct(ProductID);
 
-          var result = AzureDb.Instance.InsertInvoiceLine(invoiceId, ProductID, Quantity);
+            var result = AzureDb.Instance.InsertInvoiceLine(invoiceId, ProductID, Quantity, UnitPrice);
 
             <h2>result is: @result</h2>
         }

@@ -204,7 +204,7 @@ namespace database_final_project
                     string SelectQuery = @"SELECT TOP (1) [nInvoiceId]FROM[dbo].[TInvoice]ORDER BY nDate Desc";
                     cmd = new SqlCommand(SelectQuery, conn);
 
-                    int result = int.Parse(cmd.ExecuteScalar().ToString());
+                    
 
                     Id  = Convert.ToInt32(cmd.ExecuteScalar());
                    
@@ -221,7 +221,7 @@ namespace database_final_project
             return Id;
         }
 
-        public int InsertInvoiceLine(int InvoiceId, int ProductId, int Quantity)
+        public int InsertInvoiceLine(int InvoiceId, int ProductId, int Quantity,decimal UnitPrice)
         {
             var result = 0;   
             try
@@ -231,12 +231,13 @@ namespace database_final_project
                 {
 
                     conn.Open();
-                    string query = "EXEC pro_CreateInvoiceLine @nInvoiceId = @InvoiceId, @nProductId = @ProductId, @nQuantity = @Quantity";
+                    string query = "EXEC pro_CreateInvoiceLine @nInvoiceId = @InvoiceId, @nProductId = @ProductId, @nQuantity = @Quantity, @nUnitPrice = @UnitPrice";
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@InvoiceId", InvoiceId);
                     cmd.Parameters.AddWithValue("@ProductId", ProductId);
                     cmd.Parameters.AddWithValue("@Quantity", Quantity);
-                    
+                    cmd.Parameters.AddWithValue("@UnitPrice", UnitPrice);
+
                     result = cmd.ExecuteNonQuery();
                     conn.Close();
 
@@ -260,6 +261,43 @@ namespace database_final_project
 
             return result;
         }
+
+        public decimal GetUnitPriceForProduct(int productId)
+        {
+            decimal result = 0;
+            try
+            {
+
+                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
+                {
+
+                    conn.Open();
+                    string query = "Select nUnitPrice FROM TProduct WHERE nProductId = @ProductId";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@ProductId", productId);
+
+                    result = Convert.ToDecimal(cmd.ExecuteScalar());
+                    conn.Close();
+
+                    //conn.Open();
+                    //string SelectQuery = @"SELECT TOP (1) [nInvoiceId]FROM[dbo].[TInvoice]ORDER BY nDate Desc";
+                    //cmd = new SqlCommand(SelectQuery, conn);
+
+                    //int result = int.Parse(cmd.ExecuteScalar().ToString());
+
+
+                }
+            }
+            catch (SqlException e)
+            {
+                System.Console.WriteLine(e);
+            }
+
+            return result;
+        }
+
+
+
 
         #endregion
     }
