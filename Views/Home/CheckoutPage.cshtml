@@ -23,43 +23,40 @@
         //coMMent textfied
         //fix the relationsin ERD
 
-       
 
+
+
+        var FalseModel = new ObjectOfFieldsForDatabase();
         var invoiceId = AzureDb.Instance.InsertInvoice(Model);
-
-        Dictionary<int, int> Basket = JsonConvert.DeserializeObject<Dictionary<int, int>>(Model.Products);
-        List<int> products = new List<int>();
-
-        foreach (var product in Basket)
+        if (invoiceId == 0)
+        {
+            <h2>Error occured while making your purchace (invoice generation failed)</h2>
+        }
+        else
         {
 
-            int ProductID = product.Key;
-            int Quantity = product.Value;
-            decimal UnitPrice = AzureDb.Instance.GetUnitPriceForProduct(ProductID);
 
-            var result = AzureDb.Instance.InsertInvoiceLine(invoiceId, ProductID, Quantity, UnitPrice);
 
-            <h2>result is: @result</h2>
+            Dictionary<int, int> Basket = JsonConvert.DeserializeObject<Dictionary<int, int>>(Model.Products);
+            List<int> products = new List<int>();
+
+            foreach (var product in Basket)
+            {
+
+                int ProductID = product.Key;
+                int Quantity = product.Value;
+                decimal UnitPrice = AzureDb.Instance.GetUnitPriceForProduct(ProductID);
+
+                //var result = AzureDb.Instance.InsertInvoiceLine(invoiceId, ProductID, Quantity, UnitPrice);
+                var result = AzureDb.Instance.InsertInvoiceLine(-1, ProductID, Quantity, UnitPrice);
+                if (result == 0)
+                {
+                    <h2>Error occured while making your purchace (Invoice Line generation failed)</h2>
+
+                }
+            }
+            <h2>Your Purchase was succesfull</h2>
         }
-
-
-
-
-
-
-
-
-        <h1>InvoiceId is : @invoiceId !!1</h1>
-        <p>UserId: @Model.UserId</p>
-        
-        foreach (var product in Basket)
-        {
-            <p> ProductId: @product.Key , Quant: @product.Value</p>
-            
-        }
-        <p>Card Id : @Model.CreditCardId</p>
-        <p>Total: @Model.Total DKK</p>
-
 
 
     }
