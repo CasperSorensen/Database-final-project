@@ -106,6 +106,8 @@ namespace database_final_project.Controllers
         }
         public IActionResult RateProduct(Product rateProduct)
         {
+            var id =rateProduct.nProductId;
+
             return View("./RateProduct");
         }
 

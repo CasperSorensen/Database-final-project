@@ -16,11 +16,12 @@
 
         //error handeling
         //rollback
-        //unit price on invoiceline
+        
         //amount 10,2
         //ccv string
         //iban string
-        //coMMent textfied
+
+        
         //fix the relationsin ERD
 
 
@@ -48,7 +49,7 @@
                 decimal UnitPrice = AzureDb.Instance.GetUnitPriceForProduct(ProductID);
 
                 //var result = AzureDb.Instance.InsertInvoiceLine(invoiceId, ProductID, Quantity, UnitPrice);
-                var result = AzureDb.Instance.InsertInvoiceLine(-1, ProductID, Quantity, UnitPrice);
+                var result = AzureDb.Instance.InsertInvoiceLine(invoiceId, ProductID, Quantity, UnitPrice);
                 if (result == 0)
                 {
                     <h2>Error occured while making your purchace (Invoice Line generation failed)</h2>

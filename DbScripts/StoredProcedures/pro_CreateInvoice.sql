@@ -34,5 +34,5 @@ BEGIN
         ,[nDate])
     VALUES
         (@nUserId, @nCardId, @dTax, @nTotalAmount, @dDate)
-    RETURN @@IDENTITY
+    RETURN 1
 END

@@ -40,6 +40,7 @@ BEGIN
         IF @nTransID = 127
 				SELECT 1/0;
 
+
         UPDATE Trans SET cText = 'After' WHERE nTransID = @nTransID;
 
         FETCH NEXT FROM curTrans INTO @nTransID, @cText;
