@@ -40,19 +40,17 @@
                 <p> Stock: @Product.nStock units</p>
                 <p>Price: @Product.nUnitPrice DKK</p>
                 <button>
-                    <a href="@Url.Action("AddToBasket","Home",Product)">Add to basket</a>
+                    <a href="@Url.Action("AddToBasket", "Home", Product)">Add to basket</a>
                 </button>
                 <div class="container">
-                    <form name="UserModel" method="POST" action="/Home/RateProduct">
-
-                        <div class="field is-grouped">
-                            <div class="control">
-                                <button class="button is-link">RateProduct</button>
-                            </div>
-                        </div>
-
-
-                    </form>
+                    
+                        <button>
+                            @{var RateModel = new RateModel();
+                                RateModel.ProductId = Product.nProductId;
+                             }
+                            <a href="@Url.Action("RateProduct","Home",RateModel)">Rate a Product</a>
+                        </button>
+                    
                 </div>
                 <br />
                 <br />

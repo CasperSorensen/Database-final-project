@@ -296,7 +296,41 @@ namespace database_final_project
             return result;
         }
 
+        public int InsertRating(int UserId, int ProductId, int Rating, string Comment)
+        {
+            var result = 0;
+            try
+            {
 
+                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
+                {
+
+                    conn.Open();
+                    string query = "EXEC pro_CreateInvoiceLine @nUserId = @UserId, @nProductId = @ProductId, @nRating = @Rating, @nComment = @Comment";
+                    SqlCommand cmd = new SqlCommand(query, conn);                 
+                    cmd.Parameters.AddWithValue("@UserId", UserId);
+                    cmd.Parameters.AddWithValue("@ProductId", ProductId);
+                    cmd.Parameters.AddWithValue("@Rating", Rating);
+                    cmd.Parameters.AddWithValue("@Comment", Comment);
+
+                    result = cmd.ExecuteNonQuery();
+                    conn.Close();
+
+                    //conn.Open();
+                    //string SelectQuery = @"SELECT TOP (1) [nInvoiceId]FROM[dbo].[TInvoice]ORDER BY nDate Desc";
+                    //cmd = new SqlCommand(SelectQuery, conn);
+
+                    //int result = int.Parse(cmd.ExecuteScalar().ToString());
+
+                }
+            }
+            catch (SqlException e)
+            {
+                System.Console.WriteLine(e);
+            }
+
+            return result;
+        }
 
 
         #endregion
