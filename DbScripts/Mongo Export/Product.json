@@ -1,0 +1,150 @@
+// Array to populate Products collection for MongoDB
+[
+   {
+      "productName":"Sweatpants with Side Stripes",
+      "description":"In sagittis dui vel nisl.",
+      "unitPrice":67.97,
+      "stock":5,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Skinny Regular Ankle Jeans",
+      "description":"In tempor, turpis nec euismod scelerisque.",
+      "unitPrice":15.50,
+      "stock":15,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Sweatshirt",
+      "description":"Integer non velit.",
+      "unitPrice":61.04,
+      "stock":20,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Wool-blend Coat",
+      "description":"Nullam varius.",
+      "unitPrice":66.66,
+      "stock":18,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Pajamas",
+      "description":"Vivamus metus arcu, adipiscing molestie, hendrerit atnisl.",
+      "unitPrice":26.62,
+      "stock":9,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Cashmere Scarf",
+      "description":"Morbi vel lectus in quam fringilla rhoncus.",
+      "unitPrice":55.19,
+      "stock":6,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Hooded Sweatshirt",
+      "description":"Fusce posuere felis sed lacus.",
+      "unitPrice":55.07,
+      "stock":18,
+      "avgRating":0.0
+   },
+   {
+      "productName":"T-Shirt",
+      "description":"Ut tellus.",
+      "unitPrice":36.95,
+      "stock":8,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Woolen Jacket",
+      "description":"Proin eu mi.",
+      "unitPrice":11.87,
+      "stock":6,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Soft Slippers",
+      "description":"Fusce consequat.",
+      "unitPrice":3.74,
+      "stock":9,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Loafers",
+      "description":"Integer a nibh.",
+      "unitPrice":17.01,
+      "stock":7,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Sneakers",
+      "description":"Duis bibendum.",
+      "unitPrice":78.13,
+      "stock":18,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Long-sleeved Blouse",
+      "description":"Donec ut dolor.",
+      "unitPrice":75.15,
+      "stock":17,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Satin Skirt",
+      "description":"Nullam porttitor lacus at turpis.",
+      "unitPrice":84.93,
+      "stock":10,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Leather Jacket",
+      "description":"Duis bibendum, felis sed interdum venenatis.",
+      "unitPrice":85.89,
+      "stock":12,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Denim Joggers",
+      "description":"Suspendisse potenti.",
+      "unitPrice":66.54,
+      "stock":16,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Collar Sweater",
+      "description":"Vivamus tortor.",
+      "unitPrice":61.31,
+      "stock":9,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Cargo Shorts",
+      "description":"Donec dapibus.",
+      "unitPrice":48.23,
+      "stock":16,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Coat",
+      "description":"Praesent lectus.",
+      "unitPrice":42.75,
+      "stock":1,
+      "avgRating":0.0
+   },
+   {
+      "productName":"3-pack Gloves",
+      "description":"Aliquam erat volutpat.",
+      "unitPrice":50.06,
+      "stock":9,
+      "avgRating":0.0
+   },
+   {
+      "productName":"Golf Cap",
+      "description":"Cap for Golf",
+      "unitPrice":13.37,
+      "stock":14,
+      "avgRating":0.0
+   }
+]

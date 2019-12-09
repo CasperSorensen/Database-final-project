@@ -1,0 +1,163 @@
+// Array to populate Users collection for MongoDB
+[
+   {
+      "name":"Kevin Bauer",
+      "address":"4707 Consectetuer Avenue",
+      "city":"Copenhagen",
+      "phoneNo":"18244240",
+      "email":"ultrices@maurissit.com",
+      "totalAmount":28000.50
+   },
+   {
+      "name":"Brandon Jackson",
+      "address":"Ap 926-5802 Non Street",
+      "city":"Aarhus",
+      "phoneNo":"41508021",
+      "email":"sociis@hendrerit.edu",
+      "totalAmount":9540.20
+   },
+   {
+      "name":"Jermaine Holt",
+      "address":"441-3110 Gravida Ave",
+      "city":"Roskilde",
+      "phoneNo":"55014571",
+      "email":"ac@Nullamsuscipitest.org",
+      "totalAmount":387.00
+   },
+   {
+      "name":"Seth Wynn",
+      "address":"276-8008 Aliquam St.",
+      "city":"Copenhagen",
+      "phoneNo":"24272119",
+      "email":"gravida.mauris@fringillaestMauris.org",
+      "totalAmount":4140.75
+   },
+   {
+      "name":"Honorato Clements",
+      "address":"P.O. Box 310, 6925 Sagittis Rd.",
+      "city":"Helsingør",
+      "phoneNo":"65547304",
+      "email":"at@CuraeDonectincidunt.edu",
+      "totalAmount":10000.00
+   },
+   {
+      "name":"Darius Robbins",
+      "address":"102-3486 Et Rd.",
+      "city":"Hvalsø",
+      "phoneNo":"50861101",
+      "email":"nibh.vulputate@porttitortellus.edu",
+      "totalAmount":3310.78
+   },
+   {
+      "name":"Paul Valentine",
+      "address":"798-2467 Facilisis Avenue",
+      "city":"Copenhagen",
+      "phoneNo":"36625242",
+      "email":"ut.nulla@auctorquis.ca",
+      "totalAmount":43000.00
+   },
+   {
+      "name":"Jack Mcdowell",
+      "address":"P.O. Box 500 9515 Egestas St.",
+      "city":"Copenhagen",
+      "phoneNo":"59448484",
+      "email":"in@iaculisaliquet.net",
+      "totalAmount":536.00
+   },
+   {
+      "name":"Phelan Paul",
+      "address":"1896 In Road",
+      "city":"Helsingør",
+      "phoneNo":"26849901",
+      "email":"id@nequevitae.net",
+      "totalAmount":93236.00
+   },
+   {
+      "name":"Noble Cohen",
+      "address":"Ap 220-9572 Duis St.",
+      "city":"Odense",
+      "phoneNo":"65553998",
+      "email":"dictum.eleifend.nunc@purus.com",
+      "totalAmount":33021.00
+   },
+   {
+      "name":"Andrew Ashley",
+      "address":"4543 Egestas Street",
+      "city":"Helsingør",
+      "phoneNo":"09542959",
+      "email":"sem@nonleo.org",
+      "totalAmount":57000.00
+   },
+   {
+      "name":"Judah Ramirez",
+      "address":"766-8543 Ullamcorper, St.",
+      "city":"Hvalsø",
+      "phoneNo":"58069541",
+      "email":"sed.turpis.nec@ultrices.edu",
+      "totalAmount":48762.23
+   },
+   {
+      "name":"Theodore Bird",
+      "address":"457-7885 Ut Ave",
+      "city":"Roskilde",
+      "phoneNo":"64879626",
+      "email":"Cum.sociis@sedlibero.org",
+      "totalAmount":70006.02
+   },
+   {
+      "name":"Chancellor Callahan",
+      "address":"Ap 369-2607 Orci Rd.",
+      "city":"Copenhagen",
+      "phoneNo":"28393616",
+      "email":"dignissim@vitaeposuereat.co.uk",
+      "totalAmount":95215.70
+   },
+   {
+      "name":"Addison Wilson",
+      "address":"P.O. Box 968, 1708 Egestas Rd.",
+      "city":"Hvalsø",
+      "phoneNo":"61017529",
+      "email":"justo@diam.ca",
+      "totalAmount":54723.00
+   },
+   {
+      "name":"Xenos Fulton",
+      "address":"6621 Arcu. Street",
+      "city":"Roskilde",
+      "phoneNo":"71097123",
+      "email":"In@scelerisquesed.org",
+      "totalAmount":6341.00
+   },
+   {
+      "name":"Tanek Schultz",
+      "address":"Ap 314-8363 Arcu Avenue",
+      "city":"Copenhagen",
+      "phoneNo":"79231804",
+      "email":"cursus.diam@ridiculusmus.org",
+      "totalAmount":497.00
+   },
+   {
+      "name":"Valentine Castillo",
+      "address":"P.O. Box 551, 146 In Rd.",
+      "city":"Aarhus",
+      "phoneNo":"71667682",
+      "email":"mi@sedpede.ca",
+      "totalAmount":23953.00
+   },
+   {
+      "name":"Xenos Gonzalez",
+      "address":"Ap 135-6696 Montes, St.",
+      "city":"Roskilde",
+      "phoneNo":"72917160",
+      "email":"purus@non.com",
+      "totalAmount":4382.00
+   },
+   {
+      "name":"Gil Gross",
+      "address":"4908 Nisi Avenue",
+      "city":"Copenhagen",
+      "phoneNo":"59150514",
+      "email":"Integer.vitae@luctus.ca",
+      "totalAmount":11508.67
+   }
+]

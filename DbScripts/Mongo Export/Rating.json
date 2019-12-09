@@ -1,0 +1,279 @@
+// Array to populate Ratings collection for MongoDB
+[
+   {
+      "productName":"Sweatpants with Side Stripes",
+      "userName":"Kevin Bauer",
+      "rating":1,
+      "comment":"Duis mattis egestas metus. Aenean fermentum."
+   },
+   {
+      "productName":"Skinny Regular Ankle Jeans",
+      "userName":"Jermaine Holt",
+      "rating":4,
+      "comment":"Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem."
+   },
+   {
+      "productName":"Wool-blend Coat",
+      "userName":"Seth Wynn",
+      "rating":5,
+      "comment":"Nunc rhoncus dui vel sem. Sed sagittis."
+   },
+   {
+      "productName":"T-Shirt",
+      "userName":"Honorato Clements",
+      "rating":2,
+      "comment":"Proin eu mi. Nulla ac enim."
+   },
+   {
+      "productName":"Sweatshirt",
+      "userName":"Darius Robbins",
+      "rating":1,
+      "comment":"Phasellus sit amet erat. Nulla tempus."
+   },
+   {
+      "productName":"Loafers",
+      "userName":"Jack Mcdowell",
+      "rating":2,
+      "comment":"Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam."
+   },
+   {
+      "productName":"Cargo Shorts",
+      "userName":"Phelan Paul",
+      "rating":1,
+      "comment":"Proin at turpis a pede posuere nonummy. Integer non velit."
+   },
+   {
+      "productName":"Soft Slippers",
+      "userName":"Paul Valentine",
+      "rating":null,
+      "comment":"I am totally not a developer writing a test comment right here"
+   },
+   {
+      "productName":"Long-sleeved Blouse",
+      "userName":"Noble Cohen",
+      "rating":3,
+      "comment":null
+   },
+   {
+      "productName":"Sweatpants with Side Stripes",
+      "userName":"Andrew Ashley",
+      "rating":2,
+      "comment":"Duis aliquam convallis nunc."
+   },
+   {
+      "productName":"Woolen Jacket",
+      "userName":"Theodore Bird",
+      "rating":1,
+      "comment":"In sagittis dui vel nisl. Duis ac nibh."
+   },
+   {
+      "productName":"Wool-blend Coat",
+      "userName":"Chancellor Callahan",
+      "rating":5,
+      "comment":"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus."
+   },
+   {
+      "productName":"Cashmere Scarf",
+      "userName":"Addison Wilson",
+      "rating":4,
+      "comment":"Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede."
+   },
+   {
+      "productName":"Wool-blend Coat",
+      "userName":"Valentine Castillo",
+      "rating":4,
+      "comment":"Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis."
+   },
+   {
+      "productName":"Sneakers",
+      "userName":"Xenos Gonzalez",
+      "rating":4,
+      "comment":"Nullam molestie nibh in lectus."
+   },
+   {
+      "productName":"Loafers",
+      "userName":"Gil Gross",
+      "rating":4,
+      "comment":"Nulla justo. Aliquam quis turpis eget elit sodales scelerisque."
+   },
+   {
+      "productName":"Sweatshirt",
+      "userName":"Jermaine Holt",
+      "rating":4,
+      "comment":"Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam."
+   },
+   {
+      "productName":"Woolen Jacket",
+      "userName":"Honorato Clements",
+      "rating":3,
+      "comment":"Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem."
+   },
+   {
+      "productName":"3-pack Gloves",
+      "userName":"Tanek Schultz",
+      "rating":null,
+      "comment":"Very satisfied with the purchase"
+   },
+   {
+      "productName":"Pajamas",
+      "userName":"Xenos Fulton",
+      "rating":null,
+      "comment":"Total disaster of a website you should be ashamed."
+   },
+   {
+      "productName":"Loafers",
+      "userName":"Darius Robbins",
+      "rating":5,
+      "comment":"Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum."
+   },
+   {
+      "productName":"Pajamas",
+      "userName":"Brandon Jackson",
+      "rating":null,
+      "comment":"Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue."
+   },
+   {
+      "productName":"Sweatpants with Side Stripes",
+      "userName":"Phelan Paul",
+      "rating":2,
+      "comment":"Ut at dolor quis odio consequat varius."
+   },
+   {
+      "productName":"Hooded Sweatshirt",
+      "userName":"Phelan Paul",
+      "rating":4,
+      "comment":"Praesent blandit."
+   },
+   {
+      "productName":"Sweatshirt",
+      "userName":"Chancellor Callahan",
+      "rating":4,
+      "comment":"Ut at dolor quis odio consequat varius. Integer ac leo. Pellentesque ultrices mattis odio."
+   },
+   {
+      "productName":"Leather Jacket",
+      "userName":"Paul Valentine",
+      "rating":null,
+      "comment":"Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue."
+   },
+   {
+      "productName":"Skinny Regular Ankle Jeans",
+      "userName":"Valentine Castillo",
+      "rating":3,
+      "comment":"Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim."
+   },
+   {
+      "productName":"T-Shirt",
+      "userName":"Valentine Castillo",
+      "rating":3,
+      "comment":"Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem."
+   },
+   {
+      "productName":"Skinny Regular Ankle Jeans",
+      "userName":"Theodore Bird",
+      "rating":1,
+      "comment":null
+   },
+   {
+      "productName":"Sneakers",
+      "userName":"Jack Mcdowell",
+      "rating":5,
+      "comment":"Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis."
+   },
+   {
+      "productName":"Hooded Sweatshirt",
+      "userName":"Gil Gross",
+      "rating":2,
+      "comment":"Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae."
+   },
+   {
+      "productName":"Sneakers",
+      "userName":"Seth Wynn",
+      "rating":4,
+      "comment":"Integer tincidunt ante vel ipsum."
+   },
+   {
+      "productName":"Wool-blend Coat",
+      "userName":"Seth Wynn",
+      "rating":1,
+      "comment":"Duis consequat dui nec nisi volutpat eleifend."
+   },
+   {
+      "productName":"Loafers",
+      "userName":"Jack Mcdowell",
+      "rating":2,
+      "comment":"Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum."
+   },
+   {
+      "productName":"Leather Jacket",
+      "userName":"Judah Ramirez",
+      "rating":null,
+      "comment":"Vestibulum rutrum rutrum neque. Aenean auctor gravida sem."
+   },
+   {
+      "productName":"Long-sleeved Blouse",
+      "userName":"Seth Wynn",
+      "rating":2,
+      "comment":"Duis aliquam convallis nunc."
+   },
+   {
+      "productName":"Hooded Sweatshirt",
+      "userName":"Honorato Clements",
+      "rating":4,
+      "comment":"Suspendisse accumsan tortor quis turpis. Sed ante. Vivamus tortor."
+   },
+   {
+      "productName":"Denim Joggers",
+      "userName":"Theodore Bird",
+      "rating":1,
+      "comment":"Good to run in, I can feel the breeze."
+   },
+   {
+      "productName":"Denim Joggers",
+      "userName":"Jack Mcdowell",
+      "rating":3,
+      "comment":"Comfy to wear, ideal for Netflix and Chill time."
+   },
+   {
+      "productName":"Woolen Jacket",
+      "userName":"Gil Gross",
+      "rating":1,
+      "comment":null
+   },
+   {
+      "productName":"T-Shirt",
+      "userName":"Seth Wynn",
+      "rating":5,
+      "comment":null
+   },
+   {
+      "productName":"Long-sleeved Blouse",
+      "userName":"Addison Wilson",
+      "rating":1,
+      "comment":null
+   },
+   {
+      "productName":"Satin Skirt",
+      "userName":"Andrew Ashley",
+      "rating":5,
+      "comment":null
+   },
+   {
+      "productName":"Cashmere Scarf",
+      "userName":"Xenos Gonzalez",
+      "rating":4,
+      "comment":null
+   },
+   {
+      "productName":"Collar Sweater",
+      "userName":"Seth Wynn",
+      "rating":0,
+      "comment":"Very uncomfortable to wear. Also the materials feel cheap."
+   },
+   {
+      "productName":"Coat",
+      "userName":"Xenos Gonzalez",
+      "rating":null,
+      "comment":"This be good product, me like."
+   }
+]
