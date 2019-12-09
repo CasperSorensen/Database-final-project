@@ -104,15 +104,21 @@ namespace database_final_project.Controllers
             
             return View("./Products");
         }
-        public IActionResult RateProduct(Product rateProduct)
+        public IActionResult RateProduct(RateModel RateModel)
         {
-            var id =rateProduct.nProductId;
+            
 
-            return View("./RateProduct");
+            return View("./RateProduct", RateModel);
         }
 
-        public IActionResult DoneRate(Product donerate)
+        public IActionResult DoneRate(RateModel RateModel)
         {
+            var isLoggedIn = TempData["IsLoggedIn"].ToString();
+            var name = isLoggedIn.ToString().Split(',').ElementAt(0);
+            var id = int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
+            // new azuredb insert
+            var Id = RateModel.ProductId;
+            var UserData = new AzureDb().InsertRating(id, RateModel.ProductId,3 , "hello this needs a new price");
             return View("./Products");
         }
         public IActionResult Logout()

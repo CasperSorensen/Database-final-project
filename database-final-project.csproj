@@ -17,4 +17,9 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.6.0.0" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="DbScripts\Data Warehouse\" />
+  </ItemGroup>
+
 </Project>
