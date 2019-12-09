@@ -2,20 +2,40 @@
 @model RateModel
 @{
     ViewData["Title"] = "RateProduct";
-}
 
+    var isLoggedIn = TempData["IsLoggedIn"].ToString();
+    var name = isLoggedIn.ToString().Split(',').ElementAt(0);
+    var id = isLoggedIn.ToString().Split(',').ElementAt(1);
+    TempData.Keep();
+    List<int> ListOfRatings = new List<int>();
+    ListOfRatings.Add(0);
+    ListOfRatings.Add(1);
+    ListOfRatings.Add(2);
+    ListOfRatings.Add(3);
+    ListOfRatings.Add(4);
+    ListOfRatings.Add(5);
+
+
+
+    var msg = TempData["RatingMsg"];
+}
+<h1>@msg</h1>
 <h1>RateProduct</h1>
 
 <div class="container">
     <form name="RateModel" method="POST" action="/Home/DoneRate">
-
 
         <div class="field">
             <label class="label">Rating</label>
             <div class="control">
                 <div class="select">
                     <select name="Rating">
-                        <option disabled selected>Select Rating</option>
+
+                        @foreach (var rating in ListOfRatings)
+                        {
+                            <option>@rating</option>
+                        }
+
 
 
                     </select>
@@ -24,17 +44,31 @@
         </div>
 
         <div class="field">
+
+            <div class="control">
+                <input class="input" type="hidden" value="@id" name="UserId">
+            </div>
+        </div>
+        <div class="field">
+
+            <div class="control">
+                <input class="input" type="hidden" value="@Model.ProductId" name="ProductId">
+            </div>
+        </div>
+
+
+        <div class="field">
             <label class="label">Comment</label>
             <div class="control">
                 <input class="input" type="text" placeholder="This is a Bad Product Because.." name="Comment">
             </div>
         </div>
-        
-            <div class="field is-grouped">
-                <div class="control">
-                    <button class="button is-link">Done</button>
-                </div>
+
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-link">Done</button>
             </div>
-        
-        </form>
+        </div>
+
+    </form>
 </div>

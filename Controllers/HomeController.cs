@@ -118,8 +118,16 @@ namespace database_final_project.Controllers
             var id = int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
             // new azuredb insert
             var Id = RateModel.ProductId;
-            var UserData = new AzureDb().InsertRating(id, RateModel.ProductId,3 , "hello this needs a new price");
-            return View("./Products");
+            var UserData = new AzureDb().InsertRating(id, RateModel.ProductId,RateModel.Rating , RateModel.Comment);
+            if (UserData==0)
+            {
+                TempData["RatingMsg"] = "Rating Failed";
+            }
+            else
+            {
+                TempData["RatingMsg"] = "Rating was succesfull";
+            }
+            return View("./Index");
         }
         public IActionResult Logout()
         {

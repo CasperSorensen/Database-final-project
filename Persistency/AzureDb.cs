@@ -306,10 +306,10 @@ namespace database_final_project
                 {
 
                     conn.Open();
-                    string query = "EXEC pro_CreateInvoiceLine @nUserId = @UserId, @nProductId = @ProductId, @nRating = @Rating, @nComment = @Comment";
-                    SqlCommand cmd = new SqlCommand(query, conn);                 
-                    cmd.Parameters.AddWithValue("@UserId", UserId);
+                    string query = "Insert Into TRating ([nProductId],[nUserId],[nRating],[cComment]) Values (@ProductId, @UserId, @Rating, @Comment)";
+                    SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@ProductId", ProductId);
+                    cmd.Parameters.AddWithValue("@UserId", UserId);
                     cmd.Parameters.AddWithValue("@Rating", Rating);
                     cmd.Parameters.AddWithValue("@Comment", Comment);
 
