@@ -28,80 +28,88 @@ AS
 BEGIN
 
     -- DECLARE ALL VARIABLES
-    DECLARE @before_ICPR VARCHAR(10)
-    DECLARE @before_cName VARCHAR(30)
-    DECLARE @before_cSurname VARCHAR(40)
+    -- DECARE BEFORE VALUES
+    DECLARE @before_nUserId INT
+    DECLARE @before_cFirstName VARCHAR(20)
+    DECLARE @before_cSurname VARCHAR(20)
     DECLARE @before_cAddress VARCHAR(60)
     DECLARE @before_cPhoneNo VARCHAR(8)
-    DECLARE @before_DBirthDate DATE
-    DECLARE @before_DNewMemberDate DATE
-    DECLARE @after_ICPR VARCHAR(10)
-    DECLARE @after_cName VARCHAR(30)
-    DECLARE @after_cSurname VARCHAR(40)
+    DECLARE @before_cZipcode VARCHAR(4)
+    DECLARE @before_nCity INT
+    DECLARE @before_cEmail VARCHAR(60)
+    DECLARE @before_nTotalAmount DECIMAL(2)
+    -- DECLARE NEW VALUES
+    DECLARE @after_nUserId INT
+    DECLARE @after_cFirstName VARCHAR(20)
+    DECLARE @after_cSurname VARCHAR(20)
     DECLARE @after_cAddress VARCHAR(60)
     DECLARE @after_cPhoneNo VARCHAR(8)
-    DECLARE @after_DBirthDate DATE
-    DECLARE @after_DNewMemberDate DATE
-    DECLARE @vStatementType VARCHAR(10)
+    DECLARE @after_cZipcode VARCHAR(4)
+    DECLARE @after_nCity INT
+    DECLARE @after_cEmail VARCHAR (60)
+    DECLARE @after_nTotalAmount DECIMAL(2)
+    -- DECLARE SYSTEM DATE
+    DECLARE @cStatementType VARCHAR(10)
     DECLARE @dtExecutedAt DATETIME
-    DECLARE @nDBMSId NVARCHAR(128)
-    DECLARE @nDBMSName NVARCHAR(128)
-    DECLARE @nHostId CHAR(8)
-    DECLARE @nHostName NVARCHAR(128)
+    DECLARE @nDBMSId INT
+    DECLARE @cDBMSName NVARCHAR(128)
+    DECLARE @cHostId CHAR(8)
+    DECLARE @cHostName NVARCHAR(128)
 
     -- SET BEFORE VARIABLES
-    SELECT @before_InCPR = NULL
-    SELECT @before_cName = NULL
+    SELECT @before_nUserId = NULL
+    SELECT @before_cFirstName = NULL 
     SELECT @before_cSurname = NULL
     SELECT @before_cAddress = NULL
     SELECT @before_cPhoneNo = NULL
-    SELECT @before_DBirthDate = NULL
-    SELECT @before_DNewMemberDate = NULL
+    SELECT @before_cZipcode = NULL
+    SELECT @before_nCity = NULL
+    SELECT @before_cEmail = NULL
+    SELECT @before_nTotalAmount = NULL
 
     -- SET AFTER VARIABLES
-    SELECT @after_ICPR = cCPR
-    from inserted
-    SELECT @after_cName = cName
-    from inserted
-    SELECT @after_cSurname = cSurname
-    from inserted
-    SELECT @after_cAddress = cAddress
-    from inserted
-    SELECT @after_cPhoneNo = cPhoneNo
-    from inserted
-    SELECT @after_DBirthDate = dBirth
-    from inserted
-    SELECT @after_DNewMemberDate = dNewMember
-    from inserted
-    SELECT @vStatementType = 'INSERT'
+    SELECT @after_nUserId = nUserId from inserted
+    SELECT @after_cFirstName = cFirstName from inserted
+    SELECT @after_cSurname = cSurname from inserted
+    SELECT @after_cAddress = cAddress from inserted
+    SELECT @after_cPhoneNo = cPhoneNo from inserted
+    SELECT @after_cZipcode = cZipCode from inserted
+    SELECT @after_nCity = cCity from inserted
+    SELECT @after_cEmail = cEmail from inserted
+    SELECT @after_nTotalAmount = nTotalAmount from inserted
+    SELECT @cStatementType = 'INSERT'
 
     -- SET THE SYSTEM VARIABLES
     SET @dtExecutedAt = GETDATE()
     SET @nDBMSId = USER_ID()
-    SET @nDBMSName = USER_NAME()
-    SET @nHostId = HOST_ID()
-    SET @nHostName = HOST_NAME()
+    SET @cDBMSName = USER_NAME()
+    SET @cHostId = HOST_ID()
+    SET @cHostName = HOST_NAME()
 
     -- CALL THE INSERT INTO TAUDITUSERS STORED PROCEDURE
-    EXEC pro_InsertIntoAuditUsersTable 
-        @before_nCPR,
-        @before_cName,
+    EXEC pro_InsertIntoAuditUsers 
+        @before_nUserId,
+        @before_cFirstName, 
         @before_cSurname,
         @before_cAddress,
         @before_cPhoneNo,
-        @before_dBirthDate,
-        @before_dNewMemberDate,
-        @after_nCPR,
-        @after_cName,
+        @before_cZipcode,
+        @before_nCity,
+        @before_cEmail,
+        @before_nTotalAmount,
+        @after_nUserId,
+        @after_cFirstName, 
         @after_cSurname,
         @after_cAddress,
         @after_cPhoneNo,
-        @after_dBirthDate,
-        @after_dNewMemberDate,
-        @vStatementType,
+        @after_cZipcode,
+        @after_nCity,
+        @after_cEmail,
+        @after_nTotalAmount,
+        @cStatementType,
         @dtExecutedAt,
-        @nDBMSName,
         @nDBMSId,
-        @nHostId,
-        @nHostName
+        @cDBMSName,
+        @cHostId,
+        @cHostName
 END;
