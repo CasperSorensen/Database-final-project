@@ -1,5 +1,6 @@
 CREATE TABLE TAuditUser
 (
+  nTAuditUserId INT IDENTITY(1,1) NOT NULL,
   before_nUserId INT,
   before_cName VARCHAR(20),
   before_cSurname VARCHAR(20),

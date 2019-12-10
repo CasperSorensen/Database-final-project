@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
--- Name:         sp_InsertIntoAuditCreditCard.sql
+-- Name:         pro_InsertIntoAuditCreditCard.sql
 -- 
 -- Purpose:      Creates a Stored Procedure on the TAuditCreditCard table
 --               that can be used to insert into the TAuditCreditCard table
@@ -13,79 +13,81 @@
 --
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-
-CREATE OR ALTER PROCEDURE pro_InsertIntoAuditCreditCardTable
-
-    -- Old values
-    @before_nCPR INT,
-    @before_cName VARCHAR(30),
-    @before_cSurname VARCHAR(40),
-    @before_cAddress VARCHAR(60),
-    @before_cPhoneNo VARCHAR(8),
-    @before_dBirthDate DATE,
-    @before_dNewMemberDate DATE,
-    -- New values
-    @after_nCPR INT,
-    @after_cName VARCHAR(30),
-    @after_cSurname VARCHAR(40),
-    @after_cAddress VARCHAR(60),
-    @after_VPhoneNo VARCHAR(8),
-    @after_dBirthDate DATE,
-    @after_dNewMemberDate DATE,
-    -- Data
-    @vStatementType VARCHAR(10),
+CREATE OR ALTER PROCEDURE pro_InsertIntoAuditCreditCard
+    -- SET BEFORE VALUES
+    @before_nCreditCardId INT,
+    @before_nUserId INT,
+    @before_cIBANCode VARCHAR(34),
+    @before_dExpDate VARCHAR(4),
+    @before_nCcv INT,
+    @before_cCardholderName VARCHAR(40),
+    @before_nAmountSpent DECIMAL(2),
+    -- SET NEW VALUES
+    @after_nCreditCardId INT,
+    @after_nUserId INT,
+    @after_cIBANCode VARCHAR(34),
+    @after_dExpDate VARCHAR(4),
+    @after_nCcv INT,
+    @after_cCardholderName VARCHAR(40),
+    @after_nAmountSpent DECIMAL(2),
+    -- SET SYSTEM VALUES
+    @cStatementType VARCHAR(10),
     @dtExecutedAt DATETIME,
     @nDBMSId INT,
-    @nDBMSName NVARCHAR(128),
-    @nHostId CHAR(8),
-    @nHostName NVARCHAR(128)
+    @cDBMSName NVARCHAR(128),
+    @cHostId CHAR(8),
+    @cHostName NVARCHAR(128)
 AS
 BEGIN
-
-    INSERT INTO 
-TAudit
-        (beforeICPR ,
-        beforeVName,
-        beforeVSurname,
-        beforeVAddress,
-        beforeVPhoneNo,
-        beforeDBirthDate,
-        beforeDNewMemberDate,
-        afterICPR,
-        afterVName,
-        afterVSurname,
-        afterVAddress,
-        afterVPhoneNo,
-        afterDBirthDate,
-        afterDNewMemberDate,
-        vStatementType,
+    INSERT INTO
+    TAuditCreditCard
+        (
+        nTAuditCreditCardId,
+        before_nCreditCardId,
+        before_nUserId,
+        before_cIBANCode,
+        before_dExpDate,
+        before_nCcv,
+        before_cCardholderName,
+        before_nAmountSpent,
+        after_nCreditCardId,
+        after_nUserId,
+        after_cIBANCode,
+        after_dExpDate,
+        after_nCcv,
+        after_cCardholderName,
+        after_nAmountSpent,
+        cStatementType,
         dtExecutedAt,
-        nDBMSName,
         nDBMSId,
-        nHostId,
-        nHostName
+        cDBMSName,
+        cHostId,
+        cHostName
         )
     VALUES
-        (@beforeICPR,
-            @beforeVName,
-            @beforeVSurname,
-            @beforeVAddress,
-            @beforeVPhoneNo,
-            @beforeDBirthDate,
-            @beforeDNewMemberDate,
-            @afterICPR,
-            @afterVName,
-            @afterVSurname,
-            @afterVAddress,
-            @afterVPhoneNo,
-            @afterDBirthDate,
-            @afterDNewMemberDate,
-            @vStatementType,
+        (
+            @nTAuditCreditCardId,
+            @before_nCreditCardId,
+            @before_nUserId,
+            @before_cIBANCode,
+            @before_dExpDate,
+            @before_nCcv,
+            @before_cCardholderName,
+            @before_nAmountSpent,
+            @after_nCreditCardId,
+            @after_nUserId,
+            @after_cIBANCode,
+            @after_dExpDate,
+            @after_nCcv,
+            @after_cCardholderName,
+            @after_nAmountSpent,
+            @cStatementType,
             @dtExecutedAt,
             @nDBMSId,
-            @nDBMSName,
-            @nHostId,
-            @nHostName
+            @cDBMSName,
+            @cHostId,
+            @cHostName
     );
+
     RETURN 1
 END
