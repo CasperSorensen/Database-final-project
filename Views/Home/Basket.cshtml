@@ -51,6 +51,8 @@
                             if (product.Key==giftId)
                             {
                                 <h2>this product will be wrapped as gift @DbProduct.cname</h2>
+                                var DecoratedProduct = new GiftDecorator(DbProduct);
+                                <h2>New product price = @DecoratedProduct.nUnitPrice</h2>
                             }
                         }
 
