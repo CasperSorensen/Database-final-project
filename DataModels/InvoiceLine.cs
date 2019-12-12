@@ -2,7 +2,7 @@ using database_final_project;
 
 namespace database_final_project
 {
-  public class InvoiceLine
+  public class InvoiceLine : IModel
   {
     #region Properties
 

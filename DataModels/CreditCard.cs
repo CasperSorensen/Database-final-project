@@ -3,7 +3,7 @@ using database_final_project;
 
 namespace database_final_project
 {
-  public class CreditCard
+  public class CreditCard : IModel
   {
     #region Properties
 

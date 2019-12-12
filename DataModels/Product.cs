@@ -2,7 +2,7 @@ using database_final_project.Models;
 
 namespace database_final_project
 {
-  public class Product : IGift
+  public class Product : IGift, IModel
   {
     #region Properties
 

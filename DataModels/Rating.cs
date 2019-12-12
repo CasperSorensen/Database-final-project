@@ -2,7 +2,7 @@ using database_final_project;
 
 namespace database_final_project
 {
-  public class Rating
+  public class Rating : IModel
   {
     #region Properties
 

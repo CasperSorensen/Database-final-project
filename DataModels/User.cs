@@ -2,7 +2,7 @@ using database_final_project;
 
 namespace database_final_project
 {
-  public class User
+  public class User : IModel
   {
     #region Properties
 
