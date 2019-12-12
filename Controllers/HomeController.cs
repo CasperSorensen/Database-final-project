@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using database_final_project.Models;
 using Newtonsoft.Json;
+using database_final_project.Patterns;
 
 namespace database_final_project.Controllers
 {
@@ -113,6 +114,15 @@ namespace database_final_project.Controllers
 
 
             return View("./Products");
+        }
+
+        public IActionResult History(Product product)
+        {
+
+            
+
+
+            return View("./History",product);
         }
 
         public IActionResult RateProduct(RateModel RateModel)

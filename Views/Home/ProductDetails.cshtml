@@ -1,21 +1,27 @@
 ﻿@using database_final_project.Models
+@using database_final_project.Patterns
+@using Newtonsoft.Json;
 @model Product
 @{
     ViewData["Title"] = "ProductDetails";
 }
 <h1>ProductDetails</h1>
 @{
- 
 
-    
-
-        <h2>@Model.cname</h2>
-        <p>@Model.cdescription</p>
-        <p> @Model.nStock units</p>
-        <p>@Model.nUnitPrice DKK</p>
-    
+    var CareTaker = new ProductCareTaker(Model);
+    var product = CareTaker.GetInstance();
 
 
+    <h2>@Model.cname</h2>
+    <p>@Model.cdescription</p>
+    <p> @Model.nStock units</p>
+    <p>@Model.nUnitPrice DKK</p>
+
+
+    <button>
+        <a href="@Url.Action("History", "Home",product)">See history</a>
+@{var sd = "";}
+    </button>
 
 }
 

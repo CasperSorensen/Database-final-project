@@ -1,4 +1,7 @@
-﻿@using database_final_project.Models
+﻿@using database_final_project.Models;
+@using database_final_project.Patterns;
+@using Newtonsoft.Json;
+
 @model UserModel
 @{
     ViewData["Title"] = "Products";
@@ -10,11 +13,12 @@
     var isLoggedIn = TempData["IsLoggedIn"].ToString();
     TempData.Keep("IsLoggedIn");
 
+
     if (isLoggedIn != string.Empty)
     {
         var name = isLoggedIn.ToString().Split(',').ElementAt(0);
-        var id =int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
-    <p> you are logged in as @(isLoggedIn != null ? isLoggedIn.ToString().Split(',').ElementAt(0) : "")</p>
+        var id = int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
+        <p> you are logged in as @(isLoggedIn != null ? isLoggedIn.ToString().Split(',').ElementAt(0) : "")</p>
 
         <div class="container">
             <form name="UserModel" method="POST" action="/Home/Logout">
@@ -29,39 +33,46 @@
             </form>
         </div>
 
+        if (TempData["CareTaker"] != null)
+        {
+          
+        }
+
+
+
 
         var products = new AzureDb().GetProducts();
         foreach (var Product in products)
         {
-<div>
+            <div>
 
-    <h2>@Product.cname</h2>
-    <p>Description : @Product.cdescription</p>
-    <p> Stock: @Product.nStock units</p>
-    <p>Price: @Product.nUnitPrice DKK</p>
-    <button>
-        <a href="@Url.Action("AddToBasket", "Home", Product)">Add to basket</a>
-    </button>
-    <button>
-        <a href="@Url.Action("AddToBasketAsGift", "Home", Product)">Add to basket With Gift Wrapping</a>
-    </button>
-    <div class="container">
-        <button>
-            <a href="@Url.Action("ProductDetails","Home",Product)">ProductDetails</a>
-        </button>
-        <button>
-            @{var RateModel = new RateModel();
-                RateModel.ProductId = Product.nProductId;
-            }
-            <a href="@Url.Action("RateProduct","Home",RateModel)">Rate a Product</a>
-        </button>
+                <h2>@Product.cname</h2>
+                <p>Description : @Product.cdescription</p>
+                <p> Stock: @Product.nStock units</p>
+                <p>Price: @Product.nUnitPrice DKK</p>
+                <button>
+                    <a href="@Url.Action("AddToBasket", "Home", Product)">Add to basket</a>
+                </button>
+                <button>
+                    <a href="@Url.Action("AddToBasketAsGift", "Home", Product)">Add to basket With Gift Wrapping</a>
+                </button>
+                <div class="container">
+                    <button>
+                        <a href="@Url.Action("ProductDetails","Home",Product)">ProductDetails</a>
+                    </button>
+                    <button>
+                        @{var RateModel = new RateModel();
+                            RateModel.ProductId = Product.nProductId;
+                        }
+                        <a href="@Url.Action("RateProduct","Home",RateModel)">Rate a Product</a>
+                    </button>
 
-    </div>
-    <br />
-    <br />
-    <br />
-</div>
-           
+                </div>
+                <br />
+                <br />
+                <br />
+            </div>
+
         }
 
 
