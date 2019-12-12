@@ -104,12 +104,17 @@ namespace database_final_project.Controllers
             
             return View("./Products");
         }
-        public IActionResult RateProduct(RateModel RateModel)
-        {
-            
 
-            return View("./RateProduct", RateModel);
+
+        public IActionResult AddToBasketAsGift(Product SelectedProduct)
+        {
+                     
+                TempData["GiftIds"] = SelectedProduct.nProductId;          
+
+
+            return View("./Products");
         }
+        
 
         public IActionResult DoneRate(RateModel RateModel)
         {

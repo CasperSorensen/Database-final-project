@@ -33,29 +33,32 @@
         var products = new AzureDb().GetProducts();
         foreach (var Product in products)
         {
-            <div>
+<div>
 
-                <h2>@Product.cname</h2>
-                <p>Description : @Product.cdescription</p>
-                <p> Stock: @Product.nStock units</p>
-                <p>Price: @Product.nUnitPrice DKK</p>
-                <button>
-                    <a href="@Url.Action("AddToBasket", "Home", Product)">Add to basket</a>
-                </button>
-                <div class="container">
-                    
-                        <button>
-                            @{var RateModel = new RateModel();
-                                RateModel.ProductId = Product.nProductId;
-                             }
-                            <a href="@Url.Action("RateProduct","Home",RateModel)">Rate a Product</a>
-                        </button>
-                    
-                </div>
-                <br />
-                <br />
-                <br />
-            </div>
+    <h2>@Product.cname</h2>
+    <p>Description : @Product.cdescription</p>
+    <p> Stock: @Product.nStock units</p>
+    <p>Price: @Product.nUnitPrice DKK</p>
+    <button>
+        <a href="@Url.Action("AddToBasket", "Home", Product)">Add to basket</a>
+    </button>
+    <button>
+        <a href="@Url.Action("AddToBasketAsGift", "Home", Product)">Add to basket With Gift Wrapping</a>
+    </button>
+    <div class="container">
+
+        <button>
+            @{var RateModel = new RateModel();
+                RateModel.ProductId = Product.nProductId;
+            }
+            <a href="@Url.Action("RateProduct","Home",RateModel)">Rate a Product</a>
+        </button>
+
+    </div>
+    <br />
+    <br />
+    <br />
+</div>
         }
 
 

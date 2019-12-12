@@ -42,6 +42,18 @@
                 {
                     if (DbProduct.nProductId == product.Key)
                     {
+
+                        if (TempData["GiftIds"]!=null)
+                        {
+                            int giftId =  Convert.ToInt32(TempData["GiftIds"]);
+                            TempData.Keep();
+
+                            if (product.Key==giftId)
+                            {
+                                <h2>this product will be wrapped as gift @DbProduct.cname</h2>
+                            }
+                        }
+
                         decimal SubTotal = DbProduct.nUnitPrice * product.Value;
                         <p>@DbProduct.cname, Quantity: @product.Value (x @DbProduct.nUnitPrice =@SubTotal DKK)</p>
 
