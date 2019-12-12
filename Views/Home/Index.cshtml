@@ -3,12 +3,16 @@
 
 
 @{
-     var loginMsg = TempData["LogginMessage"]!=null?TempData["LogginMessage"].ToString():"";
+    var loginMsg = TempData["LogginMessage"]!=null?TempData["LogginMessage"].ToString():"";
     var isLoggedIn = TempData["IsLoggedIn"].ToString();
     TempData.Keep("IsLoggedIn");
-   
+
     if (isLoggedIn!=string.Empty)
     {
+        if (TempData["RatingMsg"]!=null)
+        {
+    <h1>@TempData["RatingMsg"].ToString()</h1>
+        }
         <p> you are logged in as @(isLoggedIn != null ? isLoggedIn.ToString().Split(',').ElementAt(0) : "")</p>
 
         <div class="container">

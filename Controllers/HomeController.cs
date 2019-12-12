@@ -114,7 +114,14 @@ namespace database_final_project.Controllers
 
             return View("./Products");
         }
-        
+
+        public IActionResult RateProduct(RateModel RateModel)
+        {
+
+
+            return View("./RateProduct", RateModel);
+        }
+
 
         public IActionResult DoneRate(RateModel RateModel)
         {
