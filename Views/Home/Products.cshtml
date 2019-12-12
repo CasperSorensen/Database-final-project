@@ -59,6 +59,37 @@
     <br />
     <br />
 </div>
+            <div>
+
+                <h2>@Product.cname</h2>
+                <p>Description : @Product.cdescription</p>
+                <p> Stock: @Product.nStock units</p>
+                <p>Price: @Product.nUnitPrice DKK</p>
+                <button>
+                    <a href="@Url.Action("AddToBasket", "Home", Product)">Add to basket</a>
+                </button>
+                <div class="container">
+
+                    <button>
+                        @{var RateModel = new RateModel();
+                            RateModel.ProductId = Product.nProductId;
+                        }
+                        <a href="@Url.Action("RateProduct","Home",RateModel)">Rate a Product</a>
+                    </button>
+
+                    <div class="container">
+
+                        <button>
+                            <a href="@Url.Action("ProductDetails","Home",Product)">ProductDetails</a>
+                        </button>
+
+                    </div>
+
+                </div>
+                <br />
+                <br />
+                <br />
+            </div>
         }
 
 
