@@ -129,6 +129,10 @@ namespace database_final_project.Controllers
             }
             return View("./Index");
         }
+        public IActionResult ProductDetails(Product ProductModel)
+        {
+            return View("./ProductDetails", ProductModel);
+        }
         public IActionResult Logout()
         {
 
