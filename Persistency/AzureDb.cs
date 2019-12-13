@@ -190,61 +190,92 @@ namespace database_final_project
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.Transaction = tran;
                 
-                    try
-                    {
-                    if (basket.Count==0)
-                    {
-                        throw new Exception("basket was empty");
-                    }
+                try
+                {
+                if (basket.Count==0)
+                {
+                    throw new Exception("basket was empty");
+                }
 
-                        string query = "EXEC pro_CreateInvoice @nUserId = @UserId, @nCardId = @CardId, @dTax = @Tax, @nTotalAmount = @TotalAmount, @dDate = @Date";
-                        cmd.CommandText = query;
-                        cmd.Parameters.AddWithValue("@UserId", model.UserId);
-                        cmd.Parameters.AddWithValue("@CardID", model.CreditCardId);
-                        cmd.Parameters.AddWithValue("@Tax", model.Tax);
-                        cmd.Parameters.AddWithValue("@TotalAmount", model.Total);
-                        cmd.Parameters.AddWithValue("@Date", DateTime.Now);
+                    //insert invoice
+                    string query = "EXEC pro_CreateInvoice @nUserId = @UserId, @nCardId = @CardId, @dTax = @Tax, @nTotalAmount = @TotalAmount, @dDate = @Date";
+                    cmd.CommandText = query;
+                    cmd.Parameters.AddWithValue("@UserId", model.UserId);
+                    cmd.Parameters.AddWithValue("@CardID", model.CreditCardId);
+                    cmd.Parameters.AddWithValue("@Tax", model.Tax);
+                    cmd.Parameters.AddWithValue("@TotalAmount", model.Total);
+                    cmd.Parameters.AddWithValue("@Date", DateTime.Now);
+                   cmd.ExecuteNonQuery();
+                    
+                    //get invoice Id
+                    string SelectQuery = @"SELECT TOP (1) [nInvoiceId]FROM[dbo].[TInvoice]ORDER BY nDate Desc";
+                    cmd.CommandText = SelectQuery;
+                    InvoiceId = Convert.ToInt32(cmd.ExecuteScalar());
 
+                    
+                   
+
+                    foreach (var product in basket)
+                    {
+                        int ProductID = product.Key;
+                        int Quantity = product.Value;
+
+                        //get stock
+                        cmd = conn.CreateCommand();
+                        cmd.Transaction = tran;
+                        string SelectStockQuery = @"SELECT TOP (1) [nStock]FROM[dbo].[TProduct] Where nProductId=@ProductId";
+                        cmd.CommandText = SelectStockQuery;
+                        cmd.Parameters.AddWithValue("@ProductId", ProductID);
+                        int stock = Convert.ToInt32(cmd.ExecuteScalar());
+
+                        if (stock < Quantity)
+                        {
+                            throw new Exception("Sorry but one or more items in your basket is out of stock, Terminating the purchace...");
+                        }
+
+
+                        cmd = conn.CreateCommand();
+                        cmd.Transaction = tran;                                                
+                        decimal UnitPrice = AzureDb.Instance.GetUnitPriceForProduct(ProductID);
+
+                        //inser invoice line
+                        string newquery = "EXEC pro_CreateInvoiceLine @nInvoiceId = @InvoiceId, @nProductId = @ProductId, @nQuantity = @Quantity, @nUnitPrice = @UnitPrice";
+                        cmd.CommandText = newquery;
+                        cmd.Parameters.AddWithValue("@InvoiceId", InvoiceId);
+                        cmd.Parameters.AddWithValue("@ProductId", ProductID);
+                        cmd.Parameters.AddWithValue("@Quantity", Quantity);
+                        cmd.Parameters.AddWithValue("@UnitPrice", UnitPrice);
                         cmd.ExecuteNonQuery();
 
 
-                        string SelectQuery = @"SELECT TOP (1) [nInvoiceId]FROM[dbo].[TInvoice]ORDER BY nDate Desc";
-                        cmd.CommandText = SelectQuery;
+                        //update stocks
+                        cmd = conn.CreateCommand();
+                        cmd.Transaction = tran;
+                        int NewStock = stock - Quantity;
+                        string stockUpdateQuery = "UPDATE TProduct SET nStock = @NewStock WHERE nProductId = @ProductId";
+                        cmd.CommandText = stockUpdateQuery;
+                        cmd.Parameters.AddWithValue("@NewStock", NewStock);
+                        cmd.Parameters.AddWithValue("@ProductId", ProductID);
+                        cmd.ExecuteNonQuery();
 
 
-
-                        InvoiceId = Convert.ToInt32(cmd.ExecuteScalar());
-
-
-                        foreach (var product in basket)
-                        {
-
-                            int ProductID = product.Key;
-                            int Quantity = product.Value;
-                            decimal UnitPrice = AzureDb.Instance.GetUnitPriceForProduct(ProductID);
-
-                            string newquery = "EXEC pro_CreateInvoiceLine @nInvoiceId = @InvoiceId, @nProductId = @ProductId, @nQuantity = @Quantity, @nUnitPrice = @UnitPrice";
-                            cmd.CommandText = newquery;
-                            cmd.Parameters.AddWithValue("@InvoiceId", InvoiceId);
-                            cmd.Parameters.AddWithValue("@ProductId", ProductID);
-                            cmd.Parameters.AddWithValue("@Quantity", Quantity);
-                            cmd.Parameters.AddWithValue("@UnitPrice", UnitPrice);
-
-                            cmd.ExecuteNonQuery();
                     }
 
 
-                    tran.Commit();
-                        conn.Close();
-                    return 1;
-                    }
-                    catch
-                    {
-                        tran.Rollback();
-                        conn.Close();
-                        throw;
                         
-                    }
+
+
+                tran.Commit();
+                    conn.Close();
+                return 1;
+                }
+                catch
+                {
+                    tran.Rollback();
+                    conn.Close();
+                    throw;
+                        
+                }
                 
             }
         }     
