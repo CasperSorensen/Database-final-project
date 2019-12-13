@@ -2,12 +2,12 @@
 -------------------------------------------------------------------------------
 -- Name:         tri_OnUserDelete.sql
 -- 
--- Purpose:      Creates a ON DELETE trigger on the TUser table
---               It adds the Tsuers old and the new values from the row
---               it then calls the sp_InsertIntoAuditUsers 
---               that inserts them into to the TAuditUser table.
+-- Purpose:      Creates a ON DELETE trigger on the TCreditCard table
+--               It adds the Tsuers old and the new values FROM the row
+--               it then calls the sp_InsertIntoAuditCreditCards 
+--               that inserts them into to the TAuditCreditCard table.
 --
--- At:    AFTER DELETE
+-- At:           AFTER UPDATE
 --               
 -- Type:         Trigger
 -- 
@@ -20,90 +20,88 @@
 --
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-
-CREATE OR ALTER TRIGGER trg_OnUserDelete
+CREATE
+OR ALTER TRIGGER trg_OnUserDelete
 ON TUser
 AFTER DELETE
-AS
-BEGIN
+    AS BEGIN
+    -- DECLARE ALL VARIABLES
+    DECLARE @before_nUserId INT
+    DECLARE @before_cFirstName VARCHAR(20)
+    DECLARE @before_cSurname VARCHAR(20)
+    DECLARE @before_cAddress VARCHAR(60) 
+    DECLARE @before_cPhoneNo VARCHAR(8) 
+    DECLARE @before_cZipcode VARCHAR(4) 
+    DECLARE @before_nCity INT 
+    DECLARE @before_cEmail VARCHAR(60)    
+    DECLARE @before_nTotalAmount DECIMAL(2) 
+    DECLARE @after_nUserId INT      
+    DECLARE @after_cFirstName VARCHAR(20) 
+    DECLARE @after_cSurname VARCHAR(20) 
+    DECLARE @after_cAddress VARCHAR(60) 
+    DECLARE @after_cPhoneNo VARCHAR(8) 
+    DECLARE @after_cZipcode VARCHAR(4) 
+    DECLARE @after_nCity INT 
+    DECLARE @after_cEmail VARCHAR (60)
+    DECLARE @after_nTotalAmount DECIMAL(2)      
+    DECLARE @cStatementType VARCHAR(10) 
+    DECLARE @dtExecutedAt DATETIME 
+    DECLARE @nDBMSId INT
+    DECLARE @cDBMSName NVARCHAR(128) 
+    DECLARE @cHostId CHAR(8) 
+    DECLARE @cHostName NVARCHAR(128)
+    
+    SELECT @before_nUserId = nUserId from deleted
+    SELECT @before_cFirstName = cFirstName from deleted 
+    SELECT @before_cSurname = cSurname from deleted 
+    SELECT @before_cAddress = cAddress from deleted 
+    SELECT @before_cPhoneNo = cPhoneNo from deleted 
+    SELECT @before_cZipcode = cZipCode from deleted 
+    SELECT @before_nCity = cCity from deleted 
+    SELECT @before_cEmail = cEmail from deleted 
+    SELECT @before_nTotalAmount = nTotalAmount from deleted
 
-    -- DECLARE VARIABLES --
-    DECLARE @before_ICPR VARCHAR(10)
-    DECLARE @before_VName VARCHAR(30)
-    DECLARE @before_VSurname VARCHAR(40)
-    DECLARE @before_VAddress VARCHAR(60)
-    DECLARE @before_VPhoneNo VARCHAR(8)
-    DECLARE @before_DBirthDate DATE
-    DECLARE @before_DNewMemberDate DATE
-    DECLARE @after_ICPR VARCHAR(10)
-    DECLARE @after_VName VARCHAR(30)
-    DECLARE @after_VSurname VARCHAR(40)
-    DECLARE @after_VAddress VARCHAR(60)
-    DECLARE @after_VPhoneNo VARCHAR(8)
-    DECLARE @after_DBirthDate DATE
-    DECLARE @after_DNewMemberDate DATE
-    DECLARE @vStatementType VARCHAR(10)
-    DECLARE @vStatementType VARCHAR(10)
-    DECLARE @dtExecutedAt DATETIME
-    DECLARE @nDBMSId NVARCHAR(128)
-    DECLARE @nDBMSName NVARCHAR(128)
-    DECLARE @nHostId CHAR(8)
-    DECLARE @nHostName NVARCHAR(128)
+    SELECT @after_nUserId = null
+    SELECT @after_cFirstName = null 
+    SELECT @after_cSurname = null 
+    SELECT @after_cAddress = null 
+    SELECT @after_cPhoneNo = null 
+    SELECT @after_cZipcode = null 
+    SELECT @after_nCity = null 
+    SELECT @after_cEmail = null 
+    SELECT @after_nTotalAmount = null 
+    SELECT @cStatementType = 'DELETE' 
+    
+    SET @dtExecutedAt = GETDATE() 
+    SET @nDBMSId = USER_ID() 
+    SET @cDBMSName = USER_NAME() 
+    SET @cHostId = HOST_ID() 
+    SET @cHostName = HOST_NAME() 
 
-    -- SET BEFORE VARIABLES 
-    SELECT @before_ICPR = cCPR
-    from deleted
-    SELECT @before_VName = cName
-    from deleted
-    SELECT @before_VSurname = cSurname
-    from deleted
-    SELECT @before_VAddress = cAddress
-    from deleted
-    SELECT @before_VPhoneNo = cPhoneNo
-    from deleted
-    SELECT @before_DBirthDate = dBirth
-    from deleted
-    SELECT @before_DNewMemberDate = dNewMember
-    from deleted
-
-    -- SET AFTER VARIABLES
-    SELECT @after_ICPR = NULL
-    SELECT @after_VName = NULL
-    SELECT @after_VSurname = NULL
-    SELECT @after_VAddress = NULL
-    SELECT @after_VPhoneNo = NULL
-    SELECT @after_DBirthDate = NULL
-    SELECT @after_DNewMemberDate = NULL
-
-    -- SET SYSTEM VARIABLES
-    SELECT @vStatementType = 'DELETE'
-    SET @dtExecutedAt = GETDATE()
-    SET @nDBMSId = USER_ID()
-    SET @nDBMSName = USER_NAME()
-    SET @nHostId = HOST_ID()
-    SET @nHostName = HOST_NAME()
-
-    -- CALL THE INSERT INTO TAUDITUSERS STORED PROCEDURE
-    EXEC pro_InsertIntoAuditUsersTable 
-        @before_nCPR,
-        @before_cName,
-        @before_cSurname,
-        @before_cAddress,
-        @before_cPhoneNo,
-        @before_dBirthDate,
-        @before_dNewMemberDate,
-        @after_nCPR,
-        @after_cName,
-        @after_cSurname,
-        @after_cAddress,
-        @after_cPhoneNo,
-        @after_dBirthDate,
-        @after_dNewMemberDate,
-        @vStatementType,
-        @dtExecutedAt,
-        @nDBMSName,
-        @nDBMSId,
-        @nHostId,
-        @nHostName
+EXEC pro_InsertIntoAuditUsers 
+    @before_nUserId,
+    @before_cFirstName,
+    @before_cSurname,
+    @before_cAddress, 
+    @before_cPhoneNo, 
+    @before_cZipcode, 
+    @before_nCity, 
+    @before_cEmail,     
+    @before_nTotalAmount, 
+    @after_nUserId,     
+    @after_cFirstName, 
+    @after_cSurname, 
+    @after_cAddress, 
+    @after_cPhoneNo, 
+    @after_cZipcode, 
+    @after_nCity, 
+    @after_cEmail,
+    @after_nTotalAmount,      
+    @cStatementType, 
+    @dtExecutedAt, 
+    @nDBMSId,
+    @cDBMSName, 
+    @cHostId, 
+    @cHostName
 
 END;
