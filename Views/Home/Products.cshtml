@@ -33,9 +33,11 @@
             </form>
         </div>
 
-        if (TempData["CareTaker"] != null)
+        if (TempData["History"] != null)
         {
-          
+            var productName = TempData["History"].ToString();
+            
+            <h2>Your last Viewed Product is @productName </h2>
         }
 
 

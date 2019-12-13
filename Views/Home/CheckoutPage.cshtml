@@ -16,18 +16,24 @@
 
         //error handeling
         //rollback
-        
+
         //amount 10,2
         //ccv string
         //iban string
 
-        
+
         //fix the relationsin ERD
+        Dictionary<int, int> Basket = JsonConvert.DeserializeObject<Dictionary<int, int>>(Model.Products);
+        var falsemodel = new ObjectOfFieldsForDatabase();
+        var falsebasket = new Dictionary<int, int>();
+        var result = AzureDb.Instance.InvoiceTransaction(Model,Basket);
 
+        if (result==1)
+        {
+            <h1>Your purchace was succesfull</h1>
+        }
 
-
-
-        var FalseModel = new ObjectOfFieldsForDatabase();
+        @*var FalseModel = new ObjectOfFieldsForDatabase();
         var invoiceId = AzureDb.Instance.InsertInvoice(Model);
         if (invoiceId == 0)
         {
@@ -38,8 +44,8 @@
 
 
 
-            Dictionary<int, int> Basket = JsonConvert.DeserializeObject<Dictionary<int, int>>(Model.Products);
-            List<int> products = new List<int>();
+            
+            
 
             foreach (var product in Basket)
             {
@@ -57,7 +63,7 @@
                 }
             }
             <h2>Your Purchase was succesfull</h2>
-        }
+        }*@
 
 
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using database_final_project.Models;
+using System.Data;
 
 namespace database_final_project
 {
@@ -179,88 +180,76 @@ namespace database_final_project
 
 
         }
-
-        public int InsertInvoice(ObjectOfFieldsForDatabase in_invoice)
+        public int InvoiceTransaction(ObjectOfFieldsForDatabase model,Dictionary<int,int> basket)
         {
-            int Id = 0;
-            try
+            int InvoiceId = 0;   
+            using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
             {
-               
-                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
-                {
-                    
-                    conn.Open();
-                    string query = "EXEC pro_CreateInvoice @nUserId = @UserId, @nCardId = @CardId, @dTax = @Tax, @nTotalAmount = @TotalAmount, @dDate = @Date";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@UserId", in_invoice.UserId);
-                    cmd.Parameters.AddWithValue("@CardID", in_invoice.CreditCardId);
-                    cmd.Parameters.AddWithValue("@Tax", in_invoice.Tax);
-                    cmd.Parameters.AddWithValue("@TotalAmount", in_invoice.Total);
-                    cmd.Parameters.AddWithValue("@Date", DateTime.Now);
-                    var res = cmd.ExecuteReader();
-                    conn.Close();
+                conn.Open();
+                SqlTransaction tran = conn.BeginTransaction(IsolationLevel.Serializable);
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.Transaction = tran;
+                
+                    try
+                    {
+                    if (basket.Count==0)
+                    {
+                        throw new Exception("basket was empty");
+                    }
 
-                    conn.Open();
-                    string SelectQuery = @"SELECT TOP (1) [nInvoiceId]FROM[dbo].[TInvoice]ORDER BY nDate Desc";
-                    cmd = new SqlCommand(SelectQuery, conn);
+                        string query = "EXEC pro_CreateInvoice @nUserId = @UserId, @nCardId = @CardId, @dTax = @Tax, @nTotalAmount = @TotalAmount, @dDate = @Date";
+                        cmd.CommandText = query;
+                        cmd.Parameters.AddWithValue("@UserId", model.UserId);
+                        cmd.Parameters.AddWithValue("@CardID", model.CreditCardId);
+                        cmd.Parameters.AddWithValue("@Tax", model.Tax);
+                        cmd.Parameters.AddWithValue("@TotalAmount", model.Total);
+                        cmd.Parameters.AddWithValue("@Date", DateTime.Now);
 
-                    
-
-                    Id  = Convert.ToInt32(cmd.ExecuteScalar());
-                   
-                 
+                        cmd.ExecuteNonQuery();
 
 
-                }
+                        string SelectQuery = @"SELECT TOP (1) [nInvoiceId]FROM[dbo].[TInvoice]ORDER BY nDate Desc";
+                        cmd.CommandText = SelectQuery;
+
+
+
+                        InvoiceId = Convert.ToInt32(cmd.ExecuteScalar());
+
+
+                        foreach (var product in basket)
+                        {
+
+                            int ProductID = product.Key;
+                            int Quantity = product.Value;
+                            decimal UnitPrice = AzureDb.Instance.GetUnitPriceForProduct(ProductID);
+
+                            string newquery = "EXEC pro_CreateInvoiceLine @nInvoiceId = @InvoiceId, @nProductId = @ProductId, @nQuantity = @Quantity, @nUnitPrice = @UnitPrice";
+                            cmd.CommandText = newquery;
+                            cmd.Parameters.AddWithValue("@InvoiceId", InvoiceId);
+                            cmd.Parameters.AddWithValue("@ProductId", ProductID);
+                            cmd.Parameters.AddWithValue("@Quantity", Quantity);
+                            cmd.Parameters.AddWithValue("@UnitPrice", UnitPrice);
+
+                            cmd.ExecuteNonQuery();
+                    }
+
+
+                    tran.Commit();
+                        conn.Close();
+                    return 1;
+                    }
+                    catch
+                    {
+                        tran.Rollback();
+                        conn.Close();
+                        throw;
+                        
+                    }
+                
             }
-            catch (SqlException e)
-            {
-                System.Console.WriteLine(e);
-            }
-
-            return Id;
-        }
-
-        public int InsertInvoiceLine(int InvoiceId, int ProductId, int Quantity,decimal UnitPrice)
-        {
-            var result = 0;   
-            try
-            {
-
-                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
-                {
-
-                    conn.Open();
-                    string query = "EXEC pro_CreateInvoiceLine @nInvoiceId = @InvoiceId, @nProductId = @ProductId, @nQuantity = @Quantity, @nUnitPrice = @UnitPrice";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@InvoiceId", InvoiceId);
-                    cmd.Parameters.AddWithValue("@ProductId", ProductId);
-                    cmd.Parameters.AddWithValue("@Quantity", Quantity);
-                    cmd.Parameters.AddWithValue("@UnitPrice", UnitPrice);
-
-                    result = cmd.ExecuteNonQuery();
-                    conn.Close();
-
-                    //conn.Open();
-                    //string SelectQuery = @"SELECT TOP (1) [nInvoiceId]FROM[dbo].[TInvoice]ORDER BY nDate Desc";
-                    //cmd = new SqlCommand(SelectQuery, conn);
-
-                    //int result = int.Parse(cmd.ExecuteScalar().ToString());
-
-                   
+        }     
 
 
-
-
-                }
-            }
-            catch (SqlException e)
-            {
-                System.Console.WriteLine(e);
-            }
-
-            return result;
-        }
 
         public decimal GetUnitPriceForProduct(int productId)
         {

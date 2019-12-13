@@ -74,7 +74,7 @@ namespace database_final_project.Controllers
                 Basket.Add(SelectedProduct.nProductId, 1);
                 var JsonString = JsonConvert.SerializeObject(Basket);
                 TempData["basket"] = JsonString;
-                var se = "";
+               
 
             }
             else

@@ -10,7 +10,7 @@
 
     var CareTaker = new ProductCareTaker(Model);
     var product = CareTaker.GetInstance();
-
+    TempData["History"] = JsonConvert.SerializeObject(product.cname);
 
     <h2>@Model.cname</h2>
     <p>@Model.cdescription</p>
@@ -20,7 +20,7 @@
 
     <button>
         <a href="@Url.Action("History", "Home",product)">See history</a>
-@{var sd = "";}
+
     </button>
 
 }
