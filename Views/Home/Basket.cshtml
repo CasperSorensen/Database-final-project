@@ -17,7 +17,7 @@
 
 
         var name = isLoggedIn.ToString().Split(',').ElementAt(0);
-        var id =int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
+        var id = int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
         <p> you are logged in as @(isLoggedIn != null ? name : "")</p>
         data.UserId = id;
 
@@ -43,25 +43,36 @@
                     if (DbProduct.nProductId == product.Key)
                     {
 
-                        if (TempData["GiftIds"]!=null)
-                        {
-                            int giftId =  Convert.ToInt32(TempData["GiftIds"]);
-                            TempData.Keep();
-
-                            if (product.Key==giftId)
-                            {
-                                <h2>this product will be wrapped as gift @DbProduct.cname</h2>
-                                var DecoratedProduct = new GiftDecorator(DbProduct);
-                                <h2>New product price = @DecoratedProduct.nUnitPrice</h2>
-                            }
-                        }
-
                         decimal SubTotal = DbProduct.nUnitPrice * product.Value;
                         <p>@DbProduct.cname, Quantity: @product.Value (x @DbProduct.nUnitPrice =@SubTotal DKK)</p>
 
-                        Total += DbProduct.nUnitPrice * product.Value;
+
+                        if (TempData["GiftIds"] != null)
+                        {
+                            int giftId = Convert.ToInt32(TempData["GiftIds"]);
+                            TempData.Keep();
+
+                            if (product.Key == giftId)
+                            {
+                                <br />
+                                <h2>This product will be wrapped as gift: @DbProduct.cname</h2>
+                                var DecoratedProduct = new GiftDecorator(DbProduct);
+                                <h2>New product price = @DecoratedProduct.nUnitPrice</h2>
+
+                                Total += DbProduct.nUnitPrice * product.Value + DecoratedProduct.nUnitPrice;
+                            }
+                           
+                        }
+                         else
+                            {
+                                 Total += DbProduct.nUnitPrice * product.Value;
+                            }
+
+
 
                        
+
+
                     }
                 }
 
@@ -72,11 +83,11 @@
             <h2>Total: @Total DKK</h2>
             data.Total = Total;
             <br />
-             List<CreditCard> cards = AzureDb.Instance.GetCreditCardsForUser(id);
+            List<CreditCard> cards = AzureDb.Instance.GetCreditCardsForUser(id);
             <h3>Payment Method</h3>
             <h4> Please Chose a card associated with your account to complete the purchase</h4>
-            
-           
+
+
 
             if (cards.Count == 0)
             {
@@ -90,18 +101,18 @@
                 {
                     data.CreditCardId = card.nCreditCardId;
                     data.Tax = 25;
-                <div style="border:solid">
-                    <h5>Card Id: @card.nCreditCardId</h5>
-                    <p>Card IBAN: @card.nIBANCode</p>
-                    <p>Ending In: @card.dExpDate.Month / @card.dExpDate.Year</p>
+                    <div style="border:solid">
+                        <h5>Card Id: @card.nCreditCardId</h5>
+                        <p>Card IBAN: @card.nIBANCode</p>
+                        <p>Ending In: @card.dExpDate.Month / @card.dExpDate.Year</p>
 
-                     <button>
-                         <a href="@Url.Action("CheckoutPage", "Home", data)">This One!</a>
-                    </button>
+                        <button>
+                            <a href="@Url.Action("CheckoutPage", "Home", data)">This One!</a>
+                        </button>
+                        <br />
+
+                    </div>
                     <br />
-
-                </div>
-                <br />
                 }
             }
 
@@ -111,7 +122,7 @@
                     <a href="@Url.Action("ClearBasket", "Home")">Clear Basket</a>
                 </button>
 
-                
+
             </div>
 
         }
@@ -123,9 +134,9 @@
     }
     else
     {
-        
-            <h2>You need to be logged in, in order to use Basket Please do so <a href="/">here</a></h2>
-        
+
+        <h2>You need to be logged in, in order to use Basket Please do so <a href="/">here</a></h2>
+
     }
 }
 

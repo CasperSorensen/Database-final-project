@@ -110,7 +110,7 @@ namespace database_final_project.Controllers
         public IActionResult AddToBasketAsGift(Product SelectedProduct)
         {
                      
-                TempData["GiftIds"] = SelectedProduct.nProductId;          
+           TempData["GiftIds"] = SelectedProduct.nProductId;          
 
 
             return View("./Products");

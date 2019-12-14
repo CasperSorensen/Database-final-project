@@ -234,7 +234,7 @@ namespace database_final_project
                             throw new Exception("Sorry but one or more items in your basket is out of stock, Terminating the purchace...");
                         }
 
-
+                        //get unit price
                         cmd = conn.CreateCommand();
                         cmd.Transaction = tran;                                                
                         decimal UnitPrice = AzureDb.Instance.GetUnitPriceForProduct(ProductID);
@@ -261,11 +261,11 @@ namespace database_final_project
 
 
 
-
+                        var CardId = model.CreditCardId;
                         var UserId = model.UserId;
                         decimal TotalPrice = model.Total;
 
-                        //get current total
+                        //get current total from user table
                         cmd = conn.CreateCommand();
                         cmd.Transaction = tran;
                         string Userquery = "Select nTotalAmount FROM TUser WHERE nUserId = @UserId";
@@ -290,9 +290,9 @@ namespace database_final_project
                         //Get Credit Card Total
                         cmd = conn.CreateCommand();
                         cmd.Transaction = tran;
-                        string NewQuery = "Select nAmountSpent FROM TCreditCard WHERE nUserId = @UserId";
+                        string NewQuery = "Select nAmountSpent FROM TCreditCard WHERE nCreditCardId = @CardId";
                         cmd.CommandText = NewQuery;
-                        cmd.Parameters.AddWithValue("@UserId", UserId);
+                        cmd.Parameters.AddWithValue("@CardId",CardId);
 
                         decimal AmountSpent = Convert.ToDecimal(cmd.ExecuteScalar());
                         decimal NewAmountSpent = AmountSpent + TotalPrice;
@@ -300,10 +300,10 @@ namespace database_final_project
                         //Update CreditCard Table
                         cmd = conn.CreateCommand();
                         cmd.Transaction = tran;
-                        string CardUpdateQuery = "UPDATE TCreditCard SET nAmountSpent = @NewAmount WHERE nUserId = @UserId";
+                        string CardUpdateQuery = "UPDATE TCreditCard SET nAmountSpent = @NewAmount WHERE nCreditCardId = @CardId";
                         cmd.CommandText = CardUpdateQuery;
                         cmd.Parameters.AddWithValue("@NewAmount", NewAmountSpent);
-                        cmd.Parameters.AddWithValue("@UserId", UserId);
+                        cmd.Parameters.AddWithValue("@CardId", CardId);
                         cmd.ExecuteNonQuery();
 
 
@@ -313,9 +313,9 @@ namespace database_final_project
                         
 
 
-                tran.Commit();
+                    tran.Commit();
                     conn.Close();
-                return 1;
+                    return 1;
                 }
                 catch
                 {
@@ -327,63 +327,7 @@ namespace database_final_project
                 
             }
         }  
-        
-        public int UpdateMoneyAmounts(ObjectOfFieldsForDatabase model)
-        {
-            try
-            {
-
-                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
-                {
-                    var UserId = model.UserId;
-                    decimal TotalPrice = model.Total;
-
-                    //get current total
-                    conn.Open();
-                    string query = "Select nTotalAmount FROM TUser WHERE nUserId = @UserId";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@UserId", UserId);
-
-
-                    decimal TotalAmount = Convert.ToDecimal(cmd.ExecuteScalar());
-                    decimal NewTotal = TotalAmount + TotalPrice;
-
-                    //Update User Table
-                    string UserUpdateQuery = "UPDATE TUser SET nTotalAmount = @NewTotal WHERE nUserId = @UserId";
-                    cmd.CommandText = UserUpdateQuery;
-                    cmd.Parameters.AddWithValue("@NewStock", NewTotal);
-                    cmd.Parameters.AddWithValue("@nUserId", UserId);
-                    cmd.ExecuteNonQuery();
-
-
-                    //Get Credit Card Total
-                    string NewQuery = "Select nAmountSpent FROM TCreditCard WHERE nUserId = @UserId";
-                    cmd = new SqlCommand(NewQuery, conn);
-                    cmd.Parameters.AddWithValue("@UserId", UserId);
-
-                    decimal AmountSpent = Convert.ToDecimal(cmd.ExecuteScalar());
-                    decimal NewAmountSpent = AmountSpent + TotalPrice;
-
-                    //Update CreditCard Table
-                    string CardUpdateQuery = "UPDATE TCreditCard SET nAmountSpent = @NewAmount WHERE nUserId = @UserId";
-                    cmd.CommandText = UserUpdateQuery;
-                    cmd.Parameters.AddWithValue("@NewAmount", NewAmountSpent);
-                    cmd.Parameters.AddWithValue("@nUserId", UserId);
-                    cmd.ExecuteNonQuery();
-
-
-
-                }
-            }
-            catch (SqlException e)
-            {
-                System.Console.WriteLine(e);
-            }
-
-            return 1;
-        }
-
-
+              
 
         public decimal GetUnitPriceForProduct(int productId)
         {

@@ -17,10 +17,10 @@
         //amount 10,2
         //ccv string
         //iban string
-
-        
-
         //fix the relationsin ERD
+
+
+
         Dictionary<int, int> Basket = JsonConvert.DeserializeObject<Dictionary<int, int>>(Model.Products);
         var falsemodel = new ObjectOfFieldsForDatabase();
         var falsebasket = new Dictionary<int, int>();
@@ -33,38 +33,7 @@
            
         }
 
-        @*var FalseModel = new ObjectOfFieldsForDatabase();
-        var invoiceId = AzureDb.Instance.InsertInvoice(Model);
-        if (invoiceId == 0)
-        {
-            <h2>Error occured while making your purchace (invoice generation failed)</h2>
-        }
-        else
-        {
-
-
-
-            
-            
-
-            foreach (var product in Basket)
-            {
-
-                int ProductID = product.Key;
-                int Quantity = product.Value;
-                decimal UnitPrice = AzureDb.Instance.GetUnitPriceForProduct(ProductID);
-
-                //var result = AzureDb.Instance.InsertInvoiceLine(invoiceId, ProductID, Quantity, UnitPrice);
-                var result = AzureDb.Instance.InsertInvoiceLine(invoiceId, ProductID, Quantity, UnitPrice);
-                if (result == 0)
-                {
-                    <h2>Error occured while making your purchace (Invoice Line generation failed)</h2>
-
-                }
-            }
-            <h2>Your Purchase was succesfull</h2>
-        }*@
-
+        
 
     }
 
