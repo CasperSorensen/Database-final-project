@@ -40,10 +40,44 @@
             <h2>Your last Viewed Product is @productName </h2>
         }
 
+        <div class="container">
+            <form name="UserModel" method="POST" action="/Home/SearchProducts">
+                <div class="field">
 
+                    <div class="control">
+                        <input class="input" type="text" placeholder="" name="request">
+                    </div>
+                </div>
 
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-link">Search</button>
+                    </div>
+                </div>
 
-        var products = new AzureDb().GetProducts();
+            </form>
+            <form name="UserModel" method="POST" action="/Home/ClearSearchProducts">
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-link">Clear</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        List<Product> products;
+
+        if(TempData["SearchRequest"] != null){
+
+        products = AzureDb.Instance.SearchProducts(TempData["SearchRequest"].ToString());
+        }
+        else{
+
+        products = new AzureDb().GetProducts();
+        }
+
         foreach (var Product in products)
         {
             <div>
