@@ -145,27 +145,20 @@ namespace database_final_project
 
     }
 
-        public List<Rating> GetProductRating()
+        public decimal GetAverageProductRating(int ProductId)
         {
-            
+            decimal AvgRating = 0;
             List<Rating> result = new List<Rating>();
             try
             {
                 using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
                 {
                     conn.Open();
-                    string query = "Select avg * from [dbo].TRating Where TRating.nProductId = @Id";
+                    string query = "Select nAvgRating from TProduct Where nProductId = @Id";
                     SqlCommand cmd = new SqlCommand(query, conn);
-                    SqlDataReader reader = cmd.ExecuteReader();
+                    cmd.Parameters.AddWithValue("@Id", ProductId);
+                    AvgRating = Convert.ToDecimal(cmd.ExecuteScalar());
 
-                    while (reader.Read())
-                    {
-                        var rating = Factory.CreateRating();
-                        
-                       
-                        rating.nProductId = int.Parse(reader["nProductId"].ToString());
-                        
-                    }
 
                 }
             }
@@ -173,7 +166,7 @@ namespace database_final_project
             {
                 System.Console.WriteLine(e);
             }
-            return result;
+            return AvgRating;
 
 
 
@@ -417,13 +410,6 @@ namespace database_final_project
           result = Convert.ToDecimal(cmd.ExecuteScalar());
           conn.Close();
 
-          //conn.Open();
-          //string SelectQuery = @"SELECT TOP (1) [nInvoiceId]FROM[dbo].[TInvoice]ORDER BY nDate Desc";
-          //cmd = new SqlCommand(SelectQuery, conn);
-
-          //int result = int.Parse(cmd.ExecuteScalar().ToString());
-
-
         }
       }
       catch (SqlException e)
@@ -434,43 +420,81 @@ namespace database_final_project
       return result;
     }
 
-    public int InsertRating(int UserId, int ProductId, int Rating, string Comment)
-    {
-      var result = 0;
-      try
-      {
 
-        using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
+
+        public int InsertRating(int UserId, int ProductId, int Rating, string Comment)
         {
+            using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
+            {
+                conn.Open();
+                SqlTransaction tran = conn.BeginTransaction(IsolationLevel.Serializable);
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.Transaction = tran;
 
-          conn.Open();
-          string query = "Insert Into TRating ([nProductId],[nUserId],[nRating],[cComment]) Values (@ProductId, @UserId, @Rating, @Comment)";
-          SqlCommand cmd = new SqlCommand(query, conn);
-          cmd.Parameters.AddWithValue("@ProductId", ProductId);
-          cmd.Parameters.AddWithValue("@UserId", UserId);
-          cmd.Parameters.AddWithValue("@Rating", Rating);
-          cmd.Parameters.AddWithValue("@Comment", Comment);
+                try
+                {
+                
+                    //insert Rating
+                    string query = "Insert Into TRating ([nProductId],[nUserId],[nRating],[cComment]) Values (@ProductId, @UserId, @Rating, @Comment)";
+                    cmd.CommandText = query;
+                    cmd.Parameters.AddWithValue("@ProductId", ProductId);
+                    cmd.Parameters.AddWithValue("@UserId", UserId);
+                    cmd.Parameters.AddWithValue("@Rating", Rating);
+                    cmd.Parameters.AddWithValue("@Comment", Comment);
+                    cmd.ExecuteNonQuery();
 
-          result = cmd.ExecuteNonQuery();
-          conn.Close();
 
-          //conn.Open();
-          //string SelectQuery = @"SELECT TOP (1) [nInvoiceId]FROM[dbo].[TInvoice]ORDER BY nDate Desc";
-          //cmd = new SqlCommand(SelectQuery, conn);
+                    //get all ratings
+                    cmd = conn.CreateCommand();
+                    cmd.Transaction = tran;
+                    string GetRatingsquery = "Select * FROM TRating WHERE nProductId = @ProductId ";
+                    cmd.CommandText = GetRatingsquery;
+                    cmd.Parameters.AddWithValue("@ProductId", ProductId);
+                    SqlDataReader reader = cmd.ExecuteReader();
 
-          //int result = int.Parse(cmd.ExecuteScalar().ToString());
+
+                    List<int> Ratings = new List<int>();
+                    decimal total = 0;
+                    while (reader.Read())
+                    {
+                        var SingleRating = Convert.ToInt32(reader["nRating"]);
+                        total += SingleRating;
+                        Ratings.Add(SingleRating);
+                    }
+                    reader.Close();
+                    var Count = Ratings.Count;
+
+
+                    //calculate avg
+                    decimal AverageRating = total / Count;
+
+
+                    //insert avg
+                    cmd = conn.CreateCommand();
+                    cmd.Transaction = tran;
+                    string InsertAvGRating = "UPDATE TProduct SET nAvgRating = @AverageRating WHERE nProductId = @ProductId";
+                    cmd.CommandText = InsertAvGRating;
+                    cmd.Parameters.AddWithValue("@AverageRating", AverageRating);
+                    cmd.Parameters.AddWithValue("@ProductId", ProductId);
+                    cmd.ExecuteNonQuery();
+
+
+                    tran.Commit();
+                    conn.Close();
+                    return 1;
+
+                }
+                catch (SqlException e)
+                {                   
+                    tran.Rollback();
+                    conn.Close();
+                    throw;
+                }
+
+               
+            }
 
         }
-      }
-      catch (SqlException e)
-      {
-        System.Console.WriteLine(e);
-      }
-
-      return result;
-    }
-
-
     #endregion
   }
 }
