@@ -145,7 +145,41 @@ namespace database_final_project
 
     }
 
-    public List<Product> SearchProducts(string in_request)
+        public List<Rating> GetProductRating()
+        {
+            
+            List<Rating> result = new List<Rating>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
+                {
+                    conn.Open();
+                    string query = "Select avg * from [dbo].TRating Where TRating.nProductId = @Id";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        var rating = Factory.CreateRating();
+                        
+                       
+                        rating.nProductId = int.Parse(reader["nProductId"].ToString());
+                        
+                    }
+
+                }
+            }
+            catch (SqlException e)
+            {
+                System.Console.WriteLine(e);
+            }
+            return result;
+
+
+
+        }
+
+        public List<Product> SearchProducts(string in_request)
     {
       List<Product> result = new List<Product>();
       try

@@ -12,11 +12,13 @@
     var product = CareTaker.GetInstance();
     TempData["History"] = JsonConvert.SerializeObject(product.cname);
 
+
+
     <h2>@Model.cname</h2>
     <p>@Model.cdescription</p>
     <p> @Model.nStock units</p>
     <p>@Model.nUnitPrice DKK</p>
-
+    <p>Average rating:@Model.nAvgRating</p>
 
     <button>
         <a href="@Url.Action("History", "Home",product)">See history</a>

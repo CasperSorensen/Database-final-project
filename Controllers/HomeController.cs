@@ -153,6 +153,8 @@ namespace database_final_project.Controllers
     }
     public IActionResult ProductDetails(Product ProductModel)
     {
+            var rating = new AzureDb().GetProductRating();
+            var Id = ProductModel.nProductId;
       return View("./ProductDetails", ProductModel);
     }
     public IActionResult Logout()
