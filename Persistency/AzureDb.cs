@@ -43,6 +43,9 @@ namespace database_final_project
 
         #region Methods
 
+        /// <summary>
+        /// Fetches all Users
+        /// </summary>
         public List<string> GetUsers()
         {
             List<string> result = new List<string>();
@@ -68,9 +71,11 @@ namespace database_final_project
                 System.Console.WriteLine(e);
             }
             return result;
-
         }
 
+        /// <summary>
+        /// Checks if the inputted User is valid
+        /// </summary>
         public UserModel LoginUser(UserModel user)
         {
             var id = user.UserId;
@@ -99,7 +104,6 @@ namespace database_final_project
                     {
                         return result;
                     }
-
                 }
             }
             catch (SqlException e)
@@ -107,9 +111,11 @@ namespace database_final_project
                 System.Console.WriteLine(e);
             }
             return result;
-
         }
 
+        /// <summary>
+        /// Fetches all Products
+        /// </summary>
         public List<Product> GetProducts()
         {
             List<Product> result = new List<Product>();
@@ -132,7 +138,6 @@ namespace database_final_project
                         product.nUnitPrice = decimal.Parse(reader["nUnitPrice"].ToString());
                         result.Add(product);
                     }
-
                 }
             }
             catch (SqlException e)
@@ -140,11 +145,12 @@ namespace database_final_project
                 System.Console.WriteLine(e);
             }
             return result;
-
-
-
         }
 
+        /// <summary>
+        /// Fetches the average Product rating 
+        /// based on ProductId 
+        /// </summary>
         public decimal GetAverageProductRating(int ProductId)
         {
             decimal AvgRating = 0;
@@ -158,8 +164,6 @@ namespace database_final_project
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@Id", ProductId);
                     AvgRating = Convert.ToDecimal(cmd.ExecuteScalar());
-
-
                 }
             }
             catch (SqlException e)
@@ -167,11 +171,11 @@ namespace database_final_project
                 System.Console.WriteLine(e);
             }
             return AvgRating;
-
-
-
         }
 
+        /// <summary>
+        /// Fetches Products based on an search string
+        /// </summary>
         public List<Product> SearchProducts(string in_request)
         {
             List<Product> result = new List<Product>();
@@ -205,6 +209,10 @@ namespace database_final_project
             return result;
         }
 
+        /// <summary>
+        /// Fetches a list of Products 
+        /// based on the Min Price and Max Price
+        /// </summary>
         public List<Product> SearchProductsOnPrice(int in_min, int in_max)
         {
             if (in_max == 0)
@@ -234,7 +242,6 @@ namespace database_final_project
                         product.nUnitPrice = decimal.Parse(reader["nUnitPrice"].ToString());
                         result.Add(product);
                     }
-
                 }
             }
             catch (SqlException e)
@@ -244,6 +251,10 @@ namespace database_final_project
             return result;
         }
 
+        /// <summary>
+        /// Fetches a list of Creditcards 
+        /// based on a UserId
+        /// </summary>
         public List<CreditCard> GetCreditCardsForUser(int UserId)
         {
             List<CreditCard> cards = new List<CreditCard>();
@@ -265,9 +276,7 @@ namespace database_final_project
                         card.nIBANCode = Int64.Parse(reader["nIBANCode"].ToString());
                         card.dExpDate = DateTime.Parse(reader["dExpDate"].ToString());
                         cards.Add(card);
-
                     }
-
                 }
             }
             catch (SqlException e)
@@ -275,13 +284,15 @@ namespace database_final_project
                 System.Console.WriteLine(e);
             }
             return cards;
-
-
-
         }
+
+        /// <summary>
+        /// Inserts in new Invoice
+        /// Inserts all the InvoiceLines
+        /// and updates the associated tables
+        /// </summary>
         public int InvoiceTransaction(ObjectOfFieldsForDatabase model, Dictionary<int, int> basket)
         {
-
             using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
             {
                 conn.Open();
@@ -295,7 +306,6 @@ namespace database_final_project
                     {
                         throw new Exception("basket was empty");
                     }
-
 
                     //insert invoice
                     string query = "EXEC pro_CreateInvoice @nUserId = @UserId, @nCardId = @CardId, @dTax = @Tax, @nTotalAmount = @TotalAmount, @dDate = @Date";
@@ -311,9 +321,6 @@ namespace database_final_project
                     string SelectQuery = @"SELECT TOP (1) [nInvoiceId]FROM[dbo].[TInvoice]ORDER BY nDate Desc";
                     cmd.CommandText = SelectQuery;
                     int InvoiceId = Convert.ToInt32(cmd.ExecuteScalar());
-
-
-
 
                     foreach (var product in basket)
                     {
@@ -347,7 +354,6 @@ namespace database_final_project
                         cmd.Parameters.AddWithValue("@UnitPrice", UnitPrice);
                         cmd.ExecuteNonQuery();
 
-
                         //update stocks
                         cmd = conn.CreateCommand();
                         cmd.Transaction = tran;
@@ -357,8 +363,6 @@ namespace database_final_project
                         cmd.Parameters.AddWithValue("@NewStock", NewStock);
                         cmd.Parameters.AddWithValue("@ProductId", ProductID);
                         cmd.ExecuteNonQuery();
-
-
 
                         var CardId = model.CreditCardId;
                         var UserId = model.UserId;
@@ -374,8 +378,6 @@ namespace database_final_project
                         decimal TotalAmount = Convert.ToDecimal(cmd.ExecuteScalar());
                         decimal NewTotal = TotalAmount + TotalPrice;
 
-
-
                         //Update User Table
                         cmd = conn.CreateCommand();
                         cmd.Transaction = tran;
@@ -384,7 +386,6 @@ namespace database_final_project
                         cmd.Parameters.AddWithValue("@NewTotal", NewTotal);
                         cmd.Parameters.AddWithValue("@UserId", UserId);
                         cmd.ExecuteNonQuery();
-
 
                         //Get Credit Card Total
                         cmd = conn.CreateCommand();
@@ -404,13 +405,7 @@ namespace database_final_project
                         cmd.Parameters.AddWithValue("@NewAmount", NewAmountSpent);
                         cmd.Parameters.AddWithValue("@CardId", CardId);
                         cmd.ExecuteNonQuery();
-
-
                     }
-
-
-
-
 
                     tran.Commit();
                     conn.Close();
@@ -421,19 +416,19 @@ namespace database_final_project
                     tran.Rollback();
                     conn.Close();
                     throw;
-
                 }
-
             }
         }
 
-
+        /// <summary>
+        /// Fetches the UnitPrice for a single Product
+        /// </summary>
         public decimal GetUnitPriceForProduct(int productId)
         {
             decimal result = 0;
+
             try
             {
-
                 using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
                 {
 
@@ -444,7 +439,6 @@ namespace database_final_project
 
                     result = Convert.ToDecimal(cmd.ExecuteScalar());
                     conn.Close();
-
                 }
             }
             catch (SqlException e)
@@ -455,8 +449,10 @@ namespace database_final_project
             return result;
         }
 
-
-
+        /// <summary>
+        /// Inserts in new Rating
+        /// and updates the Products Avg rating
+        /// </summary>
         public int InsertRating(int UserId, int ProductId, int Rating, string Comment)
         {
             using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
@@ -487,7 +483,6 @@ namespace database_final_project
                     cmd.Parameters.AddWithValue("@ProductId", ProductId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-
                     List<int> Ratings = new List<int>();
                     decimal total = 0;
                     while (reader.Read())
@@ -499,10 +494,8 @@ namespace database_final_project
                     reader.Close();
                     var Count = Ratings.Count;
 
-
                     //calculate avg
                     decimal AverageRating = total / Count;
-
 
                     //insert avg
                     cmd = conn.CreateCommand();
@@ -512,7 +505,6 @@ namespace database_final_project
                     cmd.Parameters.AddWithValue("@AverageRating", AverageRating);
                     cmd.Parameters.AddWithValue("@ProductId", ProductId);
                     cmd.ExecuteNonQuery();
-
 
                     tran.Commit();
                     conn.Close();
@@ -525,11 +517,9 @@ namespace database_final_project
                     conn.Close();
                     throw;
                 }
-
-
             }
-
         }
+
         #endregion
     }
 }

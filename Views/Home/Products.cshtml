@@ -98,8 +98,6 @@
 
             var minprice = Convert.ToInt32(TempData["MinPrice"]);
             var maxprice = Convert.ToInt32(TempData["MaxPrice"]);
-            products = AzureDb.Instance.SearchProductsOnPrice(minprice, maxprice);
-
         }
         else {
 
