@@ -7,7 +7,6 @@
     ViewData["Title"] = "Products";
 }
 
-<h1>Products</h1>
 @{
     var loginMsg = TempData["LogginMessage"] != null ? TempData["LogginMessage"].ToString() : "";
     var isLoggedIn = TempData["IsLoggedIn"].ToString();
@@ -36,18 +35,22 @@
         if (TempData["History"] != null)
         {
             var productName = TempData["History"].ToString();
-            
+
             <h2>Your last Viewed Product is @productName </h2>
         }
 
+        <br />
         <div class="container">
             <form name="UserModel" method="POST" action="/Home/SearchProducts">
+                <h2>Search by Product Name or Description</h2>
                 <div class="field">
-<p></p>
+                    <p></p>
                     <div class="control">
                         <input class="input" type="text" placeholder="" name="request" required>
                     </div>
                 </div>
+
+
 
                 <div class="field is-grouped">
                     <div class="control">
@@ -57,6 +60,10 @@
 
             </form>
 
+            <br />
+            <br />
+
+            <h2>Search by Price</h2>
             <form name="UserModel" method="POST" action="/Home/SearchProductsOnPrice">
                 <div class="field">
                     <p>Min price:</p>
@@ -78,6 +85,7 @@
                 </div>
 
             </form>
+            <br />
             <form name="UserModel" method="POST" action="/Home/ClearSearchProducts">
 
                 <div class="field is-grouped">
@@ -87,21 +95,27 @@
                 </div>
             </form>
         </div>
+        <br />
+        <h1>Products :</h1>
+        <br />
 
         List<Product> products = new List<Product>();
 
-        if(TempData["SearchRequest"] != null){
+        if (TempData["SearchRequest"] != null)
+        {
 
             products = AzureDb.Instance.SearchProducts(TempData["SearchRequest"].ToString());
         }
-        else if (TempData["MinPrice"] != null || TempData["MaxPrice"] != null){
+        else if (TempData["MinPrice"] != null || TempData["MaxPrice"] != null)
+        {
 
             var minprice = Convert.ToInt32(TempData["MinPrice"]);
             var maxprice = Convert.ToInt32(TempData["MaxPrice"]);
 
             products = AzureDb.Instance.SearchProductsOnPrice(minprice, maxprice);
         }
-        else {
+        else
+        {
 
             products = AzureDb.Instance.GetProducts();
         }
@@ -122,7 +136,7 @@
                 </button>
                 <div class="container">
                     <button>
-                        <a href="@Url.Action("ProductDetails","Home",Product)">ProductDetails</a>                       
+                        <a href="@Url.Action("ProductDetails","Home",Product)">ProductDetails</a>
                     </button>
                     <button>
                         @{var RateModel = new RateModel();
