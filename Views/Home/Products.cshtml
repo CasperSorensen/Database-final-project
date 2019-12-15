@@ -43,9 +43,9 @@
         <div class="container">
             <form name="UserModel" method="POST" action="/Home/SearchProducts">
                 <div class="field">
-
+<p></p>
                     <div class="control">
-                        <input class="input" type="text" placeholder="" name="request">
+                        <input class="input" type="text" placeholder="" name="request" required>
                     </div>
                 </div>
 
@@ -56,26 +56,54 @@
                 </div>
 
             </form>
+
+            <form name="UserModel" method="POST" action="/Home/SearchProductsOnPrice">
+                <div class="field">
+                    <p>Min price:</p>
+                    <div class="control">
+                        <input class="input" type="number" placeholder="" name="in_min">
+                    </div>
+                </div>
+                <div class="field">
+                    <p>Max price:</p>
+                    <div class="control">
+                        <input class="input" type="number" placeholder="" name="in_max">
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-link">Search Prices</button>
+                    </div>
+                </div>
+
+            </form>
             <form name="UserModel" method="POST" action="/Home/ClearSearchProducts">
 
                 <div class="field is-grouped">
                     <div class="control">
-                        <button class="button is-link">Clear</button>
+                        <button class="button is-link">Clear< Searches/button>
                     </div>
                 </div>
             </form>
-
         </div>
 
         List<Product> products;
 
         if(TempData["SearchRequest"] != null){
 
-        products = AzureDb.Instance.SearchProducts(TempData["SearchRequest"].ToString());
+            products = AzureDb.Instance.SearchProducts(TempData["SearchRequest"].ToString());
         }
-        else{
+        else if (TempData["MinPrice"] != null || TempData["MaxPrice"] != null){
 
-        products = new AzureDb().GetProducts();
+            var minprice = Convert.ToInt32(TempData["MinPrice"]);
+            var maxprice = Convert.ToInt32(TempData["MaxPrice"]);
+            products = AzureDb.Instance.SearchProductsOnPrice(minprice, maxprice);
+
+        }
+        else {
+
+            products = AzureDb.Instance.GetProducts();
         }
 
         foreach (var Product in products)
