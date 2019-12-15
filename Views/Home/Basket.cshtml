@@ -36,107 +36,101 @@
             List<Product> AllDbProducts = AzureDb.Instance.GetProducts();
 
             <h2>Your basket Contains:</h2>
-            foreach (var product in Basket)
+
+            var Products = Basket.Keys;
+
+            foreach (var DbProduct in AllDbProducts)
             {
-                foreach (var DbProduct in AllDbProducts)
+                if (Products.Contains(DbProduct.nProductId))
                 {
-                    if (DbProduct.nProductId == product.Key)
+                    var ProductId = DbProduct.nProductId;
+                    var Quantity = Basket[DbProduct.nProductId];
+
+                    decimal SubTotal = DbProduct.nUnitPrice * Quantity;
+                    <p>@DbProduct.cname, Quantity: @Quantity (x @DbProduct.nUnitPrice =@SubTotal DKK)</p>
+
+
+                    if (TempData["GiftIds"] != null)
                     {
+                        int giftId = Convert.ToInt32(TempData["GiftIds"]);
+                        TempData.Keep();
 
-                        decimal SubTotal = DbProduct.nUnitPrice * product.Value;
-                        <p>@DbProduct.cname, Quantity: @product.Value (x @DbProduct.nUnitPrice =@SubTotal DKK)</p>
-
-
-                        if (TempData["GiftIds"] != null)
+                        if (ProductId == giftId)
                         {
-                            int giftId = Convert.ToInt32(TempData["GiftIds"]);
-                            TempData.Keep();
+                            <br />
+                            <h2>This product will be wrapped as gift: @DbProduct.cname</h2>
+                            var DecoratedProduct = new GiftDecorator(DbProduct);
+                            <h2>New product price = @DecoratedProduct.nUnitPrice</h2>
 
-                            if (product.Key == giftId)
-                            {
-                                <br />
-                                <h2>This product will be wrapped as gift: @DbProduct.cname</h2>
-                                var DecoratedProduct = new GiftDecorator(DbProduct);
-                                <h2>New product price = @DecoratedProduct.nUnitPrice</h2>
-
-                                Total += DbProduct.nUnitPrice * product.Value + DecoratedProduct.nUnitPrice;
-                            }
-                           
+                            Total += DecoratedProduct.nUnitPrice;
                         }
-                         else
-                            {
-                                 Total += DbProduct.nUnitPrice * product.Value;
-                            }
+                        else
+                        {
+                            Total += DbProduct.nUnitPrice * Quantity;
+                        }
+                    }
+                }
+            }
+
+              
+                <br />
+                <h2>Total: @Total DKK</h2>
+                data.Total = Total;
+                <br />
+                List<CreditCard> cards = AzureDb.Instance.GetCreditCardsForUser(id);
+                <h3>Payment Method</h3>
+                <h4> Please Chose a card associated with your account to complete the purchase</h4>
 
 
 
-                       
+                if (cards.Count == 0)
+                {
+                    <h2> "no cards are registered with this user"</h2>
+                }
+                else
+                {
 
 
+                    foreach (var card in cards)
+                    {
+                        data.CreditCardId = card.nCreditCardId;
+                        data.Tax = 25;
+                        <div style="border:solid">
+                            <h5>Card Id: @card.nCreditCardId</h5>
+                            <p>Card IBAN: @card.nIBANCode</p>
+                            <p>Ending In: @card.dExpDate.Month / @card.dExpDate.Year</p>
+
+                            <button>
+                                <a href="@Url.Action("CheckoutPage", "Home", data)">This One!</a>
+                            </button>
+                            <br />
+
+                        </div>
+                        <br />
                     }
                 }
 
 
+                <div>
+                    <button>
+                        <a href="@Url.Action("ClearBasket", "Home")">Clear Basket</a>
+                    </button>
+
+
+                </div>
 
             }
-            <br />
-            <h2>Total: @Total DKK</h2>
-            data.Total = Total;
-            <br />
-            List<CreditCard> cards = AzureDb.Instance.GetCreditCardsForUser(id);
-            <h3>Payment Method</h3>
-            <h4> Please Chose a card associated with your account to complete the purchase</h4>
 
-
-
-            if (cards.Count == 0)
+else
             {
-                <h2> "no cards are registered with this user"</h2>
+                <h3>Your Basket is empty, put something in it!</h3>
             }
-            else
-            {
-
-
-                foreach (var card in cards)
-                {
-                    data.CreditCardId = card.nCreditCardId;
-                    data.Tax = 25;
-                    <div style="border:solid">
-                        <h5>Card Id: @card.nCreditCardId</h5>
-                        <p>Card IBAN: @card.nIBANCode</p>
-                        <p>Ending In: @card.dExpDate.Month / @card.dExpDate.Year</p>
-
-                        <button>
-                            <a href="@Url.Action("CheckoutPage", "Home", data)">This One!</a>
-                        </button>
-                        <br />
-
-                    </div>
-                    <br />
-                }
-            }
-
-
-            <div>
-                <button>
-                    <a href="@Url.Action("ClearBasket", "Home")">Clear Basket</a>
-                </button>
-
-
-            </div>
-
         }
-
         else
         {
-            <h3>Your Basket is empty, put something in it!</h3>
+
+            <h2>You need to be logged in, in order to use Basket Please do so <a href="/">here</a></h2>
+
         }
     }
-    else
-    {
-
-        <h2>You need to be logged in, in order to use Basket Please do so <a href="/">here</a></h2>
-
-    }
-}
 
