@@ -64,15 +64,18 @@
 
                             Total += DecoratedProduct.nUnitPrice;
                         }
-                        else
-                        {
-                            Total += DbProduct.nUnitPrice * Quantity;
-                        }
+                       
+                            
+                      
+                    }
+                    else
+                    {
+                        Total += DbProduct.nUnitPrice * Quantity;
                     }
                 }
             }
 
-              
+
                 <br />
                 <h2>Total: @Total DKK</h2>
                 data.Total = Total;

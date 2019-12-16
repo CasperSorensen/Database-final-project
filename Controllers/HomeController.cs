@@ -181,6 +181,7 @@ namespace database_final_project.Controllers
         {
 
             TempData["Basket"] = null;
+            TempData["GiftIds"] = null;
             return View("./Basket");
         }
 
