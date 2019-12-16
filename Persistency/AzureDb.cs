@@ -465,6 +465,10 @@ namespace database_final_project
                 try
                 {
 
+                    if (Comment==null)
+                    {
+                        Comment = " ";
+                    }
                     //insert Rating
                     string query = "Insert Into TRating ([nProductId],[nUserId],[nRating],[cComment]) Values (@ProductId, @UserId, @Rating, @Comment)";
                     cmd.CommandText = query;
