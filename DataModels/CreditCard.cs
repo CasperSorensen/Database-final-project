@@ -10,7 +10,7 @@ namespace database_final_project
     public int nCreditCardId { get; set; }
     public int nUserId { get; set; }
     public Int64 nIBANCode { get; set; }
-    public DateTime dExpDate { get; set; }
+    public string dExpDate { get; set; }
     public int nCcv { get; set; }
     public string cCardHolderName { get; set; }
     public decimal nTotalAmount { get; set; }
