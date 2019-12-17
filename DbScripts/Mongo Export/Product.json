@@ -1,53 +1,59 @@
-// Array to populate Products collection for MongoDB
 [
    {
+      "productName":"testProduct",
+      "description":"SOme Description",
+      "unitPrice":15.20,
+      "stock":10,
+      "avgRating":3.3
+   },
+   {
       "productName":"Sweatpants with Side Stripes",
-      "description":"In sagittis dui vel nisl.",
-      "unitPrice":67.97,
-      "stock":5,
-      "avgRating":0.0
+      "description":"Updated Description",
+      "unitPrice":58.00,
+      "stock":20,
+      "avgRating":2.0
    },
    {
       "productName":"Skinny Regular Ankle Jeans",
       "description":"In tempor, turpis nec euismod scelerisque.",
       "unitPrice":15.50,
-      "stock":15,
+      "stock":10,
       "avgRating":0.0
    },
    {
       "productName":"Sweatshirt",
       "description":"Integer non velit.",
       "unitPrice":61.04,
-      "stock":20,
-      "avgRating":0.0
+      "stock":15,
+      "avgRating":2.5
    },
    {
       "productName":"Wool-blend Coat",
       "description":"Nullam varius.",
       "unitPrice":66.66,
       "stock":18,
-      "avgRating":0.0
+      "avgRating":2.6
    },
    {
       "productName":"Pajamas",
       "description":"Vivamus metus arcu, adipiscing molestie, hendrerit atnisl.",
       "unitPrice":26.62,
-      "stock":9,
-      "avgRating":0.0
+      "stock":7,
+      "avgRating":4.6
    },
    {
       "productName":"Cashmere Scarf",
       "description":"Morbi vel lectus in quam fringilla rhoncus.",
       "unitPrice":55.19,
-      "stock":6,
-      "avgRating":0.0
+      "stock":10,
+      "avgRating":5.0
    },
    {
       "productName":"Hooded Sweatshirt",
       "description":"Fusce posuere felis sed lacus.",
       "unitPrice":55.07,
       "stock":18,
-      "avgRating":0.0
+      "avgRating":2.3
    },
    {
       "productName":"T-Shirt",
@@ -72,16 +78,16 @@
    },
    {
       "productName":"Loafers",
-      "description":"Integer a nibh.",
+      "description":"Actually...",
       "unitPrice":17.01,
-      "stock":7,
+      "stock":6,
       "avgRating":0.0
    },
    {
       "productName":"Sneakers",
       "description":"Duis bibendum.",
       "unitPrice":78.13,
-      "stock":18,
+      "stock":17,
       "avgRating":0.0
    },
    {
@@ -114,9 +120,9 @@
    },
    {
       "productName":"Collar Sweater",
-      "description":"Vivamus tortor.",
-      "unitPrice":61.31,
-      "stock":9,
+      "description":"Something you really need in your life.",
+      "unitPrice":25.80,
+      "stock":7,
       "avgRating":0.0
    },
    {
@@ -129,8 +135,8 @@
    {
       "productName":"Coat",
       "description":"Praesent lectus.",
-      "unitPrice":42.75,
-      "stock":1,
+      "unitPrice":13.37,
+      "stock":15,
       "avgRating":0.0
    },
    {
@@ -138,13 +144,6 @@
       "description":"Aliquam erat volutpat.",
       "unitPrice":50.06,
       "stock":9,
-      "avgRating":0.0
-   },
-   {
-      "productName":"Golf Cap",
-      "description":"Cap for Golf",
-      "unitPrice":13.37,
-      "stock":14,
       "avgRating":0.0
    }
 ]
