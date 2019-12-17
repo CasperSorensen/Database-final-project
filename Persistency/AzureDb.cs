@@ -378,7 +378,7 @@ namespace database_final_project
                         cmd.Parameters.AddWithValue("@UserId", UserId);
 
                         decimal TotalAmount = Convert.ToDecimal(cmd.ExecuteScalar());
-                        decimal NewTotal = TotalAmount + TotalPrice;
+                        decimal NewTotal = TotalAmount + UnitPrice * Quantity;
 
                         //Update User Table
                         cmd = conn.CreateCommand();
@@ -397,7 +397,7 @@ namespace database_final_project
                         cmd.Parameters.AddWithValue("@CardId", CardId);
 
                         decimal AmountSpent = Convert.ToDecimal(cmd.ExecuteScalar());
-                        decimal NewAmountSpent = AmountSpent + TotalPrice;
+                        decimal NewAmountSpent = AmountSpent + UnitPrice * Quantity;
 
                         //Update CreditCard Table
                         cmd = conn.CreateCommand();
