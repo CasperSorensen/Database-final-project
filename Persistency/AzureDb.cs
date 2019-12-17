@@ -20,10 +20,12 @@ namespace database_final_project
         public AzureDb()
         {
             this._builder = new SqlConnectionStringBuilder();
-            _builder.DataSource = "web-shop-server.database.windows.net";
-            _builder.UserID = "ServerUser";
-            _builder.Password = "SecretPassword123";
-            _builder.InitialCatalog = "WebShopDB";
+            _builder.ConnectionString = @"Server=DESKTOP-G7J11FP\MSSQLSERVER01;Initial Catalog=WebShopDb;User Id=DBAdmin;Password=StrongPassword123;";
+           
+            //_builder.DataSource = "DESKTOP-G7J11FP./MSSQLSERVER01";        
+            //_builder.UserID = "DBAdmin";
+            //_builder.Password = "StrongPassword123";
+            //_builder.InitialCatalog = "WebShopDB";
         }
 
         public static AzureDb Instance
