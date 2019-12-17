@@ -101,7 +101,7 @@
                         <div style="border:solid">
                             <h5>Card Id: @card.nCreditCardId</h5>
                             <p>Card IBAN: @card.nIBANCode</p>
-                            <p>Ending In: @card.dExpDate.Month / @card.dExpDate.Year</p>
+                            <p>Ending On: @card.dExpDate</p>
 
                             <button>
                                 <a href="@Url.Action("CheckoutPage", "Home", data)">This One!</a>

@@ -276,7 +276,7 @@ namespace database_final_project
 
                         card.nCreditCardId = int.Parse(reader["nCreditCardId"].ToString());
                         card.nIBANCode = Int64.Parse(reader["nIBANCode"].ToString());
-                        card.dExpDate = DateTime.Parse(reader["dExpDate"].ToString());
+                        card.dExpDate = reader["dExpDate"].ToString();
                         cards.Add(card);
                     }
                 }
