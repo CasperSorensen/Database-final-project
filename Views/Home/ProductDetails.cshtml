@@ -8,10 +8,7 @@
 <h1>ProductDetails</h1>
 @{
 
-    var CareTaker = new ProductCareTaker(Model);
 
-    var product = CareTaker.GetInstance();
-    TempData["History"] = JsonConvert.SerializeObject(product.cname);
 
 
 
@@ -21,10 +18,10 @@
     <p>@Model.nUnitPrice DKK</p>
     <p>Average rating:@Model.nAvgRating</p>
 
-    <button>
-        <a href="@Url.Action("History", "Home",product)">See history</a>
+   
+      
 
-    </button>
+   
 
 }
 

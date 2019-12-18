@@ -14,10 +14,9 @@ namespace database_final_project
 
       public override decimal GetnUnitPrice()
     {
-            Product Price = (Product)_In_product;
-            var result =Price.nUnitPrice+20;
-            return result;
-            var sd = "";
+            Product product = (Product)_In_product;
+             return product.nUnitPrice+20;
+            
     }
 
      
