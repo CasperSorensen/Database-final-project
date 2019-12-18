@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using database_final_project.Models;
 using System.Data;
+using database_final_project.Patterns;
 
 namespace database_final_project
 {
@@ -17,7 +18,7 @@ namespace database_final_project
 
         #endregion
 
-        public AzureDb()
+        private AzureDb()
         {
             this._builder = new SqlConnectionStringBuilder();
             _builder.ConnectionString = @"Server=DESKTOP-G7J11FP\MSSQLSERVER01;Initial Catalog=WebShopDb;User Id=DBAdmin;Password=StrongPassword123;";
@@ -132,7 +133,7 @@ namespace database_final_project
 
                     while (reader.Read())
                     {
-                        var product = Factory.CreateProduct();
+                        var product = (Product)ModelFactory.Build("product");
                         product.cname = reader["cName"].ToString();
                         product.cdescription = reader["cdescription"].ToString();
                         product.nStock = int.Parse(reader["nStock"].ToString());
@@ -193,7 +194,7 @@ namespace database_final_project
 
                     while (reader.Read())
                     {
-                        var product = Factory.CreateProduct();
+                        Product product =  (Product)ModelFactory.Build("product") as Product;
                         product.cname = reader["cName"].ToString();
                         product.cdescription = reader["cdescription"].ToString();
                         product.nStock = int.Parse(reader["nStock"].ToString());
@@ -236,7 +237,7 @@ namespace database_final_project
 
                     while (reader.Read())
                     {
-                        var product = Factory.CreateProduct();
+                        var product = (Product)ModelFactory.Build("product");
                         product.cname = reader["cName"].ToString();
                         product.cdescription = reader["cdescription"].ToString();
                         product.nStock = int.Parse(reader["nStock"].ToString());
@@ -272,7 +273,7 @@ namespace database_final_project
 
                     while (reader.Read())
                     {
-                        var card = Factory.CreateCreditCard();
+                        var card = (CreditCard)ModelFactory.Build("creditcard");
 
                         card.nCreditCardId = int.Parse(reader["nCreditCardId"].ToString());
                         card.nIBANCode = Int64.Parse(reader["nIBANCode"].ToString());

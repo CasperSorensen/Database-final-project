@@ -5,25 +5,22 @@ namespace database_final_project
 {
   public class GiftDecorator : ProductDecorator
   {
-
-    public GiftDecorator(Product in_product)
+        public IGift _In_product;
+    public GiftDecorator(IGift in_product)
     : base(in_product)
     {
-
+            this._In_product = in_product;
     }
 
-    public override decimal nUnitPrice
+      public override decimal GetnUnitPrice()
     {
-      get
-      {
-        return base._product.nUnitPrice + 20;
-      }
-      set
-      {
-        _product.nUnitPrice = value;
-      }
+            Product Price = (Product)_In_product;
+            var result =Price.nUnitPrice+20;
+            return result;
+            var sd = "";
     }
 
+     
   }
 
 }

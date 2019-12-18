@@ -9,6 +9,7 @@
 @{
 
     var CareTaker = new ProductCareTaker(Model);
+
     var product = CareTaker.GetInstance();
     TempData["History"] = JsonConvert.SerializeObject(product.cname);
 

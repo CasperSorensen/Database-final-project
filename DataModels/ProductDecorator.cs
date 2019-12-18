@@ -3,27 +3,17 @@ using database_final_project.Models;
 
 namespace database_final_project
 {
-  public class ProductDecorator : IGift
+  public abstract class ProductDecorator : IGift
   {
-    public Product _product;
+    public IGift _Igift;
 
-    public ProductDecorator(Product in_product)
+    public ProductDecorator(IGift in_product)
     {
-      this._product = in_product;
+      this._Igift = in_product;
 
     }
 
-    public virtual decimal nUnitPrice
-    {
-      get
-      {
-        return _product.nUnitPrice;
-      }
-      set
-      {
-        _product.nUnitPrice = value;
-      }
-    }
+        public abstract decimal GetnUnitPrice();
 
   }
 

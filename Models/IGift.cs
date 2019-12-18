@@ -2,6 +2,6 @@ namespace database_final_project.Models
 {
   public abstract class IGift
   {
-    int nUnitPrice { get; set; }
+    public decimal nUnitPrice { get; set; }
   }
 }

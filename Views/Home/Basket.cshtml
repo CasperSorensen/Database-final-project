@@ -59,10 +59,10 @@
                         {
                             <br />
                             <h2>This product will be wrapped as gift: @DbProduct.cname</h2>
-                            var DecoratedProduct = new GiftDecorator(DbProduct);
-                            <h2>New product price = @DecoratedProduct.nUnitPrice</h2>
+                            decimal newPrice = new GiftDecorator(DbProduct).GetnUnitPrice();
+                            <h2>New product price = @newPrice</h2>
 
-                            Total += DecoratedProduct.nUnitPrice;
+                            Total += newPrice;
                         }
                        
                             

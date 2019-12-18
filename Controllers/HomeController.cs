@@ -37,17 +37,13 @@ namespace database_final_project.Controllers
 
         public IActionResult CheckoutPage(ObjectOfFieldsForDatabase data)
         {
-
-
-
-
             return View(data);
         }
 
 
         public IActionResult Login(UserModel model)
         {
-            var UserData = new AzureDb().LoginUser(model);
+            var UserData = AzureDb.Instance.LoginUser(model);
             if (UserData.UserId == 0)
             {
                 TempData["IsLoggedIn"] = "";
@@ -56,8 +52,6 @@ namespace database_final_project.Controllers
             }
             else
             {
-
-
                 TempData["IsLoggedIn"] = UserData.UserName + "," + UserData.UserId;
                 return View("./Index", UserData);
             }
@@ -118,10 +112,6 @@ namespace database_final_project.Controllers
 
         public IActionResult History(Product product)
         {
-
-
-
-
             return View("./History", product);
         }
 
@@ -140,7 +130,7 @@ namespace database_final_project.Controllers
             var id = int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
             // new azuredb insert
             var Id = RateModel.ProductId;
-            var UserData = new AzureDb().InsertRating(id, RateModel.ProductId, RateModel.Rating, RateModel.Comment);
+            var UserData = AzureDb.Instance.InsertRating(id, RateModel.ProductId, RateModel.Rating, RateModel.Comment);
             if (UserData == 0)
             {
                 TempData["RatingMsg"] = "Rating Failed";
@@ -153,7 +143,7 @@ namespace database_final_project.Controllers
         }
         public IActionResult ProductDetails(Product ProductModel)
         {
-            var rating = new AzureDb().GetAverageProductRating(ProductModel.nProductId);
+            var rating = AzureDb.Instance.GetAverageProductRating(ProductModel.nProductId);
             ProductModel.nAvgRating = rating;
             return View("./ProductDetails", ProductModel);
         }

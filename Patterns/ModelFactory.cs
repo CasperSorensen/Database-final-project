@@ -1,9 +1,10 @@
 using database_final_project;
+using database_final_project.DataModels;
 using database_final_project.Models;
 
 namespace database_final_project.Patterns
 {
-  public static class ModelFactory
+  public class ModelFactory
   {
 
     public static IModel Build(string in_model)
@@ -27,7 +28,7 @@ namespace database_final_project.Patterns
         case "usermodel":
           return new UserModel();
         default:
-          return null;
+          return new NullModel();
       }
     }
   }
