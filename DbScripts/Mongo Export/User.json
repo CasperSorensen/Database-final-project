@@ -1,4 +1,3 @@
-// Array to populate Users collection for MongoDB
 [
    {
       "name":"Kevin Bauer",
@@ -6,7 +5,15 @@
       "city":"Copenhagen",
       "phoneNo":"18244240",
       "email":"ultrices@maurissit.com",
-      "totalAmount":28000.50
+      "totalAmount":98.67
+   },
+   {
+      "name":"John Bauer",
+      "address":"4707 Consectetuer Avenue",
+      "city":"Copenhagen",
+      "phoneNo":"18244240",
+      "email":"ultrices@maurissit.com",
+      "totalAmount":564.37
    },
    {
       "name":"Brandon Jackson",
@@ -14,7 +21,7 @@
       "city":"Aarhus",
       "phoneNo":"41508021",
       "email":"sociis@hendrerit.edu",
-      "totalAmount":9540.20
+      "totalAmount":196.98
    },
    {
       "name":"Jermaine Holt",
@@ -22,7 +29,7 @@
       "city":"Roskilde",
       "phoneNo":"55014571",
       "email":"ac@Nullamsuscipitest.org",
-      "totalAmount":387.00
+      "totalAmount":122.13
    },
    {
       "name":"Seth Wynn",
@@ -30,7 +37,7 @@
       "city":"Copenhagen",
       "phoneNo":"24272119",
       "email":"gravida.mauris@fringillaestMauris.org",
-      "totalAmount":4140.75
+      "totalAmount":357.91
    },
    {
       "name":"Honorato Clements",
@@ -38,7 +45,7 @@
       "city":"Helsingør",
       "phoneNo":"65547304",
       "email":"at@CuraeDonectincidunt.edu",
-      "totalAmount":10000.00
+      "totalAmount":294.22
    },
    {
       "name":"Darius Robbins",
@@ -46,7 +53,7 @@
       "city":"Hvalsø",
       "phoneNo":"50861101",
       "email":"nibh.vulputate@porttitortellus.edu",
-      "totalAmount":3310.78
+      "totalAmount":460.15
    },
    {
       "name":"Paul Valentine",
@@ -54,7 +61,7 @@
       "city":"Copenhagen",
       "phoneNo":"36625242",
       "email":"ut.nulla@auctorquis.ca",
-      "totalAmount":43000.00
+      "totalAmount":371.85
    },
    {
       "name":"Jack Mcdowell",
@@ -62,7 +69,7 @@
       "city":"Copenhagen",
       "phoneNo":"59448484",
       "email":"in@iaculisaliquet.net",
-      "totalAmount":536.00
+      "totalAmount":133.12
    },
    {
       "name":"Phelan Paul",
@@ -70,7 +77,7 @@
       "city":"Helsingør",
       "phoneNo":"26849901",
       "email":"id@nequevitae.net",
-      "totalAmount":93236.00
+      "totalAmount":0.00
    },
    {
       "name":"Noble Cohen",
@@ -78,7 +85,7 @@
       "city":"Odense",
       "phoneNo":"65553998",
       "email":"dictum.eleifend.nunc@purus.com",
-      "totalAmount":33021.00
+      "totalAmount":0.00
    },
    {
       "name":"Andrew Ashley",
@@ -86,7 +93,7 @@
       "city":"Helsingør",
       "phoneNo":"09542959",
       "email":"sem@nonleo.org",
-      "totalAmount":57000.00
+      "totalAmount":0.00
    },
    {
       "name":"Judah Ramirez",
@@ -94,7 +101,7 @@
       "city":"Hvalsø",
       "phoneNo":"58069541",
       "email":"sed.turpis.nec@ultrices.edu",
-      "totalAmount":48762.23
+      "totalAmount":0.00
    },
    {
       "name":"Theodore Bird",
@@ -102,7 +109,7 @@
       "city":"Roskilde",
       "phoneNo":"64879626",
       "email":"Cum.sociis@sedlibero.org",
-      "totalAmount":70006.02
+      "totalAmount":0.00
    },
    {
       "name":"Chancellor Callahan",
@@ -110,7 +117,7 @@
       "city":"Copenhagen",
       "phoneNo":"28393616",
       "email":"dignissim@vitaeposuereat.co.uk",
-      "totalAmount":95215.70
+      "totalAmount":0.00
    },
    {
       "name":"Addison Wilson",
@@ -118,7 +125,7 @@
       "city":"Hvalsø",
       "phoneNo":"61017529",
       "email":"justo@diam.ca",
-      "totalAmount":54723.00
+      "totalAmount":0.00
    },
    {
       "name":"Xenos Fulton",
@@ -126,7 +133,7 @@
       "city":"Roskilde",
       "phoneNo":"71097123",
       "email":"In@scelerisquesed.org",
-      "totalAmount":6341.00
+      "totalAmount":0.00
    },
    {
       "name":"Tanek Schultz",
@@ -134,7 +141,7 @@
       "city":"Copenhagen",
       "phoneNo":"79231804",
       "email":"cursus.diam@ridiculusmus.org",
-      "totalAmount":497.00
+      "totalAmount":0.00
    },
    {
       "name":"Valentine Castillo",
@@ -142,15 +149,15 @@
       "city":"Aarhus",
       "phoneNo":"71667682",
       "email":"mi@sedpede.ca",
-      "totalAmount":23953.00
+      "totalAmount":0.00
    },
    {
-      "name":"Xenos Gonzalez",
+      "name":"Martin Gonzalez",
       "address":"Ap 135-6696 Montes, St.",
       "city":"Roskilde",
       "phoneNo":"72917160",
       "email":"purus@non.com",
-      "totalAmount":4382.00
+      "totalAmount":0.00
    },
    {
       "name":"Gil Gross",
@@ -158,6 +165,6 @@
       "city":"Copenhagen",
       "phoneNo":"59150514",
       "email":"Integer.vitae@luctus.ca",
-      "totalAmount":11508.67
+      "totalAmount":0.00
    }
 ]
