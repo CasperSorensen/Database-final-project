@@ -175,14 +175,9 @@ namespace database_final_project.Controllers
             return View("./Basket");
         }
 
-        public IActionResult Privacy()
-        {
-            var sd = TempData["IsLoggedIn"].ToString();
-            return View();
-        }
+
         public IActionResult Products()
         {
-
             return View();
         }
 

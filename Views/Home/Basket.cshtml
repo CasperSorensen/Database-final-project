@@ -7,15 +7,13 @@
 <br />
 
 @{
-    var loginMsg = TempData["LogginMessage"] != null ? TempData["LogginMessage"].ToString() : "";
+   
     var isLoggedIn = TempData["IsLoggedIn"].ToString();
     TempData.Keep("IsLoggedIn");
     ObjectOfFieldsForDatabase data = new ObjectOfFieldsForDatabase();
 
     if (isLoggedIn != string.Empty)
     {
-
-
         var name = isLoggedIn.ToString().Split(',').ElementAt(0);
         var id = int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
         <p> you are logged in as @(isLoggedIn != null ? name : "")</p>
@@ -104,7 +102,7 @@
                             <p>Ending On: @card.dExpDate</p>
 
                             <button>
-                                <a href="@Url.Action("CheckoutPage", "Home", data)">This One!</a>
+                                <a href="@Url.Action("CheckoutPage", "Home", data)">Pay order with this Card</a>
                             </button>
                             <br />
 

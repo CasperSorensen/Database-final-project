@@ -8,9 +8,10 @@
 }
 
 @{
-    var loginMsg = TempData["LogginMessage"] != null ? TempData["LogginMessage"].ToString() : "";
+   
     var isLoggedIn = TempData["IsLoggedIn"].ToString();
     TempData.Keep("IsLoggedIn");
+
     int minprice = 0;
     int maxprice = 0;
 
@@ -36,13 +37,14 @@
 
         products = AzureDb.Instance.GetProducts();
     }
+    
 
-
+  
     if (isLoggedIn != string.Empty)
     {
         var name = isLoggedIn.ToString().Split(',').ElementAt(0);
         var id = int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
-        <p> you are logged in as @(isLoggedIn != null ? isLoggedIn.ToString().Split(',').ElementAt(0) : "")</p>
+        <p> you are logged in as @name</p>
 
         <div class="container">
             <form name="UserModel" method="POST" action="/Home/Logout">
@@ -57,68 +59,64 @@
             </form>
         </div>
 
-        if (TempData["History"] != null)
-        {
-            var productName = TempData["History"].ToString();
-
-            <h2>Your last Viewed Product is @productName </h2>
-        }
-
         <br />
-        <div class="container">
-            <form name="UserModel" method="POST" action="/Home/SearchProducts">
-                <h2>Search by Product Name or Description</h2>
-                <div class="field">
-                    <p></p>
-                    <div class="control">
-                        <input class="input" type="text" placeholder="" name="request" required>
+        <div class="container d-inline-flex">
+            <div>
+                <form name="UserModel" method="POST" action="/Home/SearchProducts">
+                    <h2>Search by Product Name or Description</h2>
+                    <div class="field">
+                        <p></p>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="" name="request" required>
+                        </div>
                     </div>
-                </div>
 
 
 
-                <div class="field is-grouped">
-                    <div class="control">
-                        <button class="button is-link">Search</button>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-link">Search</button>
+                        </div>
                     </div>
-                </div>
 
-            </form>
+                </form>
+            </div>
 
-            <br />
-            <br />
+            <div><p class="invisible">________________________</p></div>
 
-            <h2>Search by Price</h2>
-            <form name="UserModel" method="POST" action="/Home/SearchProductsOnPrice">
-                <div class="field">
-                    <p>Min price:</p>
-                    <div class="control">
-                        <input class="input" type="number" placeholder="" value="@minprice" name="in_min">
+            <div>
+                <h2>Search by Price</h2>
+                <form name="UserModel" method="POST" action="/Home/SearchProductsOnPrice">
+                    <div class="field">
+                        <p>Min price:</p>
+                        <div class="control">
+                            <input class="input" type="number" placeholder="" value="@minprice" name="in_min">
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <p>Max price:</p>
-                    <div class="control">
-                        <input class="input" type="number" placeholder="" value="@maxprice" name="in_max">
+                    <div class="field">
+                        <p>Max price:</p>
+                        <div class="control">
+                            <input class="input" type="number" placeholder="" value="@maxprice" name="in_max">
+                        </div>
                     </div>
-                </div>
 
-                <div class="field is-grouped">
-                    <div class="control">
-                        <button class="button is-link">Search Prices</button>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-link">Search Prices</button>
+                        </div>
                     </div>
-                </div>
 
-            </form>
-            <br />
-            <form name="UserModel" method="POST" action="/Home/ClearSearchProducts">
+                </form>
+                <br />
+                <form name="UserModel" method="POST" action="/Home/ClearSearchProducts">
 
-                <div class="field is-grouped">
-                    <div class="control">
-                        <button class="button is-link">Clear Searches</button>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-link">Clear Searches</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
         <br />
         <h1>Products :</h1>
@@ -127,22 +125,24 @@
 
         foreach (var Product in products)
         {
-            <div>
+            <div class="table-bordered">
 
                 <h2>@Product.cname</h2>
                 <p>Description : @Product.cdescription</p>
                 <p> Stock: @Product.nStock units</p>
                 <p>Price: @Product.nUnitPrice DKK</p>
+
                 <button>
                     <a href="@Url.Action("AddToBasket", "Home", Product)">Add to basket</a>
                 </button>
-                <button>
-                    <a href="@Url.Action("AddToBasketAsGift", "Home", Product)">Add a gift Wraping for this product</a>
-                </button>
+               
+                
                 <div class="container">
+
                     <button>
                         <a href="@Url.Action("ProductDetails","Home",Product)">ProductDetails</a>
                     </button>
+
                     <button>
                         @{var RateModel = new RateModel();
                             RateModel.ProductId = Product.nProductId;
@@ -155,6 +155,7 @@
                 <br />
                 <br />
             </div>
+            <br />
 
         }
 
@@ -165,8 +166,4 @@
     {
         <h2>Acces restricted Please log in <a href="/">here</a></h2>
     }
-}
-
-@{
-
 }

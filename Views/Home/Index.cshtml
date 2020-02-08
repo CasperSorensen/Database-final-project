@@ -3,17 +3,22 @@
 
 
 @{
-    var loginMsg = TempData["LogginMessage"]!=null?TempData["LogginMessage"].ToString():"";
+   
     var isLoggedIn = TempData["IsLoggedIn"].ToString();
     TempData.Keep("IsLoggedIn");
 
-    if (isLoggedIn!=string.Empty)
+    if (isLoggedIn != string.Empty)
     {
-        if (TempData["RatingMsg"]!=null)
+        var name = isLoggedIn.ToString().Split(',').ElementAt(0);
+        var id = int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
+        <p> you are logged in as @name</p>
+
+        if (TempData["RatingMsg"] != null)
         {
-    <h1>@TempData["RatingMsg"].ToString()</h1>
+            <h1>@TempData["RatingMsg"].ToString()</h1>
         }
-        <p> you are logged in as @(isLoggedIn != null ? isLoggedIn.ToString().Split(',').ElementAt(0) : "")</p>
+
+       
 
         <div class="container">
             <form name="UserModel" method="POST" action="/Home/Logout">
@@ -33,7 +38,7 @@
     {
 
         <h2>please Enter your UserId</h2>
-        <h2>@loginMsg</h2>
+       
 
 
         <div class="container">
