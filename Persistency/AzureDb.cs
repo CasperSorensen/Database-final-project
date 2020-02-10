@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using database_final_project.Models;
 using System.Data;
 using database_final_project.Patterns;
+using Newtonsoft.Json;
 
 namespace database_final_project
 {
@@ -294,8 +295,9 @@ namespace database_final_project
         /// Inserts all the InvoiceLines
         /// and updates the associated tables
         /// </summary>
-        public int InvoiceTransaction(ObjectOfFieldsForDatabase model, Dictionary<int, int> basket)
+        public int InvoiceTransaction(InvoiceModel model)
         {
+            Dictionary<int, int> basket = JsonConvert.DeserializeObject<Dictionary<int, int>>(model.Products);
             using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
             {
                 conn.Open();
@@ -518,11 +520,11 @@ namespace database_final_project
                     return 1;
 
                 }
-                catch (SqlException e)
+                catch (SqlException ex)
                 {
                     tran.Rollback();
                     conn.Close();
-                    throw;
+                    throw ex;
                 }
             }
         }

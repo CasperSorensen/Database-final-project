@@ -16,11 +16,7 @@ namespace database_final_project.Patterns
         case "rating":
           return new Rating();
         case "user":
-          return new User();
-        case "invoice":
-          return new Invoice();
-        case "invoiceline":
-          return new InvoiceLine();
+          return new User();       
         case "creditcard":
           return new CreditCard();
         case "ratemodel":

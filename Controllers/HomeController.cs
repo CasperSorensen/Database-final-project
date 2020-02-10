@@ -32,10 +32,9 @@ namespace database_final_project.Controllers
             {
                 return View();
             }
-
         }
 
-        public IActionResult CheckoutPage(ObjectOfFieldsForDatabase data)
+        public IActionResult CheckoutPage(InvoiceModel data)
         {
             return View(data);
         }
@@ -58,9 +57,10 @@ namespace database_final_project.Controllers
         }
         public IActionResult AddToBasket(Product SelectedProduct)
         {
+
             var basketAsObj = TempData["Basket"];
 
-            if (basketAsObj == string.Empty || basketAsObj == null)
+            if (basketAsObj == null)
             {
 
                 //first int is product id , second int is quantity
@@ -81,8 +81,7 @@ namespace database_final_project.Controllers
                 {
                     int quant = Basket.GetValueOrDefault(Id);
                     Basket.Remove(Id);
-                    Basket.Add(Id, quant + 1);
-
+                    Basket.Add(Id, quant + 1);                   
 
                 }
                 //product is not yet in basket - just add it
@@ -101,19 +100,6 @@ namespace database_final_project.Controllers
         }
 
 
-        public IActionResult AddToBasketAsGift(Product SelectedProduct)
-        {
-
-            TempData["GiftIds"] = SelectedProduct.nProductId;
-
-
-            return View("./Products");
-        }
-
-        public IActionResult History(Product product)
-        {
-            return View("./History", product);
-        }
 
         public IActionResult RateProduct(RateModel RateModel)
         {

@@ -10,73 +10,62 @@
    
     var isLoggedIn = TempData["IsLoggedIn"].ToString();
     TempData.Keep("IsLoggedIn");
-    ObjectOfFieldsForDatabase data = new ObjectOfFieldsForDatabase();
+
+    //we collect data for Invoice Insertion into DB throughout this page
+    InvoiceModel InvoiceDataForInsert = new InvoiceModel();
 
     if (isLoggedIn != string.Empty)
     {
         var name = isLoggedIn.ToString().Split(',').ElementAt(0);
         var id = int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
-        <p> you are logged in as @(isLoggedIn != null ? name : "")</p>
-        data.UserId = id;
+        <p> you are logged in as @name</p>
+
+        InvoiceDataForInsert.UserId = id;
+
 
         var BasketAsObj = TempData["basket"];
         TempData.Keep();
         if (BasketAsObj != null)
         {
 
-
-
             decimal Total = 0;
-            var basket = BasketAsObj.ToString();
+            string basket = BasketAsObj.ToString();
+
+            InvoiceDataForInsert.Products = basket;
 
             Dictionary<int, int> Basket = JsonConvert.DeserializeObject<Dictionary<int, int>>(basket);
-            data.Products = basket;
+            
             List<Product> AllDbProducts = AzureDb.Instance.GetProducts();
 
             <h2>Your basket Contains:</h2>
 
-            var Products = Basket.Keys;
+            //Keys are Ids values are Quantity
+            var BasketProductsIds = Basket.Keys;
+
+            //the idea here is that we get all products from DataBase, in loop compare each of their Ids with ids from Basket-(Highly ineffective) 
+            //if they match we calculate subtotals and total 
 
             foreach (var DbProduct in AllDbProducts)
             {
-                if (Products.Contains(DbProduct.nProductId))
-                {
-                    var ProductId = DbProduct.nProductId;
+                if (BasketProductsIds.Contains(DbProduct.nProductId))
+                {                   
                     var Quantity = Basket[DbProduct.nProductId];
 
                     decimal SubTotal = DbProduct.nUnitPrice * Quantity;
-                    <p>@DbProduct.cname, Quantity: @Quantity (x @DbProduct.nUnitPrice =@SubTotal DKK)</p>
-
-
-                    if (TempData["GiftIds"] != null)
-                    {
-                        int giftId = Convert.ToInt32(TempData["GiftIds"]);
-                        TempData.Keep();
-
-                        if (ProductId == giftId)
-                        {
-                            <br />
-                            <h2>This product will be wrapped as gift: @DbProduct.cname</h2>
-                            decimal newPrice = new GiftDecorator(DbProduct).GetnUnitPrice();
-                            <h2>New product price = @newPrice</h2>
-
-                            Total += newPrice;
-                        }
-                       
-                            
-                      
-                    }
-                    else
-                    {
+                    <p>@DbProduct.cname, Quantity: @Quantity (x @DbProduct.nUnitPrice =@SubTotal DKK)</p>                   
+                    
                         Total += DbProduct.nUnitPrice * Quantity;
-                    }
+                    
                 }
             }
 
 
+                InvoiceDataForInsert.Total = Total;
+                InvoiceDataForInsert.Tax = 25;
+
                 <br />
                 <h2>Total: @Total DKK</h2>
-                data.Total = Total;
+                
                 <br />
                 List<CreditCard> cards = AzureDb.Instance.GetCreditCardsForUser(id);
                 <h3>Payment Method</h3>
@@ -84,32 +73,35 @@
 
 
 
-                if (cards.Count == 0)
-                {
+            if (cards.Count == 0)
+            {
                     <h2> "no cards are registered with this user"</h2>
-                }
-                else
+            }
+            else
+            {
+
+
+                foreach (var card in cards)
                 {
+                    InvoiceDataForInsert.CreditCardId = card.nCreditCardId;
 
-
-                    foreach (var card in cards)
-                    {
-                        data.CreditCardId = card.nCreditCardId;
-                        data.Tax = 25;
                         <div style="border:solid">
                             <h5>Card Id: @card.nCreditCardId</h5>
                             <p>Card IBAN: @card.nIBANCode</p>
                             <p>Ending On: @card.dExpDate</p>
-
-                            <button>
-                                <a href="@Url.Action("CheckoutPage", "Home", data)">Pay order with this Card</a>
+                            
+                            @{ 
+                                //this button will trigger the Insert Invoice transaction after redirect
+                            }
+                            <button>                               
+                                <a href="@Url.Action("CheckoutPage", "Home", InvoiceDataForInsert)">Pay order with this Card</a>
                             </button>
                             <br />
 
                         </div>
                         <br />
-                    }
                 }
+            }
 
 
                 <div>
@@ -120,18 +112,17 @@
 
                 </div>
 
-            }
-
-else
-            {
-                <h3>Your Basket is empty, put something in it!</h3>
-            }
         }
         else
         {
-
-            <h2>You need to be logged in, in order to use Basket Please do so <a href="/">here</a></h2>
-
+            <h3>Your Basket is empty, put something in it!</h3>
         }
     }
+    else
+    {
+
+        <h2>You need to be logged in, in order to use Basket Please do so <a href="/">here</a></h2>
+
+    }
+ }
 

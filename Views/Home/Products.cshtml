@@ -28,8 +28,6 @@
         minprice = Convert.ToInt32(TempData["MinPrice"]);
         maxprice = Convert.ToInt32(TempData["MaxPrice"]);
 
-
-
         products = AzureDb.Instance.SearchProductsOnPrice(minprice, maxprice);
     }
     else
@@ -121,42 +119,40 @@
         <br />
         <h1>Products :</h1>
         <br />
-       
+
 
         foreach (var Product in products)
         {
+
+          var RateModel = new RateModel();
+          RateModel.ProductId = Product.nProductId;
+               
+
             <div class="table-bordered">
 
                 <h2>@Product.cname</h2>
                 <p>Description : @Product.cdescription</p>
                 <p> Stock: @Product.nStock units</p>
                 <p>Price: @Product.nUnitPrice DKK</p>
-
-                <button>
-                    <a href="@Url.Action("AddToBasket", "Home", Product)">Add to basket</a>
-                </button>
-               
-                
+                                           
                 <div class="container">
+
+                    <button>
+                        <a href="@Url.Action("AddToBasket", "Home", Product)">Add to basket</a>
+                    </button>
 
                     <button>
                         <a href="@Url.Action("ProductDetails","Home",Product)">ProductDetails</a>
                     </button>
 
                     <button>
-                        @{var RateModel = new RateModel();
-                            RateModel.ProductId = Product.nProductId;
-                        }
                         <a href="@Url.Action("RateProduct","Home",RateModel)">Rate a Product</a>
                     </button>
 
                 </div>
-                <br />
-                <br />
-                <br />
-            </div>
-            <br />
 
+            </div>
+            <br />           
         }
 
 
