@@ -22,23 +22,14 @@ namespace database_final_project.Controllers
 
         public IActionResult Index()
         {
-
-            if (TempData["IsLoggedIn"] == null)
-            {
-                TempData["IsLoggedIn"] = string.Empty;
                 return View();
-            }
-            else
-            {
-                return View();
-            }
+            
         }
 
         public IActionResult CheckoutPage(InvoiceModel data)
         {
             return View(data);
         }
-
 
         public IActionResult Login(UserModel model)
         {
@@ -55,11 +46,13 @@ namespace database_final_project.Controllers
                 return View("./Index", UserData);
             }
         }
+
         public IActionResult AddToBasket(Product SelectedProduct)
         {
 
             var basketAsObj = TempData["Basket"];
 
+            //basket not yet existing -create it
             if (basketAsObj == null)
             {
 
@@ -72,11 +65,12 @@ namespace database_final_project.Controllers
 
             }
             else
+            //basket allready existing - add to it
             {
                 var basket = basketAsObj.ToString();
                 Dictionary<int, int> Basket = JsonConvert.DeserializeObject<Dictionary<int, int>>(basket);
                 int Id = SelectedProduct.nProductId;
-                //product is allready in basket - increase quantity
+                //this product is allready in basket - increase quantity
                 if (Basket.ContainsKey(Id))
                 {
                     int quant = Basket.GetValueOrDefault(Id);
@@ -84,7 +78,7 @@ namespace database_final_project.Controllers
                     Basket.Add(Id, quant + 1);                   
 
                 }
-                //product is not yet in basket - just add it
+                //product is not yet in basket - just add it in
                 else
                 {
                     Basket.Add(Id, 1);
@@ -99,23 +93,17 @@ namespace database_final_project.Controllers
             return View("./Products");
         }
 
-
-
         public IActionResult RateProduct(RateModel RateModel)
         {
-
-
             return View("./RateProduct", RateModel);
         }
 
-
         public IActionResult DoneRate(RateModel RateModel)
         {
-            var isLoggedIn = TempData["IsLoggedIn"].ToString();
-            var name = isLoggedIn.ToString().Split(',').ElementAt(0);
+            var isLoggedIn = TempData["IsLoggedIn"].ToString();         
             var id = int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
-            // new azuredb insert
-            var Id = RateModel.ProductId;
+
+            // rating insert           
             var UserData = AzureDb.Instance.InsertRating(id, RateModel.ProductId, RateModel.Rating, RateModel.Comment);
             if (UserData == 0)
             {
@@ -127,40 +115,37 @@ namespace database_final_project.Controllers
             }
             return View("./Index");
         }
+
         public IActionResult ProductDetails(Product ProductModel)
         {
-            var rating = AzureDb.Instance.GetAverageProductRating(ProductModel.nProductId);
-            ProductModel.nAvgRating = rating;
+            var AvgRating = AzureDb.Instance.GetAverageProductRating(ProductModel.nProductId);
+            ProductModel.nAvgRating = AvgRating;
             return View("./ProductDetails", ProductModel);
         }
+
         public IActionResult Logout()
         {
 
-            TempData["IsLoggedIn"] = "";
+            TempData["IsLoggedIn"] = null;
             TempData["Basket"] = null;
             return View("./Index");
         }
 
         public IActionResult Checkout()
         {
-
             return View("./CheckoutPage");
         }
 
         public IActionResult Basket()
         {
-
             return View("./Basket");
         }
 
         public IActionResult ClearBasket()
         {
-
-            TempData["Basket"] = null;
-            TempData["GiftIds"] = null;
+            TempData["Basket"] = null;           
             return View("./Basket");
         }
-
 
         public IActionResult Products()
         {
@@ -170,7 +155,6 @@ namespace database_final_project.Controllers
         public IActionResult SearchProducts(string request)
         {
             TempData["SearchRequest"] = request;
-
             return View("./Products");
         }
 

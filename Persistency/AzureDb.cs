@@ -47,39 +47,6 @@ namespace database_final_project
 
         #region Methods
 
-        /// <summary>
-        /// Fetches all Users
-        /// </summary>
-        public List<string> GetUsers()
-        {
-            List<string> result = new List<string>();
-
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
-                {
-
-                    conn.Open();
-                    string query = "Select * from [dbo].TUser";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        result.Add(reader["cFirstName"].ToString());
-                    }
-                }
-            }
-            catch (SqlException e)
-            {
-                System.Console.WriteLine(e);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Checks if the inputted User is valid
-        /// </summary>
         public UserModel LoginUser(UserModel user)
         {
             var id = user.UserId;
@@ -157,8 +124,7 @@ namespace database_final_project
         /// </summary>
         public decimal GetAverageProductRating(int ProductId)
         {
-            decimal AvgRating = 0;
-            List<Rating> result = new List<Rating>();
+            decimal AvgRating = 0;           
             try
             {
                 using (SqlConnection conn = new SqlConnection(_builder.ConnectionString))
@@ -283,6 +249,8 @@ namespace database_final_project
                     }
                 }
             }
+
+
             catch (SqlException e)
             {
                 System.Console.WriteLine(e);

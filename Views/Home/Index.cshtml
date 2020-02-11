@@ -4,10 +4,10 @@
 
 @{
    
-    var isLoggedIn = TempData["IsLoggedIn"].ToString();
+    var isLoggedIn = TempData["IsLoggedIn"];
     TempData.Keep("IsLoggedIn");
 
-    if (isLoggedIn != string.Empty)
+    if (isLoggedIn != null)
     {
         var name = isLoggedIn.ToString().Split(',').ElementAt(0);
         var id = int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));

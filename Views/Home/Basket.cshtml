@@ -16,11 +16,11 @@
 
     if (isLoggedIn != string.Empty)
     {
-        var name = isLoggedIn.ToString().Split(',').ElementAt(0);
-        var id = int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
-        <p> you are logged in as @name</p>
+        var UserName = isLoggedIn.ToString().Split(',').ElementAt(0);
+        var UserId = int.Parse(isLoggedIn.ToString().Split(',').ElementAt(1));
+        <p> you are logged in as @UserName</p>
 
-        InvoiceDataForInsert.UserId = id;
+        InvoiceDataForInsert.UserId = UserId;
 
 
         var BasketAsObj = TempData["basket"];
@@ -67,7 +67,7 @@
                 <h2>Total: @Total DKK</h2>
                 
                 <br />
-                List<CreditCard> cards = AzureDb.Instance.GetCreditCardsForUser(id);
+                List<CreditCard> cards = AzureDb.Instance.GetCreditCardsForUser(UserId);
                 <h3>Payment Method</h3>
                 <h4> Please Chose a card associated with your account to complete the purchase</h4>
 
