@@ -22,7 +22,7 @@ namespace database_final_project
         private AzureDb()
         {
             this._builder = new SqlConnectionStringBuilder();
-            _builder.ConnectionString = @"Server=DESKTOP-2OUIUJB\SQLEXPRESS;Initial Catalog=WebShopDb;User Id=DBAdmin;Password=StrongPassword123;";
+            _builder.ConnectionString = @"Server=DESKTOP-2KUI3D\SQLEXPRESS;Initial Catalog=WebShopDb;User Id=DBAdmin;Password=StrongPassword123;";
         }
 
         public static AzureDb Instance
