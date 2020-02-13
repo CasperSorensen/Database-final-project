@@ -1,0 +1,27 @@
+Database Requirements:
+
+The database will store products, of which it will be necessary to register their name, description, unitprice and existing stock.
+When a user registers a purchase, an invoice is generated. The database will store the date the invoice is issued, its applicable tax,
+the total monetary amount, the creditcard with which the user paid, and the list of products purchased, including the quantity and the
+unit price of each product at the time of purchase. Creditcard is the only payment method acceptable. A user can register as many creditcards 
+as he/she desires, but it is mandatory to register at least one in order to be registered as a user. For each card, its IBAN code, cardholdername,
+expiry month and year, CCV, and total monetary amount purchased with that card so far will bestored. For the user, it will be necessary to register 
+his/her name and surname, address, zipcode, city, phonenumber, email, and the total monetary amount paid so far. Only Danish residents with a Danish 
+phone number will be allowed to register in the application. Inorder to provideu seful information to the application’s users, and because of the company’s
+will to store experimental data, productratings will also be managed. Users will be able to rate any product from 1 to 5, as well as, optionally, 
+to include a comment. In order to avoid calculations, the average rating of each product will be stored with it.
+
+
+
+CRUD Application Requirements:
+
+A CRUD application with a minimum front-end will manage purchases from a user point of view. 
+The only functionality to implement will be:
+					-Log in
+					-Purchases. A user will be able to choose products and quantities, be informed of the total price, choose a credit card to pay with, and finish the purchase
+					-Rating. A user will be able to rate any product and, optionally, include a comment 
+
+The application will comply with the following:
+					-All database queries will be prepared in order to avoid SQL injection
+					-There will be at least one call to a stored procedure
+					-There will be a multiple search option which will search products by several fields, also implementing approximate character string search (LIKE) by at least one of them

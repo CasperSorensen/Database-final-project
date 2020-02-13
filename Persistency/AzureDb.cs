@@ -23,11 +23,6 @@ namespace database_final_project
         {
             this._builder = new SqlConnectionStringBuilder();
             _builder.ConnectionString = @"Server=DESKTOP-2OUIUJB\SQLEXPRESS;Initial Catalog=WebShopDb;User Id=DBAdmin;Password=StrongPassword123;";
-           
-            //_builder.DataSource = "DESKTOP-G7J11FP./MSSQLSERVER01";        
-            //_builder.UserID = "DBAdmin";
-            //_builder.Password = "StrongPassword123";
-            //_builder.InitialCatalog = "WebShopDB";
         }
 
         public static AzureDb Instance
